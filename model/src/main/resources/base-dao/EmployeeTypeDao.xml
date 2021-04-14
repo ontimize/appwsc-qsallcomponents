@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup xmlns="http://www.ontimize.com/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+	table="EMPLOYEETYPES" datasource="mainDataSource" sqlhandler="dbSQLStatementHandler">
+	<DeleteKeys>
+		<Column>EMPLOYEETYPEID</Column>
+	</DeleteKeys>
+	<UpdateKeys>
+		<Column>EMPLOYEETYPEID</Column>
+	</UpdateKeys>
+	<GeneratedKey>EMPLOYEETYPEID</GeneratedKey>
+
+	<Queries>
+		<Query id="AGGREGATE">
+			<ValidColumns>
+				<Column>EMPLOYEETYPENAME</Column>
+				<Column>EMPLOYEETYPEDESC</Column>
+			</ValidColumns>
+			<Sentence>
+				<![CDATA[
+					SELECT
+						EMPLOYEETYPENAME, AMOUNT
+					FROM ( 
+						SELECT EMPLOYEETYPENAME, COUNT(*) AS AMOUNT
+							FROM EMPLOYEETYPES AS ET
+								INNER JOIN EMPLOYEES AS E ON E.EMPLOYEETYPEID = ET.EMPLOYEETYPEID
+							GROUP BY EMPLOYEETYPENAME HAVING EMPLOYEETYPENAME = 'Manager'
+					)
+					UNION
+					SELECT 'Employee' AS EMPLOYEETYPENAME, SUM(AMOUNT) AS AMOUNT
+					FROM (
+						SELECT EMPLOYEETYPENAME, COUNT(*) AS AMOUNT
+						FROM EMPLOYEETYPES AS ET
+							INNER JOIN EMPLOYEES AS E ON E.EMPLOYEETYPEID = ET.EMPLOYEETYPEID
+						GROUP BY EMPLOYEETYPENAME HAVING EMPLOYEETYPENAME <> 'Manager'
+					)
+					ORDER BY EMPLOYEETYPENAME DESC
+				]]>
+			</Sentence>
+		</Query>
+	</Queries>
+
+</JdbcEntitySetup>

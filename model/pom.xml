@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.imatia</groupId>
@@ -31,6 +33,47 @@
 			<groupId>com.ontimize.jee</groupId>
 			<artifactId>ontimize-jee-server-jdbc</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.ontimize.jee.dms</groupId>
+			<artifactId>ontimize-jee-dms-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ontimize.jee.dms</groupId>
+			<artifactId>ontimize-jee-dms-rest</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.poi-ooxml.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>${poi.poi-ooxml-schemas.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>ooxml-schemas</artifactId>
+			<version>${poi.ooxml-schemas.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>${poi.dom4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -55,9 +98,12 @@
 								</goals>
 								<configuration>
 									<target>
-										<available file="${hsqldatabase.path}/templateDB.script" property="database.exist" />
+										<available
+											file="${hsqldatabase.path}/templateDB.script"
+											property="database.exist" />
 										<echo message="${hsqldatabase.path}/templateDB.script" />
-										<copy tofile="${hsqldatabase.path}/templateDB.script" file="${hsqldatabase.path}/templateDB.txt" />
+										<copy tofile="${hsqldatabase.path}/templateDB.script"
+											file="${hsqldatabase.path}/templateDB.txt" />
 									</target>
 								</configuration>
 							</execution>

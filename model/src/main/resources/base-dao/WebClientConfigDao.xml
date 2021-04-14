@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup
+	xmlns="http://www.ontimize.com/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+	table="WEBCLIENT_CONFIG" datasource="mainDataSource"
+	sqlhandler="dbSQLStatementHandler">
+	<DeleteKeys>
+		<Column>USER_</Column>
+		<Column>APP_UUID</Column>
+	</DeleteKeys>
+	<UpdateKeys>
+		<Column>USER_</Column>
+		<Column>APP_UUID</Column>
+	</UpdateKeys>
+</JdbcEntitySetup>

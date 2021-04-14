@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup xmlns="http://www.ontimize.com/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+	table="TSHARE" datasource="mainDataSource" sqlhandler="dbSQLStatementHandler">
+	<DeleteKeys>
+		<Column>ID_SHARE</Column>
+	</DeleteKeys>
+	<UpdateKeys>
+		<Column>ID_SHARE</Column>
+	</UpdateKeys>
+	<GeneratedKey>ID_SHARE</GeneratedKey>
+
+	<Queries>
+		<Query id="defaultJoinTable">
+			<Sentence>
+				<![CDATA[
+					SELECT 
+						#COLUMNS#
+					FROM
+						TSHARE AS S
+					LEFT JOIN TSHARE_TARGET AS ST ON
+						S.ID_SHARE = ST.ID_SHARE
+					#WHERE#
+					#ORDER#
+				]]>
+			</Sentence>
+		</Query>
+	</Queries>
+</JdbcEntitySetup>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup
+	xmlns="http://www.ontimize.com/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+	table="ACCOUNTTYPES" datasource="mainDataSource"
+	sqlhandler="dbSQLStatementHandler">
+	<DeleteKeys>
+		<Column>ACCOUNTTYPES</Column>
+	</DeleteKeys>
+	<UpdateKeys>
+		<Column>ACCOUNTTYPES</Column>
+	</UpdateKeys>
+	<GeneratedKey>ACCOUNTTYPES</GeneratedKey>
+
+	<Queries>
+		<Query id="AGGREGATE">
+			<AmbiguousColumns>
+				<AmbiguousColumn name="ACCOUNTTYPEID" prefix="ACT" />
+			</AmbiguousColumns>
+			<ValidColumns>
+				<Column>ACCOUNTTYPEID</Column>
+				<Column>ACCOUNTTYPENAME</Column>
+				<Column>AMOUNT</Column>
+			</ValidColumns>
+			<FunctionColumns>
+				<FunctionColumn name="AMOUNT" value="COUNT(*)" />
+			</FunctionColumns>
+			<Sentence>
+				<![CDATA[
+					SELECT ACT.ACCOUNTTYPEID, ACCOUNTTYPENAME, COUNT(*) AS AMOUNT
+					FROM ACCOUNTS AS A 
+						INNER JOIN ACCOUNTTYPES AS ACT ON A.ACCOUNTTYPEID = ACT.ACCOUNTTYPEID
+					#WHERE#
+					GROUP BY ACT.ACCOUNTTYPEID, ACCOUNTTYPENAME
+					#ORDER#
+				]]>
+			</Sentence>
+		</Query>
+	</Queries>
+
+</JdbcEntitySetup>
