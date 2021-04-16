@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import model.core.dao.UserDao;
 
-import com.ontimize.db.EntityResult;
+import com.ontimize.dto.EntityResult;
 import com.ontimize.jee.common.security.PermissionsProviderSecured;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 

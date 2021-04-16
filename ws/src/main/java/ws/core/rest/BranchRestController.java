@@ -16,7 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ontimize.db.EntityResult;
+import com.ontimize.dto.EntityResult;
+import com.ontimize.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.rest.ORestController;
 
 import api.core.services.IBranchService;
@@ -37,7 +38,7 @@ public class BranchRestController extends ORestController<IBranchService> {
 	public ResponseEntity<EntityResult> handleFileUpload(@RequestParam("name") String[] names,
 			@RequestParam("file") MultipartFile[] files, @RequestParam(name = "data", required = false) String data)
 			throws JsonParseException, JsonMappingException, IOException {
-		EntityResult result = new EntityResult(EntityResult.OPERATION_SUCCESSFUL, EntityResult.NODATA_RESULT);
+		EntityResult result = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.NODATA_RESULT);
 
 		HashMap<String, Object> keyValues = new HashMap<>();
 		if (data != null) {

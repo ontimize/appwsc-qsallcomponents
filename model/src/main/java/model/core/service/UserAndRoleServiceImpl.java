@@ -12,12 +12,12 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ontimize.db.EntityResult;
+import com.ontimize.dto.EntityResult;
+import com.ontimize.dto.EntityResultMapImpl;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.common.security.PermissionsProviderSecured;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import com.ontimize.jee.server.security.SecurityTools;
-import com.ontimize.jee.server.security.encrypt.IPasswordEncryptHelper;
 
 import api.core.constants.ApplicationConstants;
 import api.core.constants.entities.Role;
@@ -257,11 +257,11 @@ public class UserAndRoleServiceImpl implements IUserAndRoleService {
 
 		List<Object> l = new ArrayList<>();
 		Hashtable<Object, Object> hresgistro = new Hashtable<>();
-		EntityResult respivot = new EntityResult(res.getOrderColumns());
+		EntityResult respivot = new EntityResultMapImpl(res.getOrderColumns());
 
 		for (int i = 0; i < res.calculateRecordNumber(); i++) {
 
-			Hashtable<?, ?> hres = res.getRecordValues(i);
+			Map hres = res.getRecordValues(i);
 
 			if (hresgistro.containsKey(hres.get(User.ID_USER))) {
 
