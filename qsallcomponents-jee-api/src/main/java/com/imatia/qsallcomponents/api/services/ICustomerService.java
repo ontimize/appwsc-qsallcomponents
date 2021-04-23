@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.ontimize.db.AdvancedEntityResult;
 import com.ontimize.dto.EntityResult;
-import com.ontimize.jee.common.exceptions.DmsException;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 
 public interface ICustomerService {
@@ -30,7 +29,7 @@ public interface ICustomerService {
 	public AdvancedEntityResult customerPaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
 			throws OntimizeJEERuntimeException;
 
-	public EntityResult customerInsert(Map<?, ?> attributes) throws OntimizeJEERuntimeException, DmsException;
+	public EntityResult customerInsert(Map<?, ?> attributes) throws OntimizeJEERuntimeException;
 
 	public EntityResult customerUpdate(Map<?, ?> attributes, Map<?, ?> KeyValues) throws OntimizeJEERuntimeException;
 

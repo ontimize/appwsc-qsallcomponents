@@ -13,12 +13,8 @@ import com.imatia.qsallcomponents.model.dao.CustomerDao;
 import com.imatia.qsallcomponents.model.dao.CustomerTypeDao;
 import com.ontimize.db.AdvancedEntityResult;
 import com.ontimize.dto.EntityResult;
-import com.ontimize.jee.common.exceptions.DmsException;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
-import com.ontimize.jee.common.naming.DMSNaming;
-import com.ontimize.jee.common.services.dms.DocumentIdentifier;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
-import com.ontimize.jee.server.services.dms.DMSCreationHelper;
 import com.ontimize.util.remote.BytesBlock;
 
 @Service("CustomerService")
@@ -39,8 +35,6 @@ public class CustomerService implements ICustomerService {
 	@Autowired
 	private DefaultOntimizeDaoHelper	daoHelper;
 
-	@Autowired
-	private DMSCreationHelper			dmsHelper;
 
 	// ---- CUSTOMER ----
 
@@ -78,9 +72,7 @@ public class CustomerService implements ICustomerService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public EntityResult customerInsert(Map<?, ?> attributes) throws OntimizeJEERuntimeException, DmsException {
-		DocumentIdentifier docId = this.dmsHelper.createDocument((String) attributes.get("CUSTOMER_WORKSPACE"));
-		((Map<Object, Object>) attributes).put(DMSNaming.DOCUMENT_ID_DMS_DOCUMENT, docId.getDocumentId());
+	public EntityResult customerInsert(Map<?, ?> attributes) throws OntimizeJEERuntimeException {
 		return this.daoHelper.insert(this.customerDao, attributes);
 	}
 

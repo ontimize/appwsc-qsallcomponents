@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ontimize.db.EntityResult;
+import com.ontimize.dto.EntityResult;
+import com.ontimize.dto.EntityResultMapImpl;
 
 @RestController
 @RequestMapping("/test")
@@ -17,7 +18,7 @@ public class DummyController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EntityResult> test() {
-		EntityResult er = new EntityResult();
+		EntityResult er = new EntityResultMapImpl();
 		Hashtable<String, String> result = new Hashtable<>();
 		result.put("Ontimize", "works");
 		er.addRecord(result);
@@ -31,7 +32,7 @@ public class DummyController {
 
 	@RequestMapping(value = "/dummyPermission", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EntityResult> dummyPermission() {
-		EntityResult er = new EntityResult();
+		EntityResult er = new EntityResultMapImpl();
 		Hashtable<String, String> result = new Hashtable<>();
 		result.put("permission", DUMMY_PERMISSION);
 		er.addRecord(result);

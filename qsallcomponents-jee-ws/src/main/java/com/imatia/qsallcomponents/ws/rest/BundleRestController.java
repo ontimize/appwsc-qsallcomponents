@@ -6,13 +6,13 @@ import java.util.Hashtable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ontimize.db.EntityResult;
+import com.ontimize.dto.EntityResult;
+import com.ontimize.dto.EntityResultMapImpl;
 
 @RestController
 @RequestMapping("/bundle")
@@ -37,7 +37,7 @@ public class BundleRestController {
 	}
 
 	public EntityResult getDummyBundleEs() {
-		EntityResult er = new EntityResult(Arrays.asList("key", "value"));
+		EntityResult er = new EntityResultMapImpl(Arrays.asList("key", "value"));
 		Hashtable<String, String> record = new Hashtable<String, String>();
 		record.put("key", "REMOTE_BUNDLE_TEST");
 		record.put("value", "Bundle remoto {0} {1} {2}");
@@ -46,7 +46,7 @@ public class BundleRestController {
 	}
 
 	public EntityResult getDummyBundleEn() {
-		EntityResult er = new EntityResult(Arrays.asList("key", "value"));
+		EntityResult er = new EntityResultMapImpl(Arrays.asList("key", "value"));
 		Hashtable<String, String> record = new Hashtable<String, String>();
 		record.put("key", "REMOTE_BUNDLE_TEST");
 		record.put("value", "Remote bundle {0} {1} {2}");
