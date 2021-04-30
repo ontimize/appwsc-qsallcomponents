@@ -12,6 +12,8 @@ yarn.lock
 *.pydevproject
 .project
 .metadata
+**/bin
+**/bin/**
 bin/**
 tmp/**
 tmp/**/*

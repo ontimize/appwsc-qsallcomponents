@@ -46,6 +46,7 @@ ontimize:
       serverPermissionNameColumn: PERMISSION_NAME
       clientPermissionQueryId: clientPermissions
       clientPermissionColumn: XMLCLIENTPERMISSION
+  remote_configuration: true
 endpoints:
   api:
     enabled: true
