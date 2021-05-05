@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.imatia.qsallcomponents.api.constants.entities.Test;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 
 public interface IAdministrationService {

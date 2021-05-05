@@ -8,11 +8,11 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.imatia.qsallcomponents.api.services.IExportServiceExt;
-import com.ontimize.dto.EntityResult;
-import com.ontimize.jee.webclient.export.ExportService;
+import com.ontimize.jee.common.dto.EntityResult;
+import com.ontimize.jee.webclient.export.base.ExcelExportService;
 
 @Service("ExportServiceExt")
-public class ExportServiceExt extends ExportService implements IExportServiceExt {
+public class ExportServiceExt extends ExcelExportService implements IExportServiceExt {
 
 	@Override
 	public File csvExport(EntityResult data, List<String> columns) throws Exception {

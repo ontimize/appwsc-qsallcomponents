@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.imatia.qsallcomponents.api.constants.entities.Test;
 import com.imatia.qsallcomponents.api.services.IAdministrationService;
 import com.imatia.qsallcomponents.model.dao.UserRoleDao;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.common.security.PermissionsProviderSecured;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;

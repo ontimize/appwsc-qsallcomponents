@@ -15,8 +15,8 @@ import com.imatia.qsallcomponents.api.services.IBranchService;
 import com.imatia.qsallcomponents.model.dao.AccountDao;
 import com.imatia.qsallcomponents.model.dao.AccountTypeDao;
 import com.imatia.qsallcomponents.model.dao.BranchDao;
-import com.ontimize.db.AdvancedEntityResult;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 

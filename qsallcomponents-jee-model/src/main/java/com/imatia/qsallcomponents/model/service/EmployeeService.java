@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 import com.imatia.qsallcomponents.api.services.IEmployeeService;
 import com.imatia.qsallcomponents.model.dao.EmployeeDao;
 import com.imatia.qsallcomponents.model.dao.EmployeeTypeDao;
-import com.ontimize.db.AdvancedEntityResult;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
+import com.ontimize.jee.common.util.remote.BytesBlock;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
-import com.ontimize.util.remote.BytesBlock;
 
 @Service("EmployeeService")
 public class EmployeeService implements IEmployeeService {

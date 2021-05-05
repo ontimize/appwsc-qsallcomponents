@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.imatia.qsallcomponents.api.services.IUserService;
 import com.imatia.qsallcomponents.model.dao.UserDao;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 
 

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
-import com.ontimize.db.AdvancedEntityResult;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.server.dao.common.ConfigurationFile;
 import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 

@@ -11,11 +11,11 @@ import com.imatia.qsallcomponents.api.services.ICustomerService;
 import com.imatia.qsallcomponents.model.dao.CustomerAccountDao;
 import com.imatia.qsallcomponents.model.dao.CustomerDao;
 import com.imatia.qsallcomponents.model.dao.CustomerTypeDao;
-import com.ontimize.db.AdvancedEntityResult;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
+import com.ontimize.jee.common.util.remote.BytesBlock;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
-import com.ontimize.util.remote.BytesBlock;
 
 @Service("CustomerService")
 //@Secured({ PermissionsProviderSecured.SECURED })

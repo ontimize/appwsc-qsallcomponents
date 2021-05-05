@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import com.imatia.qsallcomponents.api.services.IMovementService;
 import com.imatia.qsallcomponents.model.dao.MovementDao;
 import com.imatia.qsallcomponents.model.dao.MovementTypeDao;
-import com.ontimize.db.AdvancedEntityResult;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 

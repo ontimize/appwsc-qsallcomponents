@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.imatia.qsallcomponents.api.services.ISharePrefService;
 import com.imatia.qsallcomponents.model.dao.setup.OCSharePreferences;
 import com.imatia.qsallcomponents.model.dao.setup.OCSharePreferencesTarget;
-import com.ontimize.dto.EntityResult;
+import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 
