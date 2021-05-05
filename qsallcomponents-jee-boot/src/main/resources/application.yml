@@ -47,6 +47,9 @@ ontimize:
       clientPermissionQueryId: clientPermissions
       clientPermissionColumn: XMLCLIENTPERMISSION
   remote_configuration: true
+  export:
+    extension: xlsx
+    url: /export
 endpoints:
   api:
     enabled: true
