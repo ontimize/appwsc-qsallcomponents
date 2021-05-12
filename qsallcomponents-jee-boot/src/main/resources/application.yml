@@ -14,14 +14,14 @@ ontimize:
           - OPTIONS
           - DELETE
   jdbc:
-    name_convention: upper
+    name-convention: upper
     sqlhandler: hsqldb
-    sql_condition_processor:
-      upper_string: true
-      upper_like: true
+    sql-condition-processor:
+      upper-string: true
+      upper-like: true
   security:
     mode: default
-    userInformationService:
+    user-information-service:
       userRepository: OCLoginProfilesDao
       queryId: login
       userLoginColumn: USER_
@@ -34,19 +34,19 @@ ontimize:
         - USERBLOCKED
         - LASTPASSWORDUPDATE
         - FIRSTLOGIN
-    userRoleInformationService:
+    user-role-information-service:
       userRoleRepository: OCLoginProfilesDao
       queryId: userRoles
       roleLoginColumn: USER_
       roleNameColumn: ROLENAME
-    roleInformationService:
+    role-information-service:
       roleRepository: OCLoginProfilesDao
       roleNameColumn: ROLENAME
       serverPermissionQueryId: serverPermissions
       serverPermissionNameColumn: PERMISSION_NAME
       clientPermissionQueryId: clientPermissions
       clientPermissionColumn: XMLCLIENTPERMISSION
-  remote_configuration: true
+  remote-configuration: true
 endpoints:
   api:
     enabled: true
