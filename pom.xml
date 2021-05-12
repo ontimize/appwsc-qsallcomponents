@@ -9,8 +9,8 @@
 	</parent>
 
 	<groupId>com.imatia</groupId>
-	<artifactId>qsallcomponents-jee</artifactId>
-	<version>1.0.0</version>
+	<artifactId>appwsc-qsallcomponents-jee</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,26 +33,26 @@
 
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-api</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-api</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-boot</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-boot</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-model</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-model</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-ws</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-ws</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
@@ -109,9 +109,9 @@
         </profile>
     </profiles>
   <modules>
-    <module>qsallcomponents-jee-api</module>
-    <module>qsallcomponents-jee-model</module>
-    <module>qsallcomponents-jee-ws</module>
-    <module>qsallcomponents-jee-boot</module>
+    <module>appwsc-qsallcomponents-jee-api</module>
+    <module>appwsc-qsallcomponents-jee-model</module>
+    <module>appwsc-qsallcomponents-jee-ws</module>
+    <module>appwsc-qsallcomponents-jee-boot</module>
   </modules>
 </project>

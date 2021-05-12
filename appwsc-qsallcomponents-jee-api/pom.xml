@@ -4,13 +4,13 @@
 
     <parent>
         <groupId>com.imatia</groupId>
-        <artifactId>qsallcomponents-jee</artifactId>
-        <version>1.0.0</version>
+        <artifactId>appwsc-qsallcomponents-jee</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
-    <artifactId>qsallcomponents-jee-api</artifactId>
+    <artifactId>appwsc-qsallcomponents-jee-api</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
