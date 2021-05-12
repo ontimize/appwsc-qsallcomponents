@@ -2,12 +2,12 @@ ontimize:
   corsfilter:
     enabled: true
   globalcors:
-    corsConfigurations:
+    cors-configurations:
       '[/**]':
-        allowedOrigins: "*"
-        allowedHeaders: "*"
-        exposedHeaders: ["X-Auth-Token","Content-disposition","X-Requested-With"]
-        allowedMethods:
+        allowed-origins: "*"
+        allowed-headers: "*"
+        exposed-headers: ["X-Auth-Token","Content-disposition","X-Requested-With"]
+        allowed-methods:
           - GET
           - POST
           - PUT
@@ -22,11 +22,11 @@ ontimize:
   security:
     mode: default
     user-information-service:
-      userRepository: OCLoginProfilesDao
-      queryId: login
-      userLoginColumn: USER_
-      userPasswordColumn: PASSWORD
-      otherData:
+      user-repository: OCLoginProfilesDao
+      query-id: login
+      user-login-column: USER_
+      user-password-column: PASSWORD
+      other-data:
         - NAME
         - SURNAME
         - EMAIL
@@ -35,17 +35,17 @@ ontimize:
         - LASTPASSWORDUPDATE
         - FIRSTLOGIN
     user-role-information-service:
-      userRoleRepository: OCLoginProfilesDao
-      queryId: userRoles
-      roleLoginColumn: USER_
-      roleNameColumn: ROLENAME
+      user-role-repository: OCLoginProfilesDao
+      query-id: userRoles
+      role-login-column: USER_
+      role-name-column: ROLENAME
     role-information-service:
-      roleRepository: OCLoginProfilesDao
-      roleNameColumn: ROLENAME
-      serverPermissionQueryId: serverPermissions
-      serverPermissionNameColumn: PERMISSION_NAME
-      clientPermissionQueryId: clientPermissions
-      clientPermissionColumn: XMLCLIENTPERMISSION
+      role-repository: OCLoginProfilesDao
+      role-name-column: ROLENAME
+      server-permission-query-id: serverPermissions
+      server-permission-name-column: PERMISSION_NAME
+      client-permission-query-id: clientPermissions
+      client-permission-column: XMLCLIENTPERMISSION
   remote-configuration: true
 endpoints:
   api:
@@ -68,18 +68,18 @@ spring:
       org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration, org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration
   datasource:
     driver-class-name: org.hsqldb.jdbcDriver
-    jdbcUrl: jdbc:hsqldb:hsql://localhost:9013/templateDB
+    jdbc-url: jdbc:hsqldb:hsql://localhost:9013/templateDB
     username: SA
     password:
     initialSize: 10
-    testOnBorrow: true
+    test-on-borrow: true
   devtools:
     livereload:
       enabled: false
   http:
     multipart:
-      maxFileSize: 1Mb
-      maxRequestSize: 1Mb
+      max-file-size: 1Mb
+      max-request-size: 1Mb
   main:
     banner-mode: 'off'
   session:
