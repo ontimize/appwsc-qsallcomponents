@@ -2,14 +2,13 @@ package com.imatia.qsallcomponents.ws.rest;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,13 +16,14 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imatia.qsallcomponents.api.services.IBranchService;
+import com.imatia.qsallcomponents.openapi.api.IBranchesApi;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.rest.ORestController;
 
 @RestController
 @RequestMapping("/branches")
-public class BranchRestController extends ORestController<IBranchService> {
+public class BranchRestController extends ORestController<IBranchService> implements IBranchesApi {
 
 	@Autowired
 	private IBranchService branchService;
@@ -33,9 +33,8 @@ public class BranchRestController extends ORestController<IBranchService> {
 		return this.branchService;
 	}
 
-	@PostMapping(value = "plan")
-	public ResponseEntity<EntityResult> handleFileUpload(@RequestParam("name") String[] names,
-			@RequestParam("file") MultipartFile[] files, @RequestParam(name = "data", required = false) String data)
+	@Override
+	public ResponseEntity<EntityResult> plan(List<String> names, List<MultipartFile> files, String data)
 			throws JsonParseException, JsonMappingException, IOException {
 		EntityResult result = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.NODATA_RESULT);
 
@@ -44,7 +43,7 @@ public class BranchRestController extends ORestController<IBranchService> {
 			keyValues = new ObjectMapper().readValue(data, HashMap.class);
 		}
 
-		if (files.length > 0) {
+		if (files.size() > 0) {
 			for (MultipartFile file : files) {
 				if (file.isEmpty()) {
 					continue;
@@ -79,5 +78,4 @@ public class BranchRestController extends ORestController<IBranchService> {
 			return new ResponseEntity<EntityResult>(result, HttpStatus.OK);
 		}
 	}
-
 }

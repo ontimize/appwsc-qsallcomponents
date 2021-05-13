@@ -4,22 +4,18 @@ import java.util.Arrays;
 import java.util.Hashtable;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imatia.qsallcomponents.openapi.api.IBundleApi;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 
 @RestController
-@RequestMapping("/bundle")
-public class BundleRestController {
+public class BundleRestController implements IBundleApi {
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<EntityResult> getBundle(@RequestParam(name = "lang", required = true) String lang) {
+	@Override
+	public ResponseEntity<EntityResult> getBundle(String lang) {
 		EntityResult er;
 		switch (lang) {
 			case "en":

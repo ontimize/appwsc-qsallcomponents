@@ -39,6 +39,12 @@
 
 			<dependency>
 				<groupId>com.imatia</groupId>
+				<artifactId>appwsc-qsallcomponents-jee-openapi</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.imatia</groupId>
 				<artifactId>appwsc-qsallcomponents-jee-boot</artifactId>
 				<version>2.0.0-SNAPSHOT</version>
 			</dependency>
@@ -111,6 +117,8 @@
   <modules>
     <module>appwsc-qsallcomponents-jee-api</module>
     <module>appwsc-qsallcomponents-jee-model</module>
+    <module>appwsc-qsallcomponents-jee-openapi-generator</module>
+    <module>appwsc-qsallcomponents-jee-openapi</module>
     <module>appwsc-qsallcomponents-jee-ws</module>
     <module>appwsc-qsallcomponents-jee-boot</module>
   </modules>

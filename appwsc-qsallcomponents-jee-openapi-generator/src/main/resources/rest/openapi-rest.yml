@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: QSAllComponents API
+  version: '1.0'
+  description: The QSAllComponents API
+servers:
+  - url: 'http://localhost:8080/qsallcomponents-jee/'
+    description: Localhost
+paths:
+  /administration/permissions:
+    $ref: 'api/Administration.yml#/permissions'
+  /administration/test:
+    $ref: 'api/Administration.yml#/test'
+
+  /branches/{name}:
+    $ref: 'api/Branch.yml#/default'
+  /branches/{name}/insert:
+    $ref: 'api/Branch.yml#/insert'
+  /branches/{name}/delete:
+    $ref: 'api/Branch.yml#/delete'
+  /branches/{name}/update:
+    $ref: 'api/Branch.yml#/update'
+  /branches/{name}/search:
+    $ref: 'api/Branch.yml#/search'
+  /branches/{name}/advancedsearch:
+    $ref: 'api/Branch.yml#/advancedsearch'
+  /branches/plan:
+    $ref: 'api/Branch.yml#/plan'
+
+  /bundle:
+    $ref: 'api/Bundle.yml#/default'
+
+  /config:
+    $ref: 'api/Config.yml#/default'
+  /config/search:
+    $ref: 'api/Config.yml#/search'
+
+  /customers/{name}:
+    $ref: 'api/Customer.yml#/default'
+  /customers/{name}/insert:
+    $ref: 'api/Customer.yml#/insert'
+  /customers/{name}/delete:
+    $ref: 'api/Customer.yml#/delete'
+  /customers/{name}/update:
+    $ref: 'api/Customer.yml#/update'
+  /customers/{name}/search:
+    $ref: 'api/Customer.yml#/search'
+  /customers/{name}/advancedsearch:
+    $ref: 'api/Customer.yml#/advancedsearch'
+
+  /dummy:
+    $ref: 'api/Dummy.yml#/default'
+  /dummy/dummypermission:
+    $ref: 'api/Dummy.yml#/dummypermission'
+
+  /employees/{name}:
+    $ref: 'api/Employee.yml#/default'
+  /employees/{name}/insert:
+    $ref: 'api/Employee.yml#/insert'
+  /employees/{name}/delete:
+    $ref: 'api/Employee.yml#/delete'
+  /employees/{name}/update:
+    $ref: 'api/Employee.yml#/update'
+  /employees/{name}/search:
+    $ref: 'api/Employee.yml#/search'
+  /employees/{name}/advancedsearch:
+    $ref: 'api/Employee.yml#/advancedsearch'
+
+  /movements/{name}:
+    $ref: 'api/Movement.yml#/default'
+  /movements/{name}/insert:
+    $ref: 'api/Movement.yml#/insert'
+  /movements/{name}/delete:
+    $ref: 'api/Movement.yml#/delete'
+  /movements/{name}/update:
+    $ref: 'api/Movement.yml#/update'
+  /movements/{name}/search:
+    $ref: 'api/Movement.yml#/search'
+  /movements/{name}/advancedsearch:
+    $ref: 'api/Movement.yml#/advancedsearch'
+
+  /users/{name}:
+    $ref: 'api/User.yml#/default'
+  /users/{name}/insert:
+    $ref: 'api/User.yml#/insert'
+  /users/{name}/delete:
+    $ref: 'api/User.yml#/delete'
+  /users/{name}/update:
+    $ref: 'api/User.yml#/update'
+  /users/{name}/search:
+    $ref: 'api/User.yml#/search'
+  /users/{name}/advancedsearch:
+    $ref: 'api/User.yml#/advancedsearch'
+  /users/login:
+    $ref: 'api/User.yml#/login'
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+security:
+  - BasicAuth: []

@@ -1,0 +1,155 @@
+default:
+  get:
+    tags:
+      - Movements
+    summary: Returns a list of Movements.
+    description: >
+      This resource represents a list of movements in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - $ref: '#/components/schemas/NameParam'
+      - $ref: '../base/FilterParameter.yml#/components/schemas/FilterParameter' 
+      - $ref: '../base/ColumnsParameter.yml#/components/schemas/ColumnsParameter' 
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+insert:
+  post:
+    tags:
+      - Movements
+    summary: Inserts a Movement.
+    description: >
+      This resource represents a movement in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - $ref: '#/components/schemas/NameParam'
+    requestBody:
+      $ref: '../base/InsertParameter.yml#/components/requestBodies/InsertParameter'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+delete:
+  delete:
+    tags:
+      - Movements
+    summary: Deletes a Movement.
+    description: >
+      This resource represents a movement in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - $ref: '#/components/schemas/NameParam'
+    requestBody:
+      $ref: '../base/DeleteParameter.yml#/components/requestBodies/DeleteParameter'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+update:
+  put:
+    tags:
+      - Movements
+    summary: Updates a Movement.
+    description: >
+      This resource represents a movement in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - $ref: '#/components/schemas/NameParam'
+    requestBody:
+      $ref: '../base/UpdateParameter.yml#/components/requestBodies/UpdateParameter'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+search:
+  post:
+    tags:
+      - Movements
+    summary: Searchs and returns a list of movements.
+    description: >
+      This resource represents a list of movements in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - $ref: '#/components/schemas/NameParam'
+    requestBody:
+      $ref: '../base/QueryParameter.yml#/components/requestBodies/QueryParameter'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+advancedsearch:
+  post:
+    tags:
+      - Movements
+    summary: Performs an advanced search and returns a list of movements.
+    description: >
+      This resource represents a list of movements in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - $ref: '#/components/schemas/NameParam'
+    requestBody:
+      $ref: '../base/AdvancedQueryParameter.yml#/components/requestBodies/AdvancedQueryParameter'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/AdvancedEntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+components:
+  schemas:
+    NameParam:
+      in: path
+      name: name
+      description: Name
+      required: true
+      schema:
+        type: string
+        enum: 
+          - movement

@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imatia.qsallcomponents.api.services.ICustomerService;
+import com.imatia.qsallcomponents.openapi.api.ICustomersApi;
 import com.ontimize.jee.server.rest.ORestController;
 
 @RestController
 @RequestMapping("/customers")
-public class CustomerRestController extends ORestController<ICustomerService> {
+public class CustomerRestController extends ORestController<ICustomerService> implements ICustomersApi {
 
 	@Autowired
 	private ICustomerService customerService;
@@ -18,5 +19,4 @@ public class CustomerRestController extends ORestController<ICustomerService> {
 	public ICustomerService getService() {
 		return this.customerService;
 	}
-
 }

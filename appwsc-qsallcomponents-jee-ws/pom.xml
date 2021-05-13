@@ -14,7 +14,10 @@
 			<groupId>com.imatia</groupId>
 			<artifactId>appwsc-qsallcomponents-jee-model</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.imatia</groupId>
+			<artifactId>appwsc-qsallcomponents-jee-openapi</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.ontimize.boot</groupId>
 			<artifactId>ontimize-boot-starter-rest</artifactId>
