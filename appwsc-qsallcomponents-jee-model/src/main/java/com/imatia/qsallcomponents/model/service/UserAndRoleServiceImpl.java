@@ -35,7 +35,7 @@ import com.ontimize.jee.server.security.SecurityTools;
  * The Class UserAndRoleServiceImpl.
  */
 @Service("UserAndRoleService")
-// @Secured({ PermissionsProviderSecured.SECURED })
+@Secured({ PermissionsProviderSecured.SECURED })
 @Transactional(rollbackFor = Exception.class)
 public class UserAndRoleServiceImpl implements IUserAndRoleService {
 
