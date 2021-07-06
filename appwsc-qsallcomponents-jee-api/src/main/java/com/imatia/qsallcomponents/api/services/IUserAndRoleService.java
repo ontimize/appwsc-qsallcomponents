@@ -3,6 +3,7 @@ package com.imatia.qsallcomponents.api.services;
 import java.util.List;
 import java.util.Map;
 
+import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 
@@ -23,6 +24,9 @@ public interface IUserAndRoleService {
 	 *             the ontimize jee exception
 	 */
 	EntityResult userQuery(Map<?, ?> keysValues, List<?> attributes) throws OntimizeJEERuntimeException;
+
+	AdvancedEntityResult userPaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
+			throws OntimizeJEERuntimeException;
 
 	/**
 	 * Users update.

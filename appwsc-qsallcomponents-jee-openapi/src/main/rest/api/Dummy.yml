@@ -1,19 +1,14 @@
-permissions:
+default:
   get:
-    operationId: permissions 
+    operationId: dummyTest
     tags:
-      - Administration
-    summary: .
+      - Dummy
+    summary: Test
     description: >
-      .
-    x-hasparentpath: true
+      Develop purposes only.
     responses:
       '200':
-        description: OK
-        content:
-          text/plain:
-            schema:
-              type: string
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
       '400':
         $ref: '../base/Responses.yml#/components/responses/BadRequest'
       '401':
@@ -23,30 +18,17 @@ permissions:
       default:
         $ref: '../base/Responses.yml#/components/responses/Unexpected'
 
-test:
+dummypermission:
   get:
-    operationId: test 
+    operationId: dummyPermission
     tags:
-      - Administration
-    summary: .
+      - Dummy
+    summary: Permission
     description: >
-      .
-    x-hasparentpath: true
-    parameters: 
-      - in: query
-        name: who
-        description: who
-        schema:
-          type: string
-          default: 'unknown'
-        required: false
+      Develop purposes only.
     responses:
       '200':
-        description: OK
-        content:
-          application/json:
-            schema:
-              $ref: '../model/AdministrationTest.yml#/components/schemas/AdministrationTest'
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
       '400':
         $ref: '../base/Responses.yml#/components/responses/BadRequest'
       '401':

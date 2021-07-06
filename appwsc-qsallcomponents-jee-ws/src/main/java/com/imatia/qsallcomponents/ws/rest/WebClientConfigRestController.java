@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imatia.qsallcomponents.openapi.api.IConfigApi;
+import com.imatia.qsallcomponents.openapi.IConfigApi;
 import com.ontimize.jee.webclient.remoteconfiguration.IRemoteConfigurationNameConverter;
 import com.ontimize.jee.webclient.remoteconfiguration.IRemoteConfigurationService;
 import com.ontimize.jee.webclient.remoteconfiguration.RemoteConfigurationRestController;

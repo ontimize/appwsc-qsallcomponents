@@ -117,7 +117,6 @@
   <modules>
     <module>appwsc-qsallcomponents-jee-api</module>
     <module>appwsc-qsallcomponents-jee-model</module>
-    <module>appwsc-qsallcomponents-jee-openapi-generator</module>
     <module>appwsc-qsallcomponents-jee-openapi</module>
     <module>appwsc-qsallcomponents-jee-ws</module>
     <module>appwsc-qsallcomponents-jee-boot</module>

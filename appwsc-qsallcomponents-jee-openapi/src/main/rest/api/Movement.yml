@@ -1,0 +1,246 @@
+default:
+  post:
+    tags:
+      - Movements
+    summary: Inserts a Movement.
+    description: >
+      This resource represents a movement in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/InsertParameter.yml#/components/schemas/InsertParameter'
+          example:
+            data:
+              ACCOUNTID: 2
+              DATE_: '2081-01-23T12:37:38Z'
+              CONCEPT: 'First movement'
+              MOVEMENTTYPEID: 1
+              MOVEMENT: 986.64
+              CONCEPT_EN_US: 'First movement'
+              CONCEPT_ES_ES: 'Primer movimiento'
+            sqltypes:
+              MOVEMENTID: 4
+              ACCOUNTID: 4
+              DATE_: 93
+              CONCEPT: 12
+              MOVEMENTTYPEID: 4
+              MOVEMENT: 8
+              CONCEPT_EN_US: 12
+              CONCEPT_ES_ES: 12
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  get:
+    tags:
+      - Movements
+    summary: Returns a list of Movements.
+    description: >
+      This resource represents a list of movements in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - in: query
+        name: filter
+        description: Filter
+        schema:
+          type: string
+        required: false
+        examples:
+          concept:
+            value: 'CONCEPT=First movement'
+          concept_en_us:
+            value: 'CONCEPT_EN_US=Account registration'
+          concept_es_es:
+            value: 'CONCEPT_ES_ES=Apertura de cuenta'
+      - in: query
+        name: columns
+        description: Columns
+        required: false
+        schema:
+          type: string
+          example: MOVEMENTID,ACCOUNTID,DATE_,CONCEPT,MOVEMENTTYPEID,MOVEMENT,COMMENTS,CONCEPT_EN_US,CONCEPT_ES_ES,CONCEPT_GL_ES,COMMENTS_EN_US,COMMENTS_ES_ES,COMMENTS_GL_ES
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  put:
+    tags:
+      - Movements
+    summary: Updates a Movement.
+    description: >
+      This resource represents a movement in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/UpdateParameter.yml#/components/schemas/UpdateParameter'
+          examples:
+            movement:
+              value:
+                data:
+                  MOVEMENT: 1000.0
+                filter:
+                  MOVEMENTID: 80527
+                sqltypes:
+                  MOVEMENTID: 4
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  delete:
+    tags:
+      - Movements
+    summary: Deletes a Movement.
+    description: >
+      This resource represents a movement in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/DeleteParameter.yml#/components/schemas/DeleteParameter'
+          examples:
+            moventid:
+              value:
+                filter:
+                  MOVEMENTID: 80527
+                sqltypes:
+                  MOVEMENTID: 4
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+search:
+  post:
+    tags:
+      - Movements
+    summary: Searchs and returns a list of movements.
+    description: >
+      This resource represents a list of movements in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../base/QueryParameter.yml#/components/schemas/QueryParameter'
+          examples:
+            concept:
+              value:
+                filter:
+                  CONCEPT: 'First movement'
+                columns:
+                  - MOVEMENTID
+                  - ACCOUNTID
+                  - DATE_
+                  - CONCEPT
+                  - MOVEMENTTYPEID
+                  - MOVEMENT
+                  - COMMENTS
+                  - CONCEPT_EN_US
+                  - CONCEPT_ES_ES
+                  - CONCEPT_GL_ES
+                  - COMMENTS_EN_US
+                  - COMMENTS_ES_ES
+                  - COMMENTS_GL_ES
+                sqltypes:
+                  CONCEPT: 12
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+advancedsearch:
+  post:
+    tags:
+      - Movements
+    summary: Performs an advanced search and returns a list of movements.
+    description: >
+      This resource represents a list of movements in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../base/AdvancedQueryParameter.yml#/components/schemas/AdvancedQueryParameter'
+          examples:
+            concept:
+              value:
+                filter:
+                  CONCEPT: 'First movement'
+                columns:
+                  - MOVEMENTID
+                  - ACCOUNTID
+                  - DATE_
+                  - CONCEPT
+                  - MOVEMENTTYPEID
+                  - MOVEMENT
+                  - COMMENTS
+                  - CONCEPT_EN_US
+                  - CONCEPT_ES_ES
+                  - CONCEPT_GL_ES
+                  - COMMENTS_EN_US
+                  - COMMENTS_ES_ES
+                  - COMMENTS_GL_ES
+                sqltypes:
+                  CONCEPT: 12
+                pageSize: 20
+                offset: 0
+                orderBy:
+                  - columnName: DATE_
+                    ascendent: true
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/AdvancedEntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'

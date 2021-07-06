@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imatia.qsallcomponents.api.services.ICustomerService;
-import com.imatia.qsallcomponents.openapi.api.ICustomersApi;
+import com.imatia.qsallcomponents.openapi.ICustomersApi;
 import com.ontimize.jee.server.rest.ORestController;
 
 @RestController

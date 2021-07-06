@@ -23,6 +23,7 @@ import com.imatia.qsallcomponents.model.dao.RoleDao;
 import com.imatia.qsallcomponents.model.dao.ServerRoleDao;
 import com.imatia.qsallcomponents.model.dao.UserDao;
 import com.imatia.qsallcomponents.model.dao.UserRoleDao;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
@@ -70,6 +71,12 @@ public class UserAndRoleServiceImpl implements IUserAndRoleService {
 	public EntityResult userQuery(Map<?, ?> keysValues, List<?> attributes) throws OntimizeJEERuntimeException {
 
 		return this.daoHelper.query(this.userDao, keysValues, attributes);
+	}
+
+	@Override
+	public AdvancedEntityResult userPaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
+			throws OntimizeJEERuntimeException {
+		return this.daoHelper.paginationQuery(this.userDao, keysValues, attributes, recordNumber, startIndex, orderBy);
 	}
 
 	@Override

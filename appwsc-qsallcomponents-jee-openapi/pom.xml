@@ -25,4 +25,30 @@
 			<artifactId>appwsc-qsallcomponents-jee-api</artifactId>
 		</dependency>
 	</dependencies>
+	<properties>
+        <ontimize.openapi.generator.maven.plugin.packageName>com.imatia.qsallcomponents.openapi</ontimize.openapi.generator.maven.plugin.packageName>
+        <ontimize.openapi.generator.maven.plugin.importMappings>AdministrationTest=com.imatia.qsallcomponents.api.constants.entities.Test</ontimize.openapi.generator.maven.plugin.importMappings>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

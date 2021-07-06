@@ -13,6 +13,9 @@ public interface IBranchService {
 
 	public EntityResult branchQuery(Map<String, Object> keysValues, List<String> attributes) throws OntimizeJEERuntimeException;
 
+	public AdvancedEntityResult branchPaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
+			throws OntimizeJEERuntimeException;
+
 	public EntityResult branchInsert(Map<String, Object> attributes) throws OntimizeJEERuntimeException;
 
 	public EntityResult branchUpdate(Map<String, Object> attributes, Map<String, Object> keyValues) throws OntimizeJEERuntimeException;

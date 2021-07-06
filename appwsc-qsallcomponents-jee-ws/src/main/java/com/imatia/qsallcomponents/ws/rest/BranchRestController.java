@@ -16,7 +16,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imatia.qsallcomponents.api.services.IBranchService;
-import com.imatia.qsallcomponents.openapi.api.IBranchesApi;
+import com.imatia.qsallcomponents.openapi.IBranchesApi;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.rest.ORestController;

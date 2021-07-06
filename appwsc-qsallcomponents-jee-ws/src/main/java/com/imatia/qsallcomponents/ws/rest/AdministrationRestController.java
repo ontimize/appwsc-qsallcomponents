@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imatia.qsallcomponents.api.constants.entities.Test;
 import com.imatia.qsallcomponents.api.services.IAdministrationService;
-import com.imatia.qsallcomponents.openapi.api.IAdministrationApi;
+import com.imatia.qsallcomponents.openapi.IAdministrationApi;
 import com.ontimize.jee.server.rest.ORestController;
 
 @RestController
