@@ -1,4 +1,4 @@
-package com.imatia.qsallcomponents;
+package com.imatia.qsallcomponents.export;
 
 import java.io.File;
 import java.io.FileOutputStream;
