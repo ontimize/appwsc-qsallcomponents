@@ -26,4 +26,4 @@ This branch contains the project that generates the qsallcomponents backend proj
 		
 - Change the `apiEndpoit` url
  
-		http://localhost:8080/qsallcomponents-jee](http://localhost:8080/qsallcomponents-jee) 
+		http://localhost:8080/qsallcomponents-jee
