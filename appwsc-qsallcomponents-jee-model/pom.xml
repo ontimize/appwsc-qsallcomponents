@@ -33,6 +33,14 @@
 			<groupId>com.ontimize.jee</groupId>
 			<artifactId>ontimize-jee-server-jdbc</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.ontimize.jee.dms</groupId>
+			<artifactId>ontimize-jee-dms-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ontimize.jee.dms</groupId>
+			<artifactId>ontimize-jee-dms-rest</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>

@@ -1,6 +1,9 @@
 ontimize:
   corsfilter:
     enabled: true
+  dms:
+    engine: odms
+    base-path: file:/C:/applications/QSAllComponents_Jee/dms
   globalcors:
     cors-configurations:
       '[/**]':

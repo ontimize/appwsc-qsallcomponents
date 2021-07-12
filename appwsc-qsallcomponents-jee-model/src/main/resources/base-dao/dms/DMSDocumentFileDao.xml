@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup xmlns="http://www.ontimize.com/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+	table="TDMS_DOC_FILE" datasource="mainDataSource" sqlhandler="dbSQLStatementHandler">
+
+	<DeleteKeys>
+		<Column>ID_DMS_DOC_FILE</Column>
+	</DeleteKeys>
+	<UpdateKeys>
+		<Column>ID_DMS_DOC_FILE</Column>
+	</UpdateKeys>
+	<GeneratedKey>ID_DMS_DOC_FILE</GeneratedKey>
+
+	<Queries>
+		<Query id="default">
+			<AmbiguousColumns>
+				<AmbiguousColumn name="ID_DMS_DOC_FILE" prefix="tddf" />
+				<AmbiguousColumn name="ID_DMS_DOC" prefix="tddf" />
+			</AmbiguousColumns>
+			<ValidColumns>
+				<!-- TDMS_DOC_FILE -->
+				<Column>ID_DMS_DOC_FILE</Column>
+				<Column>FILE_NAME</Column>
+				<Column>ID_DMS_DOC</Column>
+				<Column>FILE_TYPE</Column>
+				<Column>ID_DMS_DOC_CATEGORY</Column>
+
+				<!-- TDMS_DOC -->
+				<Column>ID_DMS_DOC</Column>
+				<Column>UPDATE_DATE</Column>
+				<Column>UPDATE_BY_ID</Column>
+				<Column>DOC_NAME</Column>
+				<Column>OWNER_ID</Column>
+				<Column>DOC_DESCRIPTION</Column>
+				<Column>DOC_KEYWORDS</Column>
+
+				<!-- TDMS_DOC_FILE_VERSION -->
+				<Column>ID_DMS_DOC_FILE_VERSION</Column>
+				<Column>FILE_PATH</Column>
+				<Column>VERSION</Column>
+				<Column>FILE_DESCRIPTION</Column>
+				<Column>IS_ACTIVE</Column>
+				<Column>FILE_ADDED_DATE</Column>
+				<Column>FILE_ADDED_USER_ID</Column>
+				<Column>ID_DMS_DOC_FILE</Column>
+				<Column>THUMBNAIL</Column>
+				<Column>FILE_SIZE</Column>
+			</ValidColumns>
+			<Sentence>
+ 		<![CDATA[
+			SELECT
+				#COLUMNS#
+			FROM
+				${mainschema}.TDMS_DOC_FILE AS tddf
+				JOIN ${mainschema}.TDMS_DOC AS tdd ON tddf.ID_DMS_DOC = tdd.ID_DMS_DOC
+				LEFT JOIN ${mainschema}.TDMS_DOC_FILE_VERSION AS tddfv ON tddf.id_dms_doc_file = tddfv.id_dms_doc_file
+			WHERE (tddfv.IS_ACTIVE = 'Y' OR tddfv.id_dms_doc_file_version IS NULL)
+			#WHERE_CONCAT#
+			#ORDER#
+ 		 ]]>
+		</Sentence>
+		</Query>
+		<Query id="allfiles">
+			<AmbiguousColumns>
+				<AmbiguousColumn name="ID_DMS_DOC_FILE" prefix="tddf" />
+			</AmbiguousColumns>
+			<ValidColumns>
+				<Column>ID_DMS_DOC_FILE</Column>
+				<Column>FILE_NAME</Column>
+				<Column>ID_DMS_DOC</Column>
+				<Column>FILE_TYPE</Column>
+				<Column>ID_DMS_DOC_CATEGORY</Column>
+			</ValidColumns>
+			<Sentence>
+ 		<![CDATA[
+			SELECT
+				#COLUMNS#
+			FROM
+				${mainschema}.TDMS_DOC_FILE AS tddf
+			#WHERE#
+			#ORDER#
+ 		 ]]>
+		</Sentence>
+		</Query>
+	</Queries>
+
+</JdbcEntitySetup>
