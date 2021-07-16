@@ -1,6 +1,9 @@
 ontimize:
   corsfilter:
     enabled: true
+  dms:
+    engine: odms
+    base-path: file:/C:/applications/QSAllComponents_Jee/dms
   globalcors:
     cors-configurations:
       '[/**]':
@@ -19,9 +22,6 @@ ontimize:
     sql-condition-processor:
       upper-string: true
       upper-like: true
-  report:
-    type: database
-    basePath: C:/tmp/
   security:
     mode: default
     user-information-service:

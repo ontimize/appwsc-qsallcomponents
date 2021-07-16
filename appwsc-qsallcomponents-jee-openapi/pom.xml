@@ -24,10 +24,19 @@
 			<groupId>com.imatia</groupId>
 			<artifactId>appwsc-qsallcomponents-jee-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+		</dependency>
 	</dependencies>
 	<properties>
-        <ontimize.openapi.generator.maven.plugin.packageName>com.imatia.qsallcomponents.openapi</ontimize.openapi.generator.maven.plugin.packageName>
-        <ontimize.openapi.generator.maven.plugin.importMappings>AdministrationTest=com.imatia.qsallcomponents.api.constants.entities.Test</ontimize.openapi.generator.maven.plugin.importMappings>
+		<ontimize.openapi.generator.maven.plugin.packageName>com.imatia.qsallcomponents.openapi</ontimize.openapi.generator.maven.plugin.packageName>
+		<ontimize.openapi.generator.maven.plugin.importMappings>AdministrationTest=com.imatia.qsallcomponents.api.constants.entities.Test</ontimize.openapi.generator.maven.plugin.importMappings>
 	</properties>
 	<build>
 		<plugins>
