@@ -20,6 +20,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.ontimize.boot</groupId>
+			<artifactId>ontimize-boot-starter-report</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>com.imatia</groupId>
 			<artifactId>appwsc-qsallcomponents-jee-api</artifactId>
 		</dependency>
