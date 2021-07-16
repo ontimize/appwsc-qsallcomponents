@@ -22,9 +22,6 @@ ontimize:
     sql-condition-processor:
       upper-string: true
       upper-like: true
-  report:
-    type: database
-    basePath: C:/tmp/
   security:
     mode: default
     user-information-service:
