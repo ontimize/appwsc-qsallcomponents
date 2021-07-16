@@ -41,6 +41,10 @@
 			<groupId>com.ontimize.jee.dms</groupId>
 			<artifactId>ontimize-jee-dms-rest</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.ontimize.jee.report</groupId>
+			<artifactId>ontimize-jee-report-server</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
