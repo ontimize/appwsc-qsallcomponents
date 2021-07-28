@@ -51,6 +51,11 @@
 			<artifactId>ontimize-boot-starter-webaddons</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>com.ontimize.boot</groupId>
+            <artifactId>ontimize-boot-starter-keycloak</artifactId>
+        </dependency>
+
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
