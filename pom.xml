@@ -120,5 +120,6 @@
     <module>appwsc-qsallcomponents-jee-openapi</module>
     <module>appwsc-qsallcomponents-jee-ws</module>
     <module>appwsc-qsallcomponents-jee-boot</module>
+    <module>appwsc-qsallcomponents-jee-frontend</module>
   </modules>
 </project>
