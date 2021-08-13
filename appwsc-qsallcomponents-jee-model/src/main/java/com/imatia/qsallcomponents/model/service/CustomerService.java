@@ -53,7 +53,7 @@ public class CustomerService implements ICustomerService {
 			for (int i = 0; i < photoCustomer.size(); i++) {
 				Object o = photoCustomer.get(i);
 				if (o instanceof BytesBlock) {
-					photoCustomer.set(i, ((BytesBlock) o).getBytes());
+					photoCustomer.set(i, ((BytesBlock) o));
 				}
 			}
 		}
@@ -70,7 +70,7 @@ public class CustomerService implements ICustomerService {
 			for (int i = 0; i < photoCustomer.size(); i++) {
 				Object o = photoCustomer.get(i);
 				if (o instanceof BytesBlock) {
-					photoCustomer.set(i, ((BytesBlock) o).getBytes());
+					photoCustomer.set(i, ((BytesBlock) o));
 				}
 			}
 		}

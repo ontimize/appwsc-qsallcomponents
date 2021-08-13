@@ -23,8 +23,7 @@ ontimize:
       upper-string: true
       upper-like: true
   report:
-    type: database
-    basePath: C:/tmp/
+    engine: database
   security:
     mode: default
     user-information-service:

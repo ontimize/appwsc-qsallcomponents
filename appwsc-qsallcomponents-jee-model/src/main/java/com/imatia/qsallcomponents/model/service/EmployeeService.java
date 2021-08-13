@@ -44,7 +44,7 @@ public class EmployeeService implements IEmployeeService {
 			for (int i = 0; i < photoEmployee.size(); i++) {
 				Object o = photoEmployee.get(i);
 				if (o instanceof BytesBlock) {
-					photoEmployee.set(i, ((BytesBlock) o).getBytes());
+					photoEmployee.set(i, ((BytesBlock) o));
 				}
 			}
 		}

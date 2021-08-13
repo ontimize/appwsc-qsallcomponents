@@ -76,6 +76,14 @@
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>local.jasperFonts</groupId>
+		    <artifactId>local.jasperFonts</artifactId>
+		    <version>1.0</version>
+		    <scope>system</scope>
+		    <systemPath>${basedir}/src/main/resources/fonts-extension.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
