@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 import com.imatia.qsallcomponents.api.services.IEmployeeService;
 import com.imatia.qsallcomponents.model.dao.EmployeeDao;
@@ -44,7 +45,8 @@ public class EmployeeService implements IEmployeeService {
 			for (int i = 0; i < photoEmployee.size(); i++) {
 				Object o = photoEmployee.get(i);
 				if (o instanceof BytesBlock) {
-					photoEmployee.set(i, ((BytesBlock) o).getBytes());
+//					photoEmployee.set(i, ((BytesBlock) o).getBytes());
+					photoEmployee.set(i, Base64Utils.encodeToString(((BytesBlock) o).getBytes()));
 				}
 			}
 		}
@@ -87,10 +89,29 @@ public class EmployeeService implements IEmployeeService {
 		return this.daoHelper.delete(this.employeeDao, keyValues);
 	}
 
+//	@Override
+//	public AdvancedEntityResult employeePaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
+//			throws OntimizeJEERuntimeException {
+//		return this.daoHelper.paginationQuery(this.employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
+//	}
+	
 	@Override
 	public AdvancedEntityResult employeePaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
 			throws OntimizeJEERuntimeException {
-		return this.daoHelper.paginationQuery(this.employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
+		AdvancedEntityResult toRet = this.daoHelper.paginationQuery(this.employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
+
+		if (toRet.containsKey(EmployeeDao.ATTR_EMPLOYEEPHOTO)) {
+			List<Object> photoEmployee = (List<Object>) toRet.get(EmployeeDao.ATTR_EMPLOYEEPHOTO);
+			for (int i = 0; i < photoEmployee.size(); i++) {
+				Object o = photoEmployee.get(i);
+				if (o instanceof BytesBlock) {
+					photoEmployee.set(i, Base64Utils.encodeToString(((BytesBlock) o).getBytes()));
+				}
+			}
+			toRet.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, photoEmployee);
+		}
+
+		return toRet;
 	}
 
 	// ---- EMPLOYEESTYPE ----
