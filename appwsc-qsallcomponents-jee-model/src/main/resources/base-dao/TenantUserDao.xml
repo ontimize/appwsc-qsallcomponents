@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup xmlns="http://www.ontimize.com/schema/jdbc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+    table="TTENANT" datasource="tenantDataSource" sqlhandler="dbSQLStatementHandler">
+    <DeleteKeys>
+        <Column>TENANTUSERID</Column>
+    </DeleteKeys>
+    <UpdateKeys>
+        <Column>TENANTUSERID</Column>
+    </UpdateKeys>
+    <GeneratedKey>TENANTUSERID</GeneratedKey>
+    <Queries>
+    
+    </Queries>    
+    
+</JdbcEntitySetup>
