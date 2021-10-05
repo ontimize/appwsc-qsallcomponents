@@ -1,0 +1,24 @@
+ontimize:
+  dms:
+    base-path: file:///usr/local/dms
+server:
+  port: 8080
+  servlet:
+    context-path: /qsallcomponents-jee
+  tomcat:
+    uri-encoding: UTF-8
+  compression:
+    enabled: true
+    mime-types: application/json, application/xml
+spring:
+  datasource:
+    jdbc-url: jdbc:hsqldb:hsql://appwsc-qsallcomponent-jee-db:9001/templateDB
+    username: SA
+    password:
+    initial-size: 10
+    test-on-borrow: true
+  main:
+    banner-mode: 'off'
+  session:
+    store-type: none
+
