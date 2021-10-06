@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:11.0.12-oracle
 
 EXPOSE 8080
 
