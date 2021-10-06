@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <property name="LOG_FILE" value="${user.home}/logs/appwsc-qsallcomponents-jee/appwsc-qsallcomponents-jee.log"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+    <springProfile name="prod">
+        <property name="LOG_FILE" value="/usr/local/spring-boot/logs/appwsc-qsallcomponents-jee.log"/>
+    </springProfile>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <springProfile name="!pro">
+        <!--<logger name="org.springframework" level="DEBUG" additivity="false">
+            <appender-ref ref="CONSOLE" />
+        </logger>-->
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE" />
+            <appender-ref ref="FILE" />
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="FILE" />
+        </root>
+    </springProfile>
+</configuration>

@@ -17,7 +17,7 @@ services:
       networks:
          - net
       volumes:
-        - "/opt/docker-data/qsallcomponents/logs:/usr/local/tomcat/logs"
+        - "/opt/docker-data/appwsc-qsallcomponents/logs:/usr/local/spring-boot/logs"
 
 networks:
    net:
