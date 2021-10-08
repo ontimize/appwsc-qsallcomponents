@@ -4,7 +4,7 @@ ontimize:
 server:
   port: 8080
   servlet:
-    context-path: /qsallcomponents-jee
+    context-path: /qsallcomponents-jee/services/rest
   tomcat:
     uri-encoding: UTF-8
   compression:
