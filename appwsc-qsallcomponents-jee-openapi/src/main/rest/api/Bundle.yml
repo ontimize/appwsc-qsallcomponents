@@ -1,0 +1,31 @@
+default:
+  get:
+    operationId: getBundle
+    tags:
+      - Bundle
+    summary: Test
+    description: >
+      Test
+    parameters: 
+      - in: query
+        name: lang
+        description: the lang
+        schema:
+          type: string
+        required: true
+        examples:
+          English:
+           value: en
+          Spanish:
+           value: es
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'

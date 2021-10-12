@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup xmlns="http://www.ontimize.com/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+	table="TDMS_DOC_FILE_VERSION" datasource="mainDataSource" sqlhandler="dbSQLStatementHandler">
+
+	<DeleteKeys>
+		<Column>ID_DMS_DOC_FILE_VERSION</Column>
+	</DeleteKeys>
+	<UpdateKeys>
+		<Column>ID_DMS_DOC_FILE_VERSION</Column>
+	</UpdateKeys>
+	<GeneratedKey>ID_DMS_DOC_FILE_VERSION</GeneratedKey>
+
+	<Queries>
+		<Query id="default">
+			<AmbiguousColumns>
+				<AmbiguousColumn name="ID_DMS_DOC_FILE" prefix="tddfv" />
+			</AmbiguousColumns>
+			<ValidColumns>
+				<!-- TDMS_DOC_FILE_VERSION -->
+				<Column>ID_DMS_DOC_FILE_VERSION</Column>
+				<Column>FILE_PATH</Column>
+				<Column>VERSION</Column>
+				<Column>FILE_DESCRIPTION</Column>
+				<Column>IS_ACTIVE</Column>
+				<Column>FILE_ADDED_DATE</Column>
+				<Column>FILE_ADDED_USER_ID</Column>
+				<Column>ID_DMS_DOC_FILE</Column>
+				<Column>THUMBNAIL</Column>
+				<Column>FILE_SIZE</Column>
+
+				<!-- TDMS_DOC_FILE -->
+				<Column>ID_DMS_DOC_FILE</Column>
+				<Column>FILE_NAME</Column>
+				<Column>ID_DMS_DOC</Column>
+				<Column>FILE_TYPE</Column>
+				<Column>ID_DMS_DOC_CATEGORY</Column>
+			</ValidColumns>
+			<Sentence>
+ 		 <![CDATA[
+ 		 	SELECT
+ 		 		#COLUMNS#
+			FROM
+				${mainschema}.TDMS_DOC_FILE_VERSION AS tddfv
+				LEFT JOIN ${mainschema}.TDMS_DOC_FILE AS tddf ON tddfv.id_dms_doc_file = tddf.id_dms_doc_file
+			#WHERE#
+			#ORDER#
+ 		 ]]>
+		</Sentence>
+		</Query>
+	</Queries>
+
+</JdbcEntitySetup>

@@ -1,0 +1,124 @@
+{
+	"queryParam": {
+		"columns": [
+			"CUSTOMERID",
+			"CUSTOMERTYPEID",
+			"NAME",
+			"ADDRESS",
+			"COMMENTS",
+			"STARTDATE",
+			"SURNAME",
+			"ID",
+			"PHONE",
+			"EMAIL",
+			"LONGITUDE",
+			"LATITUDE"
+		],
+		"sqltypes": {
+			"CUSTOMERID": 8,
+			"STARTDATE": 93,
+			"CUSTOMERTYPEID": 4,
+			"ADDRESS": 12,
+			"PHONE": 12,
+			"LONGITUDE": 8,
+			"EMAIL": 12,
+			"ID": 12,
+			"LATITUDE": 8,
+			"COMMENTS": 12,
+			"SURNAME": 12,
+			"NAME": 12
+		}
+	},
+	"service": "CustomerService",
+	"dao": "customerPagination",
+	"offset":-1,
+	"pageSize":25,
+	"advQuery":true,
+	"excelColumns": {
+		"CUSTOMERID": {
+			
+		},
+		"NAME": {
+			
+		},
+		"STARTDATE": {
+			
+		},
+		"CUSTOMERTYPEID": {
+			
+		},
+		"ADDRESS": {
+			
+		},
+		"PHONE": {
+			
+		},
+		"LONGITUDE": {
+			
+		},
+		"EMAIL": {
+			
+		},
+		"ID": {
+			
+		},
+		"LATITUDE": {
+			
+		},
+		"COMMENTS": {
+			
+		},
+		"SURNAME": {
+			
+		}
+	},
+	"columnTitles": {
+		"CUSTOMERID": "Customer ID",
+		"STARTDATE": "Start Date",
+		"CUSTOMERTYPEID": "Customer Type ID",
+		"ADDRESS": "Address",
+		"PHONE": "Phone",
+		"LONGITUDE": "Longitude",
+		"EMAIL": "Email",
+		"ID": "ID",
+		"LATITUDE": "Latitude",
+		"COMMENTS": "Comments",
+		"SURNAME": "Surname",
+		"NAME": "Name"
+	},
+	"columnTypes": {
+		"CUSTOMERID": "java.lang.Integer",
+		"STARTDATE": "java.sql.Date",
+		"CUSTOMERTYPEID": "java.lang.Integer",
+		"ADDRESS": "java.lang.String",
+		"PHONE": "java.lang.String",
+		"LONGITUDE": "java.lang.Double",
+		"EMAIL": "java.lang.String",
+		"ID": "java.lang.String",
+		"LATITUDE": "java.lang.Double",
+		"COMMENTS": "java.lang.String",
+		"SURNAME": "java.lang.String",
+		"NAME": "java.lang.String"
+	},
+	"styles": {
+		"fondo_verde": {
+			"fillBackgroundColor": "GREEN"
+		},
+		"fondo_rojo": {
+			"fillBackgroundColor": "RED"
+		}
+	},
+	"columnStyles": {
+		"NAME": "fondo_verde"
+	},
+	"rowStyles": {
+		"1": "fondo_verde"
+	},
+	"cellStyles": {
+		"7,7": [
+			"fondo_verde"
+		],
+		"2,2,5,4": "fondo_rojo"
+	}
+}
+

@@ -1,0 +1,98 @@
+default:
+  post:
+    tags:
+      - Config
+    summary: Inserts a Configuration.
+    description: >
+      This resource represents a configuration in the system.
+    x-restcontroller: remoteconfigurationrestcontroller
+    requestBody:
+      $ref: '#/components/requestBodies/Values'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  delete:
+    tags:
+      - Config
+    summary: Deletes a Configuration.
+    description: >
+      This resource represents a configuration in the system.
+    x-restcontroller: remoteconfigurationrestcontroller
+    requestBody:
+      $ref: '#/components/requestBodies/Values'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  put:
+    tags:
+      - Config
+    summary: Updates a Configuration.
+    description: >
+      This resource represents a configuration in the system.
+    x-restcontroller: remoteconfigurationrestcontroller
+    requestBody:
+      $ref: '../base/UpdateParameter.yml#/components/requestBodies/UpdateParameter'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+search:
+  post:
+    tags:
+      - Config
+    summary: Searchs and returns a list of Configurations.
+    description: >
+      This resource represents a list of configuration in the system.
+    x-restcontroller: remoteconfigurationrestcontroller
+    requestBody:
+      $ref: '#/components/requestBodies/Values'
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+components:
+  requestBodies:
+    Values:
+      description: Values
+      content:
+        application/json:
+          schema:
+            type: object
+            x-iswildcard: true
+            additionalProperties:
+              type: object
+              x-iswildcard: true

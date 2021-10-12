@@ -5,53 +5,60 @@
 	<parent>
 		<groupId>com.ontimize.boot</groupId>
 		<artifactId>ontimize-boot-parent</artifactId>
-		<version>1.1.1</version>
+		<version>3.3.0</version>
 	</parent>
 
 	<groupId>com.imatia</groupId>
-	<artifactId>qsallcomponents-jee</artifactId>
-	<version>1.0.0</version>
+	<artifactId>appwsc-qsallcomponents-jee</artifactId>
+	<version>2.0.0</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<hsqldatabase.path>src/main/db</hsqldatabase.path>
 		<database.url>jdbc:hsqldb:hsql://localhost:9013/templateDB</database.url>
 		<hsqldb.version>2.3.4</hsqldb.version>
 		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+		<javax.mail.version>1.5.0</javax.mail.version>
+		<poi.poi.version>4.1.0</poi.poi.version>
+       		<poi.poi-ooxml.version>4.1.0</poi.poi-ooxml.version>
+        	<poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
+        	<poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
+        	<poi.dom4j.version>1.6.1</poi.dom4j.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
 
 			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-web</artifactId>
+				<groupId>com.imatia</groupId>
+				<artifactId>appwsc-qsallcomponents-jee-api</artifactId>
+				<version>2.0.0</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-api</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-openapi</artifactId>
+				<version>2.0.0</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-boot</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-boot</artifactId>
+				<version>2.0.0</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-model</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-model</artifactId>
+				<version>2.0.0</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.imatia</groupId>
-				<artifactId>qsallcomponents-jee-ws</artifactId>
-				<version>1.0.0</version>
+				<artifactId>appwsc-qsallcomponents-jee-ws</artifactId>
+				<version>2.0.0</version>
 			</dependency>
 
 			<dependency>
@@ -59,6 +66,32 @@
 				<artifactId>hsqldb</artifactId>
 				<version>${hsqldb.version}</version>
 			</dependency>
+			
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.poi-ooxml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi.poi-ooxml-schemas.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>ooxml-schemas</artifactId>
+                <version>${poi.ooxml-schemas.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${poi.dom4j.version}</version>
+            </dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -82,9 +115,10 @@
         </profile>
     </profiles>
   <modules>
-    <module>api</module>
-    <module>model</module>
-    <module>ws</module>
-    <module>boot</module>
+    <module>appwsc-qsallcomponents-jee-api</module>
+    <module>appwsc-qsallcomponents-jee-model</module>
+    <module>appwsc-qsallcomponents-jee-openapi</module>
+    <module>appwsc-qsallcomponents-jee-ws</module>
+    <module>appwsc-qsallcomponents-jee-boot</module>
   </modules>
 </project>
