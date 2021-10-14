@@ -58,6 +58,7 @@ endpoints:
     enabled: true
 logging:
   level:
+    org.springframework.security.web.firewall.HttpStatusRequestRejectedHandler: DEBUG
     root: info
 server:
   port: 8080
