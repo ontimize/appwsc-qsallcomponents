@@ -40,6 +40,11 @@
 			<groupId>com.ontimize.boot</groupId>
 			<artifactId>ontimize-boot-starter-jdbc</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.ontimize.boot</groupId>
+			<artifactId>ontimize-boot-starter-report</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.ontimize.boot</groupId>
