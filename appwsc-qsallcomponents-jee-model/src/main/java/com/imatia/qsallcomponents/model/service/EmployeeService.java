@@ -45,8 +45,7 @@ public class EmployeeService implements IEmployeeService {
 			for (int i = 0; i < photoEmployee.size(); i++) {
 				Object o = photoEmployee.get(i);
 				if (o instanceof BytesBlock) {
-//					photoEmployee.set(i, ((BytesBlock) o).getBytes());
-					photoEmployee.set(i, Base64Utils.encodeToString(((BytesBlock) o).getBytes()));
+					photoEmployee.set(i, ((BytesBlock) o).getBytes());
 				}
 			}
 		}
@@ -88,12 +87,6 @@ public class EmployeeService implements IEmployeeService {
 	public EntityResult employeeDelete(Map<String, Object> keyValues) throws OntimizeJEERuntimeException {
 		return this.daoHelper.delete(this.employeeDao, keyValues);
 	}
-
-//	@Override
-//	public AdvancedEntityResult employeePaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
-//			throws OntimizeJEERuntimeException {
-//		return this.daoHelper.paginationQuery(this.employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
-//	}
 	
 	@Override
 	public AdvancedEntityResult employeePaginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy)
@@ -105,7 +98,7 @@ public class EmployeeService implements IEmployeeService {
 			for (int i = 0; i < photoEmployee.size(); i++) {
 				Object o = photoEmployee.get(i);
 				if (o instanceof BytesBlock) {
-					photoEmployee.set(i, Base64Utils.encodeToString(((BytesBlock) o).getBytes()));
+					photoEmployee.set(i, ((BytesBlock) o).getBytes());
 				}
 			}
 			toRet.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, photoEmployee);
