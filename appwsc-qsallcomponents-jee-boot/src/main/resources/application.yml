@@ -4,6 +4,9 @@ ontimize:
   dms:
     engine: odms
     base-path: file:/C:/applications/QSAllComponents_Jee/dms
+  report:
+    enable: true
+    engine: database
   globalcors:
     cors-configurations:
       '[/**]':

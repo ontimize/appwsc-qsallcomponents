@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+	<fontFamily name="OpenSans">
+		<normal><![CDATA[reports/fonts/OpenSans/OpenSans-Regular.ttf]]></normal>
+		<bold><![CDATA[reports/fonts/OpenSans/OpenSans-Bold.ttf]]></bold>
+		<italic><![CDATA[reports/fonts/OpenSans/OpenSans-Italic.ttf]]></italic>
+		<boldItalic><![CDATA[reports/fonts/OpenSans/OpenSans-BoldItalic.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+		<exportFonts/>
+	</fontFamily>
+	<fontFamily name="OpenSansSemiBold">
+		<normal><![CDATA[reports/fonts/OpenSansSemiBold/OpenSans-SemiBold.ttf]]></normal>
+		<bold><![CDATA[reports/fonts/OpenSansSemiBold/OpenSans-ExtraBold.ttf]]></bold>
+		<italic><![CDATA[reports/fonts/OpenSansSemiBold/OpenSans-SemiBoldItalic.ttf]]></italic>
+		<boldItalic><![CDATA[reports/fonts/OpenSansSemiBold/OpenSans-ExtraBoldItalic.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+		<exportFonts/>
+	</fontFamily>
+</fontFamilies>

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 import com.imatia.qsallcomponents.api.services.IEmployeeService;
 import com.imatia.qsallcomponents.model.dao.EmployeeDao;
@@ -103,7 +104,6 @@ public class EmployeeService implements IEmployeeService {
 	public EntityResult employeeDelete(Map<String, Object> keyValues) throws OntimizeJEERuntimeException {
 		return this.daoHelper.delete(this.employeeDao, keyValues);
 	}
-
 
 	// ---- EMPLOYEESTYPE ----
 
