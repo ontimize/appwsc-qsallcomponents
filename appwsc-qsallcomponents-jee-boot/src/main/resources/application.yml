@@ -53,6 +53,14 @@ ontimize:
       client-permission-query-id: clientPermissions
       client-permission-column: XMLCLIENTPERMISSION
   remote-configuration: true
+  multitenant:
+    configuration:
+      store-repository:
+        tenant-id: TENANT_ID
+        driver-class: DRIVER_CLASS
+        jdbc-url: JDBC_URL
+        username: USERNAME
+        password: PASSWORD
 endpoints:
   api:
     enabled: true
