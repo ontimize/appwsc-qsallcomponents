@@ -54,6 +54,7 @@ ontimize:
       client-permission-column: XMLCLIENTPERMISSION
   remote-configuration: true
   multitenant:
+    enabled: true
     configuration:
       store-repository:
         tenant-id: TENANT_ID
