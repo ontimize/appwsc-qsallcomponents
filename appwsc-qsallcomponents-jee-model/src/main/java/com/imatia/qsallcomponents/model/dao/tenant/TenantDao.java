@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import com.ontimize.jee.server.dao.common.ConfigurationFile;
-import com.ontimize.jee.server.multitenant.jdbc.TenantStoreDao;
+import com.ontimize.jee.server.multitenant.store.jdbc.TenantStoreDao;
 
 @Lazy
 @Repository(value = "TenantDao")
