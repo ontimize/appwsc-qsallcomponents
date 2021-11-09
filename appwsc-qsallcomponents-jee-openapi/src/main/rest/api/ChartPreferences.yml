@@ -1,0 +1,144 @@
+default:
+  post:
+    tags:
+      - ChartPreferences
+    summary: Inserts an chartPreference.
+    description: >
+      This resource represents an chartPreference in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/InsertParameter.yml#/components/schemas/InsertParameter'
+          examples:
+            Configuration:
+              value:
+                data:
+                  NAME: 'Configuration'
+                  ENTITY: 'customer'
+                  PREFERENCES: 'json'
+                sqltypes:
+                  NAME: 12
+                  ENTITY: 12
+                  PREFERENCES: 12
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  get:
+    tags:
+      - ChartPreferences
+    summary: Returns a list of preferences.
+    description: >
+      This resource represents a list of preferences in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - in: query
+        name: filter
+        description: Filter
+        schema:
+          type: string
+        required: false
+        examples:
+
+          name:
+            value: 'NAME=Configuration'
+          entity:
+            value: 'ENTITY=customer'
+          preferences: 
+            value: 'PREFERENCES=json'
+     
+      - in: query
+        name: columns
+        description: Columns
+        required: false
+        schema:
+          type: string
+          example: NAME,ENTITY,PREFERENCES
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  put:
+    tags:
+      - ChartPreferences
+    summary: Updates an chartPreference.
+    description: >
+      This resource represents an chartPreference in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/UpdateParameter.yml#/components/schemas/UpdateParameter'
+          examples:
+            preferences:
+              value:
+                data:
+                  PREFERENCES: 'modified json'
+                filter:
+                  CHARTPREFERENCESID: 001
+                sqltypes:
+                  CHARTPREFERENCESID: 4
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  delete:
+    tags:
+      - chartPreferences
+    summary: Deletes an chartPreferences.
+    description: >
+      This resource represents an chartPreferences in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/DeleteParameter.yml#/components/schemas/DeleteParameter'
+          examples:
+            chartpreferencesid:
+              value:
+                filter:
+                  CHARTPREFERENCESID: 002
+                sqltypes:
+                  CHARTPREFERENCESID: 4
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
