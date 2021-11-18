@@ -26,7 +26,12 @@ ontimize:
       upper-string: true
       upper-like: true
   security:
-    mode: default
+    mode: keycloak
+    keycloak:
+      auth-server-url: http://keycloak.34.122.211.64.nip.io/auth
+      realm: keycloak-demo
+      resource: keycloak-demo-server
+      public-client: true
     user-information-service:
       user-repository: OCLoginProfilesDao
       query-id: login
