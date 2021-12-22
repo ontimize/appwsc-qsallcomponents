@@ -8,6 +8,7 @@ ontimize:
     enable: true
     engine: database
   save-config: true
+  save-config-dao: ConfigsDao
   globalcors:
     cors-configurations:
       '[/**]':
