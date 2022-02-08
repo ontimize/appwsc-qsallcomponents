@@ -6,6 +6,8 @@ info:
 servers:
   - url: 'http://localhost:8080/qsallcomponents-jee/'
     description: Localhost
+  - url: 'https://try.imatia.com/ontimizeweb/services/qsallcomponents-jee/services/rest'
+    description: Ontimize try.imatia.com
 
 paths:
   /administration/userRole:
