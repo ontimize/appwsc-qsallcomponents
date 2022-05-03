@@ -5,7 +5,7 @@ WORKDIR /opt/hsqldb
 COPY templateDB.txt templateDB.script
 COPY templateDB.properties templateDB.properties
 
-EXPOSE 9001
+EXPOSE 9011
 
 ENV HSQLDB_VERSION 2.3.4
 
