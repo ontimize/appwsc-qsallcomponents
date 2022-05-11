@@ -12,7 +12,7 @@ server:
     mime-types: application/json, application/xml
 spring:
   datasource:
-    jdbc-url: jdbc:hsqldb:hsql://appwsc-qsallcomponent-jee-db:9001/templateDB
+    jdbc-url: jdbc:hsqldb:hsql://appwsc-qsallcomponent-jee-reports-db:9011/templateDB
     username: SA
     password:
     initial-size: 10
