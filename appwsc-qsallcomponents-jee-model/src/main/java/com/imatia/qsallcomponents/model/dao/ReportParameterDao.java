@@ -1,11 +1,10 @@
 package com.imatia.qsallcomponents.model.dao;
 
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Repository;
-
+import com.ontimize.jee.report.server.dao.IReportParameterDao;
 import com.ontimize.jee.server.dao.common.ConfigurationFile;
 import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
-import com.ontimize.jee.server.services.reportstore.dao.IReportParameterDao;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Repository;
 
 @Lazy
 @Repository(value = "ReportParameterDao")

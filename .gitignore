@@ -89,3 +89,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/appwsc-qsallcomponents-jee-model/src/main/db/templateDB.lck
+/appwsc-qsallcomponents-jee-model/src/main/db/templateDB.log
+/appwsc-qsallcomponents-jee-model/src/main/db/templateDB.script

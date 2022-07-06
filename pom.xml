@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>com.ontimize.boot</groupId>
 		<artifactId>ontimize-boot-parent</artifactId>
-		<version>3.7.0</version>
+		<version>3.9.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.imatia</groupId>
 	<artifactId>appwsc-qsallcomponents-jee</artifactId>
-	<version>2.1.0</version>
+	<version>2.2.0</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,31 +34,31 @@
 			<dependency>
 				<groupId>com.imatia</groupId>
 				<artifactId>appwsc-qsallcomponents-jee-api</artifactId>
-				<version>2.1.0</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
 				<artifactId>appwsc-qsallcomponents-jee-openapi</artifactId>
-				<version>2.1.0</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
 				<artifactId>appwsc-qsallcomponents-jee-boot</artifactId>
-				<version>2.1.0</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.imatia</groupId>
 				<artifactId>appwsc-qsallcomponents-jee-model</artifactId>
-				<version>2.1.0</version>
+				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.imatia</groupId>
 				<artifactId>appwsc-qsallcomponents-jee-ws</artifactId>
-				<version>2.1.0</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
