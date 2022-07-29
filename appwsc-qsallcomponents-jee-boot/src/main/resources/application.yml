@@ -7,6 +7,10 @@ ontimize:
   report:
     enable: true
     engine: database
+  export:
+    enable: true
+    url: /export
+    extension: xlsx
   save-config: true
   save-config-dao: ConfigsDao
   globalcors:
@@ -91,6 +95,7 @@ spring:
       max-request-size: 1Mb
   main:
     banner-mode: 'off'
+    allow-bean-definition-overriding: true
   session:
     store-type: none
 
