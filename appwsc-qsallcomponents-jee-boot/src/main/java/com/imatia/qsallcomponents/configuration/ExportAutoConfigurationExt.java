@@ -16,14 +16,14 @@ import org.springframework.context.annotation.Primary;
 @ConditionalOnProperty(name = "ontimize.export.enable", havingValue = "true", matchIfMissing = false)
 public class ExportAutoConfigurationExt {
 
-    @Bean("ExportRestController")
-    @Primary
-    public ExportRestController exportRestController() {
-        return new ExportRestControllerExt();
-    }
-
-    @Bean("CsvExportService")
-    public ExportServiceExt exportService() {
-        return new ExportServiceExt();
-    }
+//    @Bean("ExportRestController")
+//    @Primary
+//    public ExportRestController exportRestController() {
+//        return new ExportRestControllerExt();
+//    }
+//
+//    @Bean("CsvExportService")
+//    public ExportServiceExt exportService() {
+//        return new ExportServiceExt();
+//    }
 }
