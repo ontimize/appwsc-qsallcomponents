@@ -1,23 +1,23 @@
 version: '3'
 
 services:
-   appwsc-qsallcomponent-jee-db:
-      container_name: appwsc-qsallcomponent-jee-db
-      image: appwsc-qsallcomponent-jee-db
+   appwsc-qsallcomponent-jee-development-preview-db:
+      container_name: appwsc-qsallcomponent-jee-development-preview-db
+      image: appwsc-qsallcomponent-jee-development-preview-db
          
       networks:
          - net    
-   appwsc-qsallcomponent-jee-server:
-      container_name: appwsc-qsallcomponent-jee-boot
-      image: appwsc-qsallcomponent-jee-boot
+   appwsc-qsallcomponent-jee-development-preview-server:
+      container_name: appwsc-qsallcomponent-jee-development-preview-boot
+      image: appwsc-qsallcomponent-jee-development-preview-boot
       ports:
-         - "9091:8080"
+         - "9092:8080"
       depends_on:
-         - appwsc-qsallcomponent-jee-db
+         - appwsc-qsallcomponent-jee-development-preview-db
       networks:
          - net
       volumes:
-        - "/opt/docker-data/appwsc-qsallcomponents/logs:/usr/local/spring-boot/logs"
+        - "/opt/docker-data/appwsc-qsallcomponents-development-preview/logs:/usr/local/spring-boot/logs"
 
 networks:
    net:
