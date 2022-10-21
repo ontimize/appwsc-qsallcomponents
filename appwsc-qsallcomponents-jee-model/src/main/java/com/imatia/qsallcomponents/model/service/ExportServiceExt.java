@@ -5,17 +5,20 @@ import java.io.FileWriter;
 import java.util.List;
 import java.util.Map;
 
+import com.ontimize.jee.webclient.export.base.BaseExportService;
+import com.ontimize.jee.webclient.export.base.ExportQueryParameters;
+import com.ontimize.jee.webclient.export.exception.ExportException;
+import com.ontimize.jee.webclient.export.providers.ExportDataProvider;
 import org.springframework.stereotype.Service;
 
 import com.imatia.qsallcomponents.api.services.IExportServiceExt;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.webclient.export.base.ExcelExportService;
 
-@Service("ExportServiceExt")
-public class ExportServiceExt extends ExcelExportService implements IExportServiceExt {
+public class ExportServiceExt extends BaseExportService implements IExportServiceExt {
 
 	@Override
-	public File csvExport(EntityResult data, List<String> columns) throws Exception {
+	public File csvExport(EntityResult data, List<Object> columns) throws Exception {
 		StringBuilder body = new StringBuilder();
 
 		for (int j = 0; j < data.calculateRecordNumber(); j++) {
@@ -43,4 +46,16 @@ public class ExportServiceExt extends ExcelExportService implements IExportServi
 		return csvFile;
 	}
 
+	@Override
+	public File generateFile(ExportQueryParameters exportParam) throws ExportException {
+		try {
+			ExportDataProvider<EntityResult> dataProvider = getDataProvider();
+			dataProvider.doQuery();
+			EntityResult data = dataProvider.getData();
+			List<Object> columns = exportParam.getQueryParam().getColumns();
+			return csvExport(data,columns);
+		} catch (Exception e) {
+			throw new ExportException("Impossible to export CSV file",e);
+		}
+	}
 }

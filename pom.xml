@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.ontimize.boot</groupId>
 		<artifactId>ontimize-boot-parent</artifactId>
-		<version>3.9.0-SNAPSHOT</version>
+		<version>3.9.0-export-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.imatia</groupId>
@@ -21,11 +21,12 @@
 		<hsqldb.version>2.3.4</hsqldb.version>
 		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
 		<javax.mail.version>1.5.0</javax.mail.version>
+		<itextpdf.version>7.2.3</itextpdf.version>
 		<poi.poi.version>4.1.0</poi.poi.version>
-       		<poi.poi-ooxml.version>4.1.0</poi.poi-ooxml.version>
-        	<poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
-        	<poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
-        	<poi.dom4j.version>1.6.1</poi.dom4j.version>
+		<poi.poi-ooxml.version>4.1.0</poi.poi-ooxml.version>
+		<poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
+		<poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
+		<poi.dom4j.version>1.6.1</poi.dom4j.version>
 	</properties>
 
 	<dependencyManagement>
@@ -65,6 +66,18 @@
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
 				<version>${hsqldb.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.itextpdf</groupId>
+				<artifactId>kernel</artifactId>
+				<version>${itextpdf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.itextpdf</groupId>
+				<artifactId>layout</artifactId>
+				<version>${itextpdf.version}</version>
 			</dependency>
 			
             <dependency>
