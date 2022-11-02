@@ -27,8 +27,6 @@
 		<poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
 		<poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
 		<poi.dom4j.version>1.6.1</poi.dom4j.version>
-
-		<project.dependency.ontimize.boot.version>3.9.0-export-SNAPSHOT</project.dependency.ontimize.boot.version>
 	</properties>
 
 	<dependencyManagement>
