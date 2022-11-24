@@ -3,9 +3,9 @@ package com.imatia.qsallcomponents.model.dao;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
+import com.ontimize.jee.server.dao.IPreferencesDao;
 import com.ontimize.jee.server.dao.common.ConfigurationFile;
 import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
-import com.ontimize.jee.webclient.preferences.IPreferencesDao;
 
 @Lazy
 @Repository(value = "PreferencesDao")
