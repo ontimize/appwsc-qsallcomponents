@@ -71,17 +71,15 @@
 			<artifactId>dom4j</artifactId>
 			<version>${poi.dom4j.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>kernel</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>layout</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
