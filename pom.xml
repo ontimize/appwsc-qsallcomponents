@@ -27,6 +27,12 @@
 		<poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
 		<poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
 		<poi.dom4j.version>1.6.1</poi.dom4j.version>
+		
+		<!-- =========================================================== -->
+                <!-- Sonar -->
+                <!-- =========================================================== -->
+		<sonar.organization>ontimize</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencyManagement>
