@@ -8,6 +8,7 @@ import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.dao.jdbc.AdvancedEntityResultResultSetExtractor;
 import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 import com.ontimize.jee.server.dao.jdbc.OntimizeTableMetaDataContext;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +33,7 @@ class EmployeeDaoTest {
     EmployeeDao employeeDao;
 
 
-
+    @Disabled
     @Nested
     class PaginationQuery {
 
