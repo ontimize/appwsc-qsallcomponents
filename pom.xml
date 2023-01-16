@@ -32,7 +32,7 @@
                 <!-- Sonar -->
                 <!-- =========================================================== -->
 		<sonar.organization>ontimize</sonar.organization>
-                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencyManagement>
@@ -114,6 +114,26 @@
 
 		</dependencies>
 	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>sonatype-snapshot</id>
+					<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+					<releases>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 
   <modules>
     <module>appwsc-qsallcomponents-jee-api</module>
