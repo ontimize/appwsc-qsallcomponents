@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.ontimize.boot</groupId>
 		<artifactId>ontimize-boot-parent</artifactId>
-		<version>3.9.0</version>
+		<version>3.10.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.imatia</groupId>
@@ -27,9 +27,12 @@
 		<poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
 		<poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
 		<poi.dom4j.version>1.6.1</poi.dom4j.version>
-		<junit-jupiter-params.version>5.7.2</junit-jupiter-params.version>
-		<mockito-core.version>4.6.1</mockito-core.version>
-		<mockito-junit-jupiter.version>4.8.0</mockito-junit-jupiter.version>
+		
+		<!-- =========================================================== -->
+                <!-- Sonar -->
+                <!-- =========================================================== -->
+		<sonar.organization>ontimize</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencyManagement>
@@ -108,48 +111,30 @@
                 <artifactId>dom4j</artifactId>
                 <version>${poi.dom4j.version}</version>
             </dependency>
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-params</artifactId>
-				<version>${junit-jupiter-params.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-api</artifactId>
-				<version>${junit-jupiter-params.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-inline</artifactId>
-				<version>${mockito.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-junit-jupiter</artifactId>
-				<version>${mockito.version}</version>
-			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
-		
+
 	<profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>imatia-artifactory</id>
-                    <url>https://artifactory.imatia.com/public-artifactory/libs-release</url>
-                    <releases>
-                    </releases>
-                    <snapshots>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>sonatype-snapshot</id>
+					<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+					<releases>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
   <modules>
     <module>appwsc-qsallcomponents-jee-api</module>
     <module>appwsc-qsallcomponents-jee-model</module>
