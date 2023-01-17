@@ -1,7 +1,6 @@
 package com.imatia.qsallcomponents.model.service;
 
 import com.imatia.qsallcomponents.model.dao.UserRoleDao;
-import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
