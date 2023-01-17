@@ -1,7 +1,7 @@
 package com.imatia.qsallcomponents.model.service;
 
 import com.imatia.qsallcomponents.model.dao.UserRoleDao;
-import com.ontimize.jee.common.dto.EntityResult;
+import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,13 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,19 +38,19 @@ class AdministrationServiceImplTest {
             keysValues.put("field1", "value1");
             attributes.add("attribute1");
 
-            //tengo q validar q los parametros q recibe userRoleQuery son los mismos q devuelve el return
+            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
+            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
 
-            ArgumentCaptor<Map<?, ?>> ksValues = ArgumentCaptor.forClass(Map.class);
-            ArgumentCaptor<List<?>> attrs = ArgumentCaptor.forClass(List.class);
-            String rolesWithUserQuery = UserRoleDao.ROLES_WITH_USER_QUERY;
+            administrationService.userRoleQuery(keysValues, attributes);
+            Mockito.verify(userRoleDao).query(ksValues.capture(), attrs.capture(), Mockito.any(), Mockito.any(String.class));
 
-
-            Mockito.verify(userRoleDao).query(ksValues.capture(), attrs.capture(), (List<?>) null, UserRoleDao.ROLES_WITH_USER_QUERY);
-            EntityResult actual = administrationService.userRoleQuery(keysValues,attributes);
-
-            String expected = "sqlTemplate";
-
-            assertEquals(expected, actual);
+            assertAll(() -> {
+                        assertEquals(keysValues, ksValues.getValue());
+                    },
+                    () -> {
+                        assertEquals(attributes, attrs.getValue());
+                    }
+            );
 
         }
     }
