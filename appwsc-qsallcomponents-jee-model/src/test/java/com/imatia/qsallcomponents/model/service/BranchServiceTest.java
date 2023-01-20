@@ -27,17 +27,17 @@ class BranchServiceTest {
     @Nested
     class Branch {
 
+
+        Map<String, Object> keysValues = new HashMap<>();
+        List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
+        ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
+        ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
+
+
         @Test
         void when_branchQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
-            Map<String, Object> keysValues = new HashMap<>();
-            List<String> attributes = new ArrayList<>();
 
             keysValues.put("field1", "value1");
-            attributes.add("attribute1");
-
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
-
             branchService.branchQuery(keysValues, attributes);
             Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture());
 
@@ -49,18 +49,14 @@ class BranchServiceTest {
                     }
             );
         }
+
         @Test
         void when_branchPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_startIndex_and_orderBy_expected_AdvancedEntityResult() {
-            Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("BRANCHID", 1);
-            List<String> attributes = new ArrayList<>(Arrays.asList("column1"));
             int recordNumber = 5;
             int startIndex = 3;
             List<String> orderBy = new ArrayList<>();
-            String queryId = "default";
 
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
             ArgumentCaptor<Integer> rNumber = ArgumentCaptor.forClass(Integer.class);
             ArgumentCaptor<Integer> sIndex = ArgumentCaptor.forClass(Integer.class);
             ArgumentCaptor<List<String>> oBy = ArgumentCaptor.forClass(List.class);
@@ -85,6 +81,7 @@ class BranchServiceTest {
                     }
             );
         }
+
         @Test
         void when_branchInsert_receive_attributes_expected_EntityResult() {
             Map<String, Object> attributes = new HashMap<>();
@@ -98,14 +95,13 @@ class BranchServiceTest {
             assertEquals(attributes, attrs.getValue());
 
         }
+
         @Test
         void when_branchUpdate_receive_attributes_and_keysValues_expected_EntityResult() {
             Map<String, Object> attributes = new HashMap<>();
-            Map<String, Object> keysValues = new HashMap<>();
             attributes.put("attribute1", 1);
             keysValues.put("field1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
             ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
 
             branchService.branchUpdate(attributes, keysValues);
@@ -119,17 +115,15 @@ class BranchServiceTest {
                     }
             );
         }
+
         @Test
         void when_branchDelete_receive_keyValues_expected_EntityResult() {
-            Map<String, Object> keyValues = new HashMap<>();
-            keyValues.put("field1", "value1");
+            keysValues.put("field1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> kValues = ArgumentCaptor.forClass(Map.class);
+            branchService.branchDelete(keysValues);
+            Mockito.verify(daoHelper).delete(Mockito.any(), ksValues.capture());
 
-            branchService.branchDelete(keyValues);
-            Mockito.verify(daoHelper).delete(Mockito.any(), kValues.capture());
-
-            assertEquals(keyValues, kValues.getValue());
+            assertEquals(keysValues, ksValues.getValue());
 
 
         }
