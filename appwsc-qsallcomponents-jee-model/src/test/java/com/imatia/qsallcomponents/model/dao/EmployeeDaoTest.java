@@ -1,74 +1,82 @@
 package com.imatia.qsallcomponents.model.dao;
 
 import com.ontimize.jee.common.db.AdvancedEntityResult;
-import com.ontimize.jee.common.db.AdvancedEntityResultMapImpl;
-import com.ontimize.jee.common.db.handler.DefaultSQLStatementHandler;
-import com.ontimize.jee.common.dto.EntityResult;
-import com.ontimize.jee.common.dto.EntityResultMapImpl;
-import com.ontimize.jee.server.dao.jdbc.AdvancedEntityResultResultSetExtractor;
 import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
-import com.ontimize.jee.server.dao.jdbc.OntimizeTableMetaDataContext;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeDaoTest {
 
+
     @InjectMocks
     EmployeeDao employeeDao;
 
+    @Mock
+    OntimizeJdbcDaoSupport ontimizeJdbcDaoSupport;
 
-    @Disabled
+    @Mock
+    AdvancedEntityResult advancedEntityResult;
+
     @Nested
     class PaginationQuery {
 
+        @Disabled
         @Test
         void when_receive_keysValues_and_attributes_and_sort_and_queryId_and_queryAdapter_expect_paginationQuery() {
 
             Map<String, Object> keysValues = new HashMap<>();
-            keysValues.put("EMPLOYEEID",1);
+            keysValues.put(EmployeeDao.ATTR_ID, 1);
             List<String> attributes = new ArrayList<>(Arrays.asList("column1"));
             int recordNumber = 5;
             int startIndex = 3;
             List<String> orderBy = new ArrayList<>();
             String queryId = "default";
 
-            OntimizeJdbcDaoSupport ontimizeJdbcDaoSupport = new OntimizeJdbcDaoSupport();
+            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
+            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
+            ArgumentCaptor<Integer> rNumber = ArgumentCaptor.forClass(Integer.class);
+            ArgumentCaptor<Integer> sIndex = ArgumentCaptor.forClass(Integer.class);
+            ArgumentCaptor<List<String>> oBy = ArgumentCaptor.forClass(List.class);
+            ArgumentCaptor<String> qId = ArgumentCaptor.forClass(String.class);
 
-            //ArgumentCaptor<OntimizeJdbcDaoSupport.SimpleScrollablePreparedStatementCreator> ssPSC = ArgumentCaptor.forClass(OntimizeJdbcDaoSupport.SimpleScrollablePreparedStatementCreator.class);
-            ArgumentCaptor<ArgumentPreparedStatementSetter> pss = ArgumentCaptor.forClass(ArgumentPreparedStatementSetter.class);
-            String checkSQLQuery = " SELECT column1 FROM  [my-table]   WHERE column3 = ?  AND column2 = ? ";
+            Mockito.when(ontimizeJdbcDaoSupport.paginationQuery(ksValues.capture(), attrs.capture(), rNumber.capture(), sIndex.capture(), oBy.capture(), qId.capture())).thenReturn(advancedEntityResult);
 
+            employeeDao.paginationQuery(keysValues, attributes,recordNumber,startIndex,orderBy,queryId,null);
+            //Mockito.doReturn(advancedEntityResult).when(ontimizeJdbcDaoSupport.paginationQuery(ksValues.capture(), attrs.capture(), rNumber.capture(), sIndex.capture(), oBy.capture(), qId.capture()));
+            //Mockito.verify(ontimizeJdbcDaoSupport).paginationQuery(ksValues.capture(), attrs.capture(), rNumber.capture(),sIndex.capture(),oBy.capture(), qId.capture());
 
-            JdbcTemplate jdbcTemplate = Mockito.mock(JdbcTemplate.class);
-            Mockito.doReturn(new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT)).when(jdbcTemplate).query(Mockito.any(PreparedStatementCreator.class), Mockito.any(), Mockito.any());
-            Mockito.doReturn(new EntityResultMapImpl()).when(jdbcTemplate).query(Mockito.any(String.class), (Object[]) Mockito.any(), Mockito.any(ResultSetExtractor.class));
-            ontimizeJdbcDaoSupport.setJdbcTemplate(jdbcTemplate);
-            ontimizeJdbcDaoSupport.setStatementHandler(new DefaultSQLStatementHandler());
-            ReflectionTestUtils.setField(ontimizeJdbcDaoSupport, "compiled", true);
-            OntimizeTableMetaDataContext tableMetaDataContext = ontimizeJdbcDaoSupport.getTableMetaDataContext();
-            ReflectionTestUtils.setField(tableMetaDataContext, "tableName", "myTable");
-
-            AdvancedEntityResult eR = ontimizeJdbcDaoSupport.paginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy, queryId, null);
-            //Mockito.verify(jdbcTemplate).query(ssPSC.capture(), pss.capture(), Mockito.any(AdvancedEntityResultResultSetExtractor.class));
-
-            AdvancedEntityResult advancedEntityResult = employeeDao.paginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy, queryId);
-
+            assertAll(() -> {
+                        assertEquals(keysValues, ksValues.getValue());
+                    },
+                    () -> {
+                        assertEquals(attributes, attrs.getValue());
+                    },
+                    () -> {
+                        assertEquals(recordNumber, rNumber.getValue());
+                    },
+                    () -> {
+                        assertEquals(startIndex, sIndex.getValue());
+                    },
+                    () -> {
+                        assertEquals(orderBy, oBy.getValue());
+                    },
+                    () -> {
+                        assertEquals(queryId, qId.getValue());
+                    }
+            );
 
         }
     }

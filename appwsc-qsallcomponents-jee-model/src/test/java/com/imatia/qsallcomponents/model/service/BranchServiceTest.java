@@ -1,6 +1,8 @@
 package com.imatia.qsallcomponents.model.service;
 
+import com.imatia.qsallcomponents.model.dao.AccountDao;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +25,9 @@ class BranchServiceTest {
     BranchService branchService;
     @Mock
     DefaultOntimizeDaoHelper daoHelper;
+
+    @Mock
+    AccountDao accountDao;
 
     @Nested
     class Branch {
@@ -129,4 +134,36 @@ class BranchServiceTest {
         }
 
     }
+
+    @Disabled
+    @Nested
+    class Accounts{
+        Map<String, Object> keysValues = new HashMap<>();
+        List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
+        ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
+        ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
+
+
+        /*
+        EntityResult accountQuery(Map<String, Object> keysValues, List<String> attributes) throws OntimizeJEERuntimeException {
+        return this.daoHelper.query(this.accountDao, keysValues, attributes, AccountDao.ACCOUNT_BALANCE_QUERY_KEY);/
+         */
+        @Test
+        void when_accountQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+
+            keysValues.put("VACCOUNTBALANCE", "value1");
+            branchService.accountQuery(keysValues, attributes);
+            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture(), Mockito.any(String.class));
+
+            assertAll(() -> {
+                        assertEquals(keysValues, ksValues.getValue());
+                    },
+                    () -> {
+                        assertEquals(attributes, attrs.getValue());
+                    }
+            );
+        }
+    }
+
+
 }
