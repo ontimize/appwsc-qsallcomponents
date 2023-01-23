@@ -27,6 +27,9 @@ class BranchServiceTest {
     @Mock
     DefaultOntimizeDaoHelper daoHelper;
 
+    @Mock
+    AccountDao accountDao;
+
     @Nested
     class Branch {
 
@@ -249,11 +252,18 @@ class BranchServiceTest {
             attributes.put(AccountDao.ATTR_ENTITYID, 2095);
             attributes.remove(AccountDao.ATTR_ANID);
             attributes.remove(AccountDao.ATTR_CDID);
-            EntityResult toRet;
+
+            Map<String, Object> mapAccountData = new HashMap<String, Object>();
+            mapAccountData.put(AccountDao.ATTR_CDID, 34);
+            mapAccountData.put(AccountDao.ATTR_ANID, 0000000001);
+
+            Map<String, Object> mapAccountKey = new HashMap<String, Object>();
+            mapAccountKey.put(AccountDao.ATTR_ID, 1);
 
             ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
 
-            Mockito.verify(daoHelper).insert(Mockito.any(), attrs.capture());
+            Mockito.verify(daoHelper).insert(accountDao, attributes);
+            Mockito.verify(daoHelper).update(accountDao, mapAccountData, mapAccountKey);
 
         }
 
