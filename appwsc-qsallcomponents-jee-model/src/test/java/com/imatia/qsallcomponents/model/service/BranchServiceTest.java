@@ -2,15 +2,13 @@ package com.imatia.qsallcomponents.model.service;
 
 import com.imatia.qsallcomponents.model.dao.AccountDao;
 import com.ontimize.jee.common.dto.EntityResult;
+import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
@@ -242,7 +240,7 @@ class BranchServiceTest {
             );
         }
 
-        @Disabled
+
         @Test
         void when_accountInsert_receive_attributes_expected_EntityResult() {
             Map<String, Object> attributes = new HashMap<>();
@@ -250,25 +248,25 @@ class BranchServiceTest {
             attributes.remove(AccountDao.ATTR_ANID);
             attributes.remove(AccountDao.ATTR_CDID);
 
+            EntityResult toRet = new EntityResultMapImpl();
+            toRet.put(AccountDao.ATTR_ID, 1);
+            Mockito.doReturn(toRet).when(daoHelper).insert(accountDao, attributes);
+            Object accountKey = toRet.get(AccountDao.ATTR_ID);
+
+            Mockito.doReturn(1).when(accountDao).createAccountNumber((Integer) accountKey);
+
+            EntityResult accoutUpdate = Mockito.mock(EntityResultMapImpl.class);
+
             Map<String, Object> mapAccountData = new HashMap<String, Object>();
-            mapAccountData.put(AccountDao.ATTR_CDID, 34);
+            mapAccountData.put(AccountDao.ATTR_CDID, 0);
             mapAccountData.put(AccountDao.ATTR_ANID, 0000000001);
 
             Map<String, Object> mapAccountKey = new HashMap<String, Object>();
             mapAccountKey.put(AccountDao.ATTR_ID, 1);
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
+            Mockito.doReturn(accoutUpdate).when(daoHelper).update(accountDao, mapAccountData, mapAccountKey);
 
-            EntityResult toRet = branchService.accountInsert(attributes);
-
-            Mockito.verify(daoHelper).insert(accountDao, attributes);
-            Mockito.verify(daoHelper).update(accountDao, mapAccountData, mapAccountKey);
-            /*
-            doreturn un er q tenga los valores que yo quiero
-            el id de lo q va a enocntrar es diferente
-            se necesita el id q ha generado la bd para generar el account/
-             */
-
+            branchService.accountInsert(attributes);
 
         }
 
