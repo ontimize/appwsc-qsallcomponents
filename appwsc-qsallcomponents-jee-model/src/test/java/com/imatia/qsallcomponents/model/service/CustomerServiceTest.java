@@ -1,7 +1,10 @@
 package com.imatia.qsallcomponents.model.service;
 
 import com.imatia.qsallcomponents.model.dao.CustomerDao;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
+import com.ontimize.jee.common.db.AdvancedEntityResultMapImpl;
 import com.ontimize.jee.common.dto.EntityResult;
+import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import com.ontimize.jee.server.dao.IOntimizeDaoSupport;
 import org.junit.jupiter.api.Disabled;
@@ -28,6 +31,9 @@ class CustomerServiceTest {
     @Mock
     DefaultOntimizeDaoHelper daoHelper;
 
+    @Mock
+    CustomerDao customerDao;
+
     @Nested
     class Customer {
 
@@ -37,33 +43,31 @@ class CustomerServiceTest {
         ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
         ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
 
-        EntityResult toRet;
 
-        @Disabled
         @Test
         void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
-            /* public EntityResult customerQuery(Map<?, ?> keysValues, List<?> attributes)
 
-            EntityResult toRet = this.daoHelper.query(this.customerDao, keysValues, attributes);
-		if (toRet.containsKey(CustomerDao.ATTR_PHOTO)) {
-			List<Object> photoCustomer = (List<Object>) toRet.get(CustomerDao.ATTR_PHOTO);
-			for (int i = 0; i < photoCustomer.size(); i++) {
-				Object o = photoCustomer.get(i);
-				if (o instanceof BytesBlock) {
-					photoCustomer.set(i, ((BytesBlock) o).getBytes());
-				}
-			}
-		}
-		return toRet;/
-             */
-            /*
-            la tabla customers tiene datos q son los q va a devolver customerdao
-            /q el entityresult tenga attr-photo na mas
-             */
             keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
-            CustomerDao customerDao = Mockito.mock(CustomerDao.class);
+            EntityResult toRet = Mockito.mock(EntityResultMapImpl.class);
             Mockito.doReturn(toRet).when(daoHelper).query(customerDao, keysValues, attributes);
+
             customerService.customerQuery(keysValues, attributes);
+
+        }
+
+        @Test
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_EntityResult() {
+
+            keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
+            int recordNumber = 5;
+            int startIndex = 3;
+            List<String> orderBy = new ArrayList<>();
+
+            AdvancedEntityResult advancedEResult = Mockito.mock(AdvancedEntityResultMapImpl.class);
+
+            Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(customerDao, keysValues, attributes, recordNumber, startIndex, orderBy);
+
+            customerService.customerPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
 
         }
 
