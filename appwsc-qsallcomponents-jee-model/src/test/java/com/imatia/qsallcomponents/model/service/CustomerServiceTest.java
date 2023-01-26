@@ -1,10 +1,12 @@
 package com.imatia.qsallcomponents.model.service;
 
+import com.imatia.qsallcomponents.model.dao.CustomerAccountDao;
 import com.imatia.qsallcomponents.model.dao.CustomerDao;
 import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.db.AdvancedEntityResultMapImpl;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
+import com.ontimize.jee.common.dto.EntityResultTools;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import com.ontimize.jee.server.dao.IOntimizeDaoSupport;
 import org.junit.jupiter.api.Disabled;
@@ -31,6 +33,9 @@ class CustomerServiceTest {
     @Mock
     DefaultOntimizeDaoHelper daoHelper;
 
+    @Mock
+    CustomerAccountDao customerAccountDao;
+    
     @Mock
     CustomerDao customerDao;
 
@@ -242,15 +247,19 @@ class CustomerServiceTest {
 
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("attributes1", "value1");
-            Map<String, Object> KeyValues = new HashMap<>();
-            KeyValues.put("field1", "value1");
+            Map<String, Object> keyValues = new HashMap<>();
+            keyValues.put("field1", "value1");
+            
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            Hashtable record = new Hashtable();
+            record.put("attributes1", "value1");
+            record.put("field1","value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).update(customerAccountDao,attributes, keyValues);
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
-
-            customerService.customerAccountUpdate(attributes, KeyValues);
-            Mockito.verify(daoHelper).update(Mockito.any(), attrs.capture(), attrs.capture());
-
-            assertEquals(attributes, attrs.getValue());
+            EntityResult entityResult1 = customerService.customerAccountUpdate(attributes, keyValues);
+            
+            assertEquals(entityResult, entityResult1);
         }
 
         @Test
