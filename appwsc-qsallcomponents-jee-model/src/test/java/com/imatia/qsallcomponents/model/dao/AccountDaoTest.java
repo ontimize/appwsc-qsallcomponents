@@ -31,5 +31,13 @@ class AccountDaoTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void when_createAccountNumber_receive_accountID_expect_int(){
+        int accountID = 6378;
+        int actual = accountDao.createAccountNumber(accountID);
+        int expected = 1000006378;
+        assertEquals(expected,actual);
+    }
+
 
 }

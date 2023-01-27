@@ -6,10 +6,7 @@ import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.db.AdvancedEntityResultMapImpl;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
-import com.ontimize.jee.common.dto.EntityResultTools;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
-import com.ontimize.jee.server.dao.IOntimizeDaoSupport;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +32,7 @@ class CustomerServiceTest {
 
     @Mock
     CustomerAccountDao customerAccountDao;
-    
+
     @Mock
     CustomerDao customerDao;
 
@@ -50,15 +47,35 @@ class CustomerServiceTest {
 
 
         @Test
-        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_toRet() {
 
             keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
-            EntityResult toRet = Mockito.mock(EntityResultMapImpl.class);
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            Hashtable record = new Hashtable();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            toRet.addRecord(record);
             Mockito.doReturn(toRet).when(daoHelper).query(customerDao, keysValues, attributes);
 
-            customerService.customerQuery(keysValues, attributes);
-
+            EntityResult entityResult = customerService.customerQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
         }
+
+
+        @Test
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_() {
+
+            keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            Hashtable record = new Hashtable();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).query(customerDao, keysValues, attributes);
+            EntityResult entityResult = customerService.customerQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
+        }
+
 
         @Test
         void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_EntityResult() {
@@ -249,16 +266,16 @@ class CustomerServiceTest {
             attributes.put("attributes1", "value1");
             Map<String, Object> keyValues = new HashMap<>();
             keyValues.put("field1", "value1");
-            
+
             EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             Hashtable record = new Hashtable();
             record.put("attributes1", "value1");
-            record.put("field1","value1");
+            record.put("field1", "value1");
             entityResult.addRecord(record);
-            Mockito.doReturn(entityResult).when(daoHelper).update(customerAccountDao,attributes, keyValues);
+            Mockito.doReturn(entityResult).when(daoHelper).update(customerAccountDao, attributes, keyValues);
 
             EntityResult entityResult1 = customerService.customerAccountUpdate(attributes, keyValues);
-            
+
             assertEquals(entityResult, entityResult1);
         }
 

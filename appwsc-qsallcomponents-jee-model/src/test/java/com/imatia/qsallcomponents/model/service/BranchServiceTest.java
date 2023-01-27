@@ -3,18 +3,20 @@ package com.imatia.qsallcomponents.model.service;
 import com.imatia.qsallcomponents.model.dao.AccountDao;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
+import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -201,7 +203,7 @@ class BranchServiceTest {
             ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
             ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
 
-            branchService.accountQuery(keysValues, attributes);
+            branchService.accountConceptsQuery(keysValues, attributes);
             Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture(), Mockito.any(String.class));
 
             assertAll(() -> {
@@ -267,6 +269,26 @@ class BranchServiceTest {
             Mockito.doReturn(accoutUpdate).when(daoHelper).update(accountDao, mapAccountData, mapAccountKey);
 
             branchService.accountInsert(attributes);
+
+        }
+
+        @Test
+        void when_accountInsert_receive_attributes_expected_EntityResult_OPERATION_WRONG() {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put(AccountDao.ATTR_ENTITYID, 2095);
+            attributes.remove(AccountDao.ATTR_ANID);
+            attributes.remove(AccountDao.ATTR_CDID);
+
+            EntityResult toRet = new EntityResultMapImpl();
+            toRet.put(AccountDao.ATTR_ID, 1);
+            Mockito.doReturn(toRet).when(daoHelper).insert(accountDao, attributes);
+            toRet.setCode(1);
+
+            branchService.accountInsert(attributes);
+            OntimizeJEERuntimeException thrown = assertThrows(OntimizeJEERuntimeException.class,()->toRet.getCode(), toRet.getMessage());
+
+            assertEquals("Some expected message", thrown.getMessage());
+
 
         }
 
