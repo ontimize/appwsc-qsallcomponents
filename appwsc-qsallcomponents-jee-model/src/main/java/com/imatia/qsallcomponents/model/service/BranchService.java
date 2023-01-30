@@ -120,10 +120,10 @@ public class BranchService implements IBranchService {
         Map<String, Object> mapAccountKey = new HashMap<String, Object>();
         mapAccountKey.put(AccountDao.ATTR_ID, accountKey);
 
-        EntityResult accoutUpdate = this.daoHelper.update(this.accountDao, mapAccountData, mapAccountKey);
+        EntityResult accountUpdate = this.daoHelper.update(this.accountDao, mapAccountData, mapAccountKey);
 
-        if (accoutUpdate.getCode() == EntityResult.OPERATION_WRONG) {
-            throw new OntimizeJEERuntimeException(accoutUpdate.getMessage());
+        if (accountUpdate.getCode() == EntityResult.OPERATION_WRONG) {
+            throw new OntimizeJEERuntimeException(accountUpdate.getMessage());
         }
 
         return toRet;

@@ -1,6 +1,10 @@
 package com.imatia.qsallcomponents.model.service;
 
 import com.imatia.qsallcomponents.model.dao.AccountDao;
+import com.imatia.qsallcomponents.model.dao.AccountTypeDao;
+import com.imatia.qsallcomponents.model.dao.BranchDao;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
+import com.ontimize.jee.common.db.AdvancedEntityResultMapImpl;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
@@ -8,7 +12,6 @@ import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,7 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -28,32 +32,36 @@ class BranchServiceTest {
     DefaultOntimizeDaoHelper daoHelper;
 
     @Mock
+    BranchDao branchDao;
+
+    @Mock
     AccountDao accountDao;
+
+    @Mock
+    AccountTypeDao accountTypeDao;
 
     @Nested
     class Branch {
 
-
         Map<String, Object> keysValues = new HashMap<>();
         List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
-        ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-        ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
-
 
         @Test
         void when_branchQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
 
             keysValues.put("field1", "value1");
-            branchService.branchQuery(keysValues, attributes);
-            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture());
 
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    }
-            );
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).query(branchDao, keysValues, attributes);
+
+            EntityResult entityResult1 = branchService.branchQuery(keysValues, attributes);
+
+            assertEquals(entityResult, entityResult1);
+
         }
 
         @Test
@@ -63,29 +71,18 @@ class BranchServiceTest {
             int startIndex = 3;
             List<String> orderBy = new ArrayList<>();
 
-            ArgumentCaptor<Integer> rNumber = ArgumentCaptor.forClass(Integer.class);
-            ArgumentCaptor<Integer> sIndex = ArgumentCaptor.forClass(Integer.class);
-            ArgumentCaptor<List<String>> oBy = ArgumentCaptor.forClass(List.class);
+            AdvancedEntityResult advancedEntityResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            advancedEntityResult.addRecord(record);
+            Mockito.doReturn(advancedEntityResult).when(daoHelper).paginationQuery(branchDao, keysValues, attributes, recordNumber, startIndex, orderBy);
 
-            branchService.branchPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
-            Mockito.verify(daoHelper).paginationQuery(Mockito.any(), ksValues.capture(), attrs.capture(), rNumber.capture(), sIndex.capture(), oBy.capture());
+            AdvancedEntityResult advancedEntityResult1 = branchService.branchPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
 
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(recordNumber, rNumber.getValue());
-                    },
-                    () -> {
-                        assertEquals(startIndex, sIndex.getValue());
-                    },
-                    () -> {
-                        assertEquals(orderBy, oBy.getValue());
-                    }
-            );
+            assertEquals(advancedEntityResult, advancedEntityResult1);
+
+
         }
 
         @Test
@@ -93,13 +90,15 @@ class BranchServiceTest {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("field1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).insert(branchDao, attributes);
+            EntityResult entityResult1 = branchService.branchInsert(attributes);
 
-            branchService.branchInsert(attributes);
-            Mockito.verify(daoHelper).insert(Mockito.any(), attrs.capture());
-
-            assertEquals(attributes, attrs.getValue());
-
+            assertEquals(entityResult, entityResult1);
         }
 
         @Test
@@ -108,28 +107,31 @@ class BranchServiceTest {
             attributes.put("attribute1", 1);
             keysValues.put("field1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).update(branchDao, attributes, keysValues);
+            EntityResult entityResult1 = branchService.branchUpdate(attributes, keysValues);
 
-            branchService.branchUpdate(attributes, keysValues);
-            Mockito.verify(daoHelper).update(Mockito.any(), attrs.capture(), ksValues.capture());
-
-            assertAll(() -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    }
-            );
+            assertEquals(entityResult, entityResult1);
         }
 
         @Test
         void when_branchDelete_receive_keyValues_expected_EntityResult() {
             keysValues.put("field1", "value1");
 
-            branchService.branchDelete(keysValues);
-            Mockito.verify(daoHelper).delete(Mockito.any(), ksValues.capture());
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).delete(branchDao, keysValues);
+            EntityResult entityResult1 = branchService.branchDelete(keysValues);
 
-            assertEquals(keysValues, ksValues.getValue());
+            assertEquals(entityResult, entityResult1);
+
         }
 
     }
@@ -138,23 +140,21 @@ class BranchServiceTest {
     class Accounts {
         Map<String, Object> keysValues = new HashMap<>();
         List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
-        ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-        ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
 
         @Test
         void when_accountQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
 
             keysValues.put("VACCOUNTBALANCE", "value1");
-            branchService.accountQuery(keysValues, attributes);
-            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture(), Mockito.any(String.class));
 
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    }
-            );
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).query(accountDao, keysValues, attributes, AccountDao.ACCOUNT_BALANCE_QUERY_KEY);
+            EntityResult entityResult1 = branchService.accountQuery(keysValues, attributes);
+
+            assertEquals(entityResult, entityResult1);
         }
 
         @Test
@@ -164,29 +164,15 @@ class BranchServiceTest {
             int startIndex = 3;
             List<String> orderBy = new ArrayList<>();
 
-            ArgumentCaptor<Integer> rNumber = ArgumentCaptor.forClass(Integer.class);
-            ArgumentCaptor<Integer> sIndex = ArgumentCaptor.forClass(Integer.class);
-            ArgumentCaptor<List<String>> oBy = ArgumentCaptor.forClass(List.class);
+            AdvancedEntityResult advancedEntityResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            advancedEntityResult.addRecord(record);
+            Mockito.doReturn(advancedEntityResult).when(daoHelper).paginationQuery(accountDao, keysValues, attributes, recordNumber, startIndex, orderBy, AccountDao.ACCOUNT_BALANCE_QUERY_KEY);
+            AdvancedEntityResult advancedEntityResult1 = branchService.accountPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
 
-            branchService.accountPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
-            Mockito.verify(daoHelper).paginationQuery(Mockito.any(), ksValues.capture(), attrs.capture(), rNumber.capture(), sIndex.capture(), oBy.capture(), Mockito.any());
-
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(recordNumber, rNumber.getValue());
-                    },
-                    () -> {
-                        assertEquals(startIndex, sIndex.getValue());
-                    },
-                    () -> {
-                        assertEquals(orderBy, oBy.getValue());
-                    }
-            );
+            assertEquals(advancedEntityResult, advancedEntityResult1);
         }
 
     }
@@ -200,19 +186,15 @@ class BranchServiceTest {
             keysValues.put("VACCOUNTCONCEPTS", "value1");
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
 
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).query(accountDao, keysValues, attributes, AccountDao.ACCOUNT_CONCEPTS_QUERY_KEY);
+            EntityResult entityResult1 = branchService.accountConceptsQuery(keysValues, attributes);
 
-            branchService.accountConceptsQuery(keysValues, attributes);
-            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture(), Mockito.any(String.class));
-
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    }
-            );
+            assertEquals(entityResult, entityResult1);
         }
 
 
@@ -223,23 +205,21 @@ class BranchServiceTest {
 
         Map<String, Object> keysValues = new HashMap<>();
         List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
-        ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-        ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
 
         @Test
         void when_accountMovementTypesQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
 
             keysValues.put("VACCOUNTMOVEMENTTYPES", "value1");
-            branchService.accountMovementTypesQuery(keysValues, attributes);
-            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture(), Mockito.any(String.class));
 
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    }
-            );
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).query(accountDao, keysValues, attributes, AccountDao.ACCOUNT_MOVEMENTTYPES_QUERY_KEY);
+            EntityResult entityResult1 = branchService.accountMovementTypesQuery(keysValues, attributes);
+
+            assertEquals(entityResult, entityResult1);
         }
 
 
@@ -257,7 +237,7 @@ class BranchServiceTest {
 
             Mockito.doReturn(1).when(accountDao).createAccountNumber((Integer) accountKey);
 
-            EntityResult accoutUpdate = Mockito.mock(EntityResultMapImpl.class);
+            EntityResult accountUpdate = Mockito.mock(EntityResultMapImpl.class);
 
             Map<String, Object> mapAccountData = new HashMap<String, Object>();
             mapAccountData.put(AccountDao.ATTR_CDID, 0);
@@ -266,14 +246,15 @@ class BranchServiceTest {
             Map<String, Object> mapAccountKey = new HashMap<String, Object>();
             mapAccountKey.put(AccountDao.ATTR_ID, 1);
 
-            Mockito.doReturn(accoutUpdate).when(daoHelper).update(accountDao, mapAccountData, mapAccountKey);
+            Mockito.doReturn(accountUpdate).when(daoHelper).update(accountDao, mapAccountData, mapAccountKey);
 
-            branchService.accountInsert(attributes);
+            EntityResult entityResult1 = branchService.accountInsert(attributes);
+            assertEquals(toRet, entityResult1);
 
         }
 
         @Test
-        void when_accountInsert_receive_attributes_expected_EntityResult_OPERATION_WRONG() {
+        void when_accountInsert_receive_attributes_expected_toRet_EntityResult_OPERATION_WRONG() {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put(AccountDao.ATTR_ENTITYID, 2095);
             attributes.remove(AccountDao.ATTR_ANID);
@@ -284,11 +265,41 @@ class BranchServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).insert(accountDao, attributes);
             toRet.setCode(1);
 
-            branchService.accountInsert(attributes);
-            OntimizeJEERuntimeException thrown = assertThrows(OntimizeJEERuntimeException.class,()->toRet.getCode(), toRet.getMessage());
+            assertThrows(OntimizeJEERuntimeException.class, () -> {
+                branchService.accountInsert(attributes);
+            });
 
-            assertEquals("Some expected message", thrown.getMessage());
+        }
 
+        @Test
+        void when_accountInsert_receive_attributes_expected_accountUpdate_EntityResult_OPERATION_WRONG() {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put(AccountDao.ATTR_ENTITYID, 2095);
+            attributes.remove(AccountDao.ATTR_ANID);
+            attributes.remove(AccountDao.ATTR_CDID);
+
+            EntityResult toRet = new EntityResultMapImpl();
+            toRet.put(AccountDao.ATTR_ID, 1);
+            Mockito.doReturn(toRet).when(daoHelper).insert(accountDao, attributes);
+            Object accountKey = toRet.get(AccountDao.ATTR_ID);
+
+            Mockito.doReturn(1).when(accountDao).createAccountNumber((Integer) accountKey);
+
+            Map<String, Object> mapAccountData = new HashMap<String, Object>();
+            mapAccountData.put(AccountDao.ATTR_CDID, 0);
+            mapAccountData.put(AccountDao.ATTR_ANID, 0000000001);
+
+            Map<String, Object> mapAccountKey = new HashMap<String, Object>();
+            mapAccountKey.put(AccountDao.ATTR_ID, 1);
+
+            EntityResult accountUpdate = new EntityResultMapImpl();
+            accountUpdate.put(AccountDao.ATTR_ID, 1);
+            Mockito.doReturn(accountUpdate).when(daoHelper).update(accountDao, mapAccountData, mapAccountKey);
+            accountUpdate.setCode(1);
+
+            assertThrows(OntimizeJEERuntimeException.class, () -> {
+                branchService.accountInsert(attributes);
+            });
 
         }
 
@@ -298,28 +309,30 @@ class BranchServiceTest {
             attributes.put("attribute1", 1);
             keysValues.put("field1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).update(accountDao, attributes, keysValues);
+            EntityResult entityResult1 = branchService.accountUpdate(attributes, keysValues);
 
-            branchService.accountUpdate(attributes, keysValues);
-            Mockito.verify(daoHelper).update(Mockito.any(), attrs.capture(), ksValues.capture());
-
-            assertAll(() -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    }
-            );
+            assertEquals(entityResult, entityResult1);
         }
 
         @Test
         void when_accountDelete_receive_keyValues_expected_EntityResult() {
             keysValues.put("field1", "value1");
 
-            branchService.accountDelete(keysValues);
-            Mockito.verify(daoHelper).delete(Mockito.any(), ksValues.capture());
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).delete(accountDao, keysValues);
+            EntityResult entityResult1 = branchService.accountDelete(keysValues);
 
-            assertEquals(keysValues, ksValues.getValue());
+            assertEquals(entityResult, entityResult1);
         }
 
         @Test
@@ -327,18 +340,15 @@ class BranchServiceTest {
             attributes.add("attribute1");
             keysValues.put("field1", "value1");
 
-            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
+            EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("field1", "value1");
+            entityResult.addRecord(record);
+            Mockito.doReturn(entityResult).when(daoHelper).query(accountTypeDao, keysValues, attributes, AccountTypeDao.AGGREGATE_QUERY_KEY);
+            EntityResult entityResult1 = branchService.accountTypeAggregateQuery(keysValues, attributes);
 
-            branchService.accountTypeAggregateQuery(keysValues, attributes);
-            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture(), Mockito.any(String.class));
-
-            assertAll(() -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    }
-            );
+            assertEquals(entityResult, entityResult1);
         }
 
 
