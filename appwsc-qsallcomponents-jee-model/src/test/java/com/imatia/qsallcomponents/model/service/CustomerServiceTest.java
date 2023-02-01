@@ -10,6 +10,7 @@ import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.common.exceptions.DmsException;
 import com.ontimize.jee.common.naming.DMSNaming;
 import com.ontimize.jee.common.services.dms.DocumentIdentifier;
+import com.ontimize.jee.common.util.remote.BytesBlock;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import com.ontimize.jee.server.services.dms.DMSCreationHelper;
 import org.junit.jupiter.api.Disabled;
@@ -55,13 +56,30 @@ class CustomerServiceTest {
         List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
 
         @Test
-        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_BytesBlock() {
 
             keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
             record.put("attributes1", "value1");
-            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            record.put(CustomerDao.ATTR_PHOTO, bytesBlock);
+            toRet.addRecord(record);
+
+            Mockito.doReturn(toRet).when(daoHelper).query(customerDao, keysValues, attributes);
+            EntityResult entityResult = customerService.customerQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
+        }
+        @Test
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+
+            keysValues.put("CUSTOMERPHOTO", "value1");
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+
+            record.put("attributes1", "ATR1");
+            record.put("CUSTOMERPHOTO", "value1");
             toRet.addRecord(record);
 
             Mockito.doReturn(toRet).when(daoHelper).query(customerDao, keysValues, attributes);
@@ -71,7 +89,7 @@ class CustomerServiceTest {
 
 
         @Test
-        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_BytesBlock() {
 
             keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
             int recordNumber = 5;
@@ -80,8 +98,10 @@ class CustomerServiceTest {
 
             AdvancedEntityResult advancedEResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
             record.put("attributes1", "value1");
-            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            record.put(CustomerDao.ATTR_PHOTO, bytesBlock);
             advancedEResult.addRecord(record);
             advancedEResult.containsKey(CustomerDao.ATTR_PHOTO);
             Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(customerDao, keysValues, attributes, recordNumber, startIndex, orderBy);
@@ -89,20 +109,41 @@ class CustomerServiceTest {
             assertEquals(advancedEResult, advancedEntityResult);
         }
 
-        @Disabled
+        @Test
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+
+            keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
+            int recordNumber = 5;
+            int startIndex = 3;
+            List<String> orderBy = new ArrayList<>();
+            AdvancedEntityResult advancedEResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+
+            record.put("attributes1", "ATR1");
+            record.put("CUSTOMERPHOTO", "value1");
+            advancedEResult.addRecord(record);
+
+            advancedEResult.addRecord(record);
+            advancedEResult.containsKey(CustomerDao.ATTR_PHOTO);
+            Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(customerDao, keysValues, attributes, recordNumber, startIndex, orderBy);
+            AdvancedEntityResult advancedEntityResult = customerService.customerPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
+            assertEquals(advancedEResult, advancedEntityResult);
+        }
+
         @Test
         void when_customerInsert_receive_attributes_and_expected_EntityResult() throws DmsException {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("attribute1", 1);
+
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             HashMap record = new HashMap<>();
             record.put("attributes1", "value1");
             record.put("field1", "value1");
             toRet.addRecord(record);
 
-
-            ArgumentCaptor<DocumentIdentifier> docId = ArgumentCaptor.forClass(DocumentIdentifier.class);
-            attributes.put(DMSNaming.DOCUMENT_ID_DMS_DOCUMENT, "CUSTOMER_WORKSPACE");
+            DocumentIdentifier docId = new DocumentIdentifier();
+            attributes.put(DMSNaming.DOCUMENT_ID_DMS_DOCUMENT, docId.getDocumentId());
+            Mockito.doReturn(docId).when(dmsHelper).createDocument((String) attributes.get("CUSTOMER_WORKSPACE"));
 
             Mockito.doReturn(toRet).when(daoHelper).insert(customerDao, attributes);
             EntityResult entityResult = customerService.customerInsert(attributes);
