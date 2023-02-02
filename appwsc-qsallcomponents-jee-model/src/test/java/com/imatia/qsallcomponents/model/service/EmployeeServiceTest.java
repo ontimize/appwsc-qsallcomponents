@@ -1,16 +1,17 @@
 package com.imatia.qsallcomponents.model.service;
 
+import com.imatia.qsallcomponents.model.dao.CustomerDao;
 import com.imatia.qsallcomponents.model.dao.EmployeeDao;
 import com.imatia.qsallcomponents.model.dao.EmployeeTypeDao;
 import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.db.AdvancedEntityResultMapImpl;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
+import com.ontimize.jee.common.util.remote.BytesBlock;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,31 +33,48 @@ class EmployeeServiceTest {
     @Mock
     EmployeeDao employeeDao;
 
+    @Mock
+    EmployeeTypeDao employeeTypeDao;
+
 
     @Nested
     class Employees {
 
         Map<String, Object> keysValues = new HashMap<>();
         List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
-        ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-        ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
+
+        @Test
+        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_BytesBlock() {
+
+            keysValues.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, "value1");
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            record.put("attributes1", "value1");
+            record.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, bytesBlock);
+            toRet.addRecord(record);
+
+            Mockito.doReturn(toRet).when(daoHelper).query(employeeDao, keysValues, attributes);
+            EntityResult entityResult = employeeService.employeeQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
+
+        }
 
         @Test
         void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
-            keysValues.put("EMPLOYEEPHOTO", 1);
 
-            EntityResult toRet = Mockito.mock(EntityResultMapImpl.class);
+            keysValues.put("EPHOTO", "EPhoto");
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
 
-            Mockito.doReturn(toRet).when(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture());
-            employeeService.employeeQuery(keysValues, attributes);
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    }
-            );
+            record.put("attributes1", "value1");
+            record.put("EPHOTO", "EPhoto");
+            toRet.addRecord(record);
 
+            Mockito.doReturn(toRet).when(daoHelper).query(employeeDao, keysValues, attributes);
+            EntityResult entityResult = employeeService.employeeQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
 
         }
 
@@ -68,46 +85,74 @@ class EmployeeServiceTest {
             int startIndex = 3;
             List<String> orderBy = new ArrayList<>();
 
-            ArgumentCaptor<Integer> rNumber = ArgumentCaptor.forClass(Integer.class);
-            ArgumentCaptor<Integer> sIndex = ArgumentCaptor.forClass(Integer.class);
-            ArgumentCaptor<List<String>> oBy = ArgumentCaptor.forClass(List.class);
+            AdvancedEntityResult advancedEResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, "value1");
+            advancedEResult.addRecord(record);
 
-            AdvancedEntityResult advancedEResult = Mockito.mock(AdvancedEntityResultMapImpl.class);
-
-            Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(Mockito.any(), ksValues.capture(), attrs.capture(), rNumber.capture(), sIndex.capture(), oBy.capture(), Mockito.any());
-            employeeService.employeePaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
-
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(recordNumber, rNumber.getValue());
-                    },
-                    () -> {
-                        assertEquals(startIndex, sIndex.getValue());
-                    },
-                    () -> {
-                        assertEquals(orderBy, oBy.getValue());
-                    }
-            );
+            Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
+            AdvancedEntityResult advancedEntityResult = employeeService.employeePaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
+            assertEquals(advancedEResult, advancedEntityResult);
 
         }
 
+        @Test
+        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_BytesBlock() {
+            keysValues.put("EMPLOYEEPHOTO", 1);
+            int recordNumber = 5;
+            int startIndex = 3;
+            List<String> orderBy = new ArrayList<>();
+
+            AdvancedEntityResult advancedEResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            record.put("attributes1", "value1");
+            record.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, bytesBlock);
+            advancedEResult.addRecord(record);
+
+            Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
+            AdvancedEntityResult advancedEntityResult = employeeService.employeePaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
+            assertEquals(advancedEResult, advancedEntityResult);
+
+        }
 
         @Test
         void when_employeeInsert_receive_attributes_expected_EntityResult() {
             Map<String, Object> attributes = new HashMap<>();
-            attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, 1);
+            attributes.put("EMPLOYEEPHOTO", 1);
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
 
-            employeeService.employeeInsert(attributes);
-            Mockito.verify(daoHelper).insert(Mockito.any(), attrs.capture());
+            attributes.containsKey(EmployeeDao.ATTR_EMPLOYEEPHOTO);
+            Mockito.doReturn(toRet).when(daoHelper).insert(employeeDao, attributes);
+            EntityResult entityResult = employeeService.employeeInsert(attributes);
+            assertEquals(toRet, entityResult);
 
-            assertEquals(attributes, attrs.getValue());
+        }
+
+        @Test
+        void when_employeeInsert_receive_attributes_expected_EntityResult_with_String() {
+            String str = "string1";
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, str);
+            attributes.put("attributes1", "value1");
+
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, Base64.getDecoder().decode(str));
+            record.put("attributes1", "value1");
+            toRet.addRecord(record);
+
+            Mockito.doReturn(toRet).when(daoHelper).insert(Mockito.eq(employeeDao), Mockito.any(Map.class));
+            EntityResult entityResult = employeeService.employeeInsert(attributes);
+            assertEquals(toRet, entityResult);
 
         }
 
@@ -118,19 +163,39 @@ class EmployeeServiceTest {
             Map<String, Object> keyValues = new HashMap<>();
             keyValues.put("keyvalues1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
 
-            employeeService.employeeUpdate(attributes, keyValues);
-            Mockito.verify(daoHelper).update(Mockito.any(), attrs.capture(), ksValues.capture());
+            attributes.containsKey(EmployeeDao.ATTR_EMPLOYEEPHOTO);
+            Mockito.doReturn(toRet).when(daoHelper).update(employeeDao, attributes, keyValues);
+            EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
+            assertEquals(toRet, entityResult);
 
-            assertAll(() -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(keyValues, ksValues.getValue());
-                    }
-            );
+        }
+
+        @Test
+        void when_employeeUpdate_receive_attributes_and_keyValues_expected_EntityResult_with_string() {
+            String str = "string1";
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, str);
+
+            Map<String, Object> keyValues = new HashMap<>();
+            keyValues.put("keyvalues1", "value1");
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, Base64.getDecoder().decode(str));
+            toRet.addRecord(record);
+
+            attributes.containsKey(EmployeeDao.ATTR_EMPLOYEEPHOTO);
+            Mockito.doReturn(toRet).when(daoHelper).update(Mockito.eq(employeeDao), Mockito.any(Map.class), Mockito.any(Map.class));
+            EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
+            assertEquals(toRet, entityResult);
+
 
         }
 
@@ -139,10 +204,15 @@ class EmployeeServiceTest {
             Map<String, Object> keyValues = new HashMap<>();
             keyValues.put("field1", "value1");
 
-            employeeService.employeeDelete(keyValues);
-            Mockito.verify(daoHelper).delete(Mockito.any(), ksValues.capture());
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).delete(employeeDao, keysValues);
+            EntityResult entityResult = employeeService.employeeDelete(keysValues);
+            assertEquals(toRet, entityResult);
 
-            assertEquals(keyValues, ksValues.getValue());
         }
 
     }
@@ -152,8 +222,6 @@ class EmployeeServiceTest {
 
         Map<String, Object> keysValues = new HashMap<>();
         List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
-        ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-        ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
 
 
         @Test
@@ -161,19 +229,14 @@ class EmployeeServiceTest {
             attributes.add("employeeTypeQuery");
             keysValues.put("keysvalues1", "value1");
 
-            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-
-            employeeService.employeeTypeQuery(keysValues, attributes);
-            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture());
-
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    }
-            );
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).query(employeeTypeDao, keysValues, attributes);
+            EntityResult entityResult = employeeService.employeeTypeQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
 
         }
 
@@ -182,12 +245,14 @@ class EmployeeServiceTest {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("field1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
-
-            employeeService.employeeTypeInsert(attributes);
-            Mockito.verify(daoHelper).insert(Mockito.any(), attrs.capture());
-
-            assertEquals(attributes, attrs.getValue());
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).insert(employeeTypeDao, attributes);
+            EntityResult entityResult = employeeService.employeeTypeInsert(attributes);
+            assertEquals(toRet, entityResult);
 
         }
 
@@ -197,19 +262,16 @@ class EmployeeServiceTest {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("attributes1", "value1");
             keysValues.put("keysvalues1", "value1");
-            ArgumentCaptor<Map<String, Object>> attrs = ArgumentCaptor.forClass(Map.class);
 
-            employeeService.employeeTypeUpdate(attributes, keysValues);
-            Mockito.verify(daoHelper).update(Mockito.any(), attrs.capture(), ksValues.capture());
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).update(employeeTypeDao, attributes, keysValues);
+            EntityResult entityResult = employeeService.employeeTypeUpdate(attributes, keysValues);
+            assertEquals(toRet, entityResult);
 
-            assertAll(() -> {
-                        assertEquals(attributes, attrs.getValue());
-                    },
-                    () -> {
-                        assertEquals(keysValues, ksValues.getValue());
-
-                    }
-            );
         }
 
         @Test
@@ -217,12 +279,14 @@ class EmployeeServiceTest {
             Map<String, Object> keyValues = new HashMap<>();
             keyValues.put("field1", "value1");
 
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-
-            employeeService.employeeTypeDelete(keyValues);
-            Mockito.verify(daoHelper).delete(Mockito.any(), ksValues.capture());
-
-            assertEquals(keyValues, ksValues.getValue());
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("field1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).delete(employeeTypeDao, keyValues);
+            EntityResult entityResult = employeeService.employeeTypeDelete(keyValues);
+            assertEquals(toRet, entityResult);
 
         }
 
@@ -231,19 +295,14 @@ class EmployeeServiceTest {
             attributes.add(EmployeeTypeDao.AGGREGATE_QUERY_KEY);
             keysValues.put("keysvalues1", "value1");
 
-            ArgumentCaptor<List<String>> attrs = ArgumentCaptor.forClass(List.class);
-            ArgumentCaptor<Map<String, Object>> ksValues = ArgumentCaptor.forClass(Map.class);
-
-            employeeService.employeeTypeAggregateQuery(keysValues, attributes);
-            Mockito.verify(daoHelper).query(Mockito.any(), ksValues.capture(), attrs.capture(), Mockito.any(String.class));
-
-            assertAll(() -> {
-                        assertEquals(keysValues, ksValues.getValue());
-                    },
-                    () -> {
-                        assertEquals(attributes, attrs.getValue());
-                    }
-            );
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).query(employeeTypeDao, keysValues, attributes, EmployeeTypeDao.AGGREGATE_QUERY_KEY);
+            EntityResult entityResult = employeeService.employeeTypeAggregateQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
 
         }
 
