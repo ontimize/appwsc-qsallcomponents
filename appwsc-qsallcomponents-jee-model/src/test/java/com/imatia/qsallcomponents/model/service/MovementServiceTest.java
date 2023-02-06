@@ -1,13 +1,11 @@
 package com.imatia.qsallcomponents.model.service;
 
-import com.imatia.qsallcomponents.model.dao.CustomerDao;
 import com.imatia.qsallcomponents.model.dao.MovementDao;
 import com.imatia.qsallcomponents.model.dao.MovementTypeDao;
 import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.db.AdvancedEntityResultMapImpl;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
-import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -206,7 +204,6 @@ class MovementServiceTest {
             assertEquals(toRet, entityResult);
 
         }
-
 
 
     }
