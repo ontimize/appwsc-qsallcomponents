@@ -2,7 +2,6 @@ package com.imatia.qsallcomponents.model.service;
 
 import com.imatia.qsallcomponents.api.services.ISharePrefService;
 import com.imatia.qsallcomponents.model.dao.setup.OCSharePreferences;
-import com.imatia.qsallcomponents.model.dao.setup.OCSharePreferencesTarget;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
