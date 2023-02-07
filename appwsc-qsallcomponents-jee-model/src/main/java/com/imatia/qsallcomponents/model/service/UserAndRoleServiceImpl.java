@@ -271,7 +271,7 @@ public class UserAndRoleServiceImpl implements IUserAndRoleService {
 
 			if (hresgistro.containsKey(hres.get(User.ID_USER))) {
 
-				Hashtable<String, Object> aux = (Hashtable<String, Object>) hresgistro.get(hres.get(User.ID_USER));
+				Map<String, Object> aux = (Map<String, Object>)  hresgistro.get(hres.get(User.ID_USER));
 
 				aux.put(Role.ROLE_NAME, ((String) aux.get(Role.ROLE_NAME)) + UserAndRoleServiceImpl.PIVOT_ROLES_SEPARATOR + hres.get(Role.ROLE_NAME));
 				hresgistro.put(hres.get(User.ID_USER), aux);
@@ -285,7 +285,7 @@ public class UserAndRoleServiceImpl implements IUserAndRoleService {
 
 		for (int i = 0; i < l.size(); i++) {
 
-			respivot.addRecord((Hashtable<?, ?>) hresgistro.get(l.get(i)));
+			respivot.addRecord((Map) hresgistro.get(l.get(i)));
 		}
 
 		return respivot;
