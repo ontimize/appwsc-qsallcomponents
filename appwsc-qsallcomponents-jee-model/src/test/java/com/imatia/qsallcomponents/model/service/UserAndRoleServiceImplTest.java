@@ -1,10 +1,7 @@
 package com.imatia.qsallcomponents.model.service;
 
 import com.imatia.qsallcomponents.api.constants.ApplicationConstants;
-import com.imatia.qsallcomponents.api.constants.entities.Role;
-import com.imatia.qsallcomponents.api.constants.entities.RoleServerPermission;
-import com.imatia.qsallcomponents.api.constants.entities.ServerPermission;
-import com.imatia.qsallcomponents.api.constants.entities.User;
+import com.imatia.qsallcomponents.api.constants.entities.*;
 import com.imatia.qsallcomponents.model.dao.RoleDao;
 import com.imatia.qsallcomponents.model.dao.ServerRoleDao;
 import com.imatia.qsallcomponents.model.dao.UserDao;
@@ -15,6 +12,7 @@ import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import com.ontimize.jee.server.security.SecurityTools;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -394,7 +392,176 @@ class UserAndRoleServiceImplTest {
 
     }
 
+    @Nested
+    class RolesForUserUpdate {
 
+        Map<String, Object> keysValuesMap = new HashMap<>();
+
+        Map<String, Object> attributesValues = new HashMap<>();
+
+
+        @Test
+        void when_rolesForUserUpdate_receive_attributesValues_and_keysValues_expected_null() {
+
+            attributesValues.put(RoleServerPermission.ACTIVED, "ACTIVED");
+            keysValuesMap.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put(RoleServerPermission.ACTIVED, "ACTIVED");
+            record.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
+            toRet.addRecord(record);
+
+            Map<String, Object> valuesToInsert = new HashMap<>();
+            valuesToInsert.put(User.ID_USER, keysValuesMap.get(User.ID_USER));
+            valuesToInsert.put(Role.ID_ROLE, keysValuesMap.get(Role.ID_ROLE));
+
+            EntityResult entityResult = userAndRoleService.rolesForUserUpdate(attributesValues, keysValuesMap);
+            assertNull(entityResult);
+
+
+        }
+
+        @Test
+        void when_rolesForUserUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_insert() {
+
+            attributesValues.put(RoleServerPermission.ACTIVED, "S");
+            keysValuesMap.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put(RoleServerPermission.ACTIVED, "S");
+            record.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
+            toRet.addRecord(record);
+
+            ApplicationConstants.S.equals(attributesValues.get(RoleServerPermission.ACTIVED));
+            Map<String, Object> valuesToInsert = new HashMap<>();
+            valuesToInsert.put(User.ID_USER, keysValuesMap.get(User.ID_USER));
+            valuesToInsert.put(Role.ID_ROLE, keysValuesMap.get(Role.ID_ROLE));
+
+            Mockito.doReturn(toRet).when(daoHelper).insert(userRolesDao, valuesToInsert);
+            EntityResult entityResult = userAndRoleService.rolesForUserUpdate(attributesValues, keysValuesMap);
+            assertEquals(toRet, entityResult);
+
+        }
+
+        @Test
+        void when_rolesForUserUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_delete() {
+
+            attributesValues.put(RoleServerPermission.ACTIVED, "ACTIVED");
+            keysValuesMap.put(UserRole.ID_USER_ROLE, "ID_USER_ROLE");
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put(RoleServerPermission.ACTIVED, "ACTIVED");
+            record.put(UserRole.ID_USER_ROLE, "ID_USER_ROLE");
+            toRet.addRecord(record);
+
+            Map<String, Object> valuesToDelete = new HashMap<>();
+            valuesToDelete.put(UserRole.ID_USER_ROLE, keysValuesMap.get(UserRole.ID_USER_ROLE));
+
+            Mockito.doReturn(toRet).when(daoHelper).delete(userRolesDao, valuesToDelete);
+            EntityResult entityResult = userAndRoleService.rolesForUserUpdate(attributesValues, keysValuesMap);
+            assertEquals(toRet, entityResult);
+
+
+        }
+    }
+
+
+    @Nested
+    class SearchUsersCRUD {
+
+        Map<String, Object> keysValuesMap = new HashMap<>();
+
+        List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
+
+        @Test
+        void when_searchUsersQuery_receive_keysValues_and_attributes_expected_EntityResult_put_User_ID_USER() {
+
+            attributesList.add(User.ID_USER);
+            keysValuesMap.put("keysvaluesMap1", "value1");
+
+            EntityResult res = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            Map record = new Hashtable<>();
+            record.put(User.ID_USER, "USER_");
+            record.put("keysvaluesMap1", "value1");
+            res.addRecord(record);
+
+            Mockito.doReturn(res).when(daoHelper).query(userRolesDao, keysValuesMap, attributesList, UserRoleDao.DEFAULT_QUERY);
+            EntityResult entityResult = userAndRoleService.searchUsersQuery(keysValuesMap, attributesList);
+            assertEquals(res.containsKey(User.ID_USER), entityResult.containsKey(User.ID_USER));
+
+        }
+
+        @Disabled
+        @Test
+        void when_searchUsersQuery_receive_keysValues_and_attributes_expected_EntityResult_containsKey_User_ID_USER() {
+
+            attributesList.add(User.ID_USER);
+            keysValuesMap.put("keysvaluesMap1", "value1");
+
+            EntityResult res = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            Map record = new Hashtable<>();
+            record.put(User.ID_USER, "USER_");
+            record.put("keysvaluesMap1", "value1");
+            res.addRecord(record);
+
+           
+            Mockito.doReturn(res).when(daoHelper).query(userRolesDao, keysValuesMap, attributesList, UserRoleDao.DEFAULT_QUERY);
+            EntityResult entityResult = userAndRoleService.searchUsersQuery(keysValuesMap, attributesList);
+            assertEquals(res.containsKey(User.ID_USER), entityResult.containsKey(User.ID_USER));
+
+        }
+
+
+    }
+
+
+    @Nested
+    class SearchUsersUpdate {
+
+        Map<String, Object> keysValuesMap = new HashMap<>();
+
+        Map<String, Object> attributesMap = new HashMap<>();
+
+        @Test
+        void when_searchUsersUpdate_receive_attributes_and_keyValues_expected_EntityResult() {
+            attributesMap.put("attributesMap1", "value1");
+            keysValuesMap.put("keysvaluesMap1", "value1");
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributesMap1", "value1");
+            record.put("keysvaluesMap1", "value1");
+            toRet.addRecord(record);
+            Mockito.doReturn(toRet).when(daoHelper).update(userDao, attributesMap, keysValuesMap);
+            EntityResult entityResult = userAndRoleService.searchUsersUpdate(attributesMap, keysValuesMap);
+            SecurityTools.invalidateSecurityManager(daoHelper.getApplicationContext());
+            assertEquals(toRet, entityResult);
+
+        }
+
+    }
+
+
+    @Nested
+    class SearchUsersDelete {
+
+        @Test
+        void when_searchUsersDelete_receive_keysValues_expected_EntityResult() {
+
+            Map<String, Object> keysValuesMap = new HashMap<String, Object>();
+            keysValuesMap.put(User.DOWN_DATE, new Date());
+
+            EntityResult result = userAndRoleService.userDelete(keysValuesMap);
+
+            EntityResult entityResult = userAndRoleService.searchUsersDelete(keysValuesMap);
+            assertEquals(result, entityResult);
+
+        }
+
+    }
 }
 
 
