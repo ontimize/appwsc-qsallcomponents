@@ -262,12 +262,14 @@ public class UserAndRoleServiceImpl implements IUserAndRoleService {
 	private EntityResult pivotRoles(EntityResult res) {
 
 		List<Object> l = new ArrayList<>();
-		Hashtable<Object, Object> hresgistro = new Hashtable<>();
+		HashMap<Object, Object> hresgistro = new HashMap<>();
 		EntityResult respivot = new EntityResultMapImpl(res.getOrderColumns());
 
-		for (int i = 0; i < res.calculateRecordNumber(); i++) {
+		HashMap<String, Object> hres = (HashMap<String, Object>) res.getRecordValues(0);
 
-			Map hres = res.getRecordValues(i);
+
+		for (int i = 0; i <= res.calculateRecordNumber(); i++) {
+
 
 			if (hresgistro.containsKey(hres.get(User.ID_USER))) {
 
