@@ -494,7 +494,6 @@ class UserAndRoleServiceImplTest {
 
         }
 
-        @Disabled
         @Test
         void when_searchUsersQuery_receive_keysValues_and_attributes_expected_EntityResult_containsKey_User_ID_USER() {
 
@@ -507,7 +506,6 @@ class UserAndRoleServiceImplTest {
             record.put("keysvaluesMap1", "value1");
             res.addRecord(record);
 
-           
             Mockito.doReturn(res).when(daoHelper).query(userRolesDao, keysValuesMap, attributesList, UserRoleDao.DEFAULT_QUERY);
             EntityResult entityResult = userAndRoleService.searchUsersQuery(keysValuesMap, attributesList);
             assertEquals(res.containsKey(User.ID_USER), entityResult.containsKey(User.ID_USER));
