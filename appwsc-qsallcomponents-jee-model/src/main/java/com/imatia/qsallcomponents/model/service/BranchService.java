@@ -38,6 +38,7 @@ public class BranchService implements IBranchService {
 //	@Autowired
 //	private IMailService				mailService;
 
+
     @Override
     public EntityResult branchQuery(Map<String, Object> keysValues, List<String> attributes) throws OntimizeJEERuntimeException {
         return this.daoHelper.query(this.branchDao, keysValues, attributes);

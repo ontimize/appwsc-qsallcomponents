@@ -19,8 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -59,7 +58,7 @@ class BranchServiceTest {
             Mockito.doReturn(entityResult).when(daoHelper).query(branchDao, keysValues, attributes);
 
             EntityResult entityResult1 = branchService.branchQuery(keysValues, attributes);
-
+            assertNotNull(entityResult1);
             assertEquals(entityResult, entityResult1);
 
         }
@@ -79,7 +78,7 @@ class BranchServiceTest {
             Mockito.doReturn(advancedEntityResult).when(daoHelper).paginationQuery(branchDao, keysValues, attributes, recordNumber, startIndex, orderBy);
 
             AdvancedEntityResult advancedEntityResult1 = branchService.branchPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
-
+            assertNotNull(advancedEntityResult1);
             assertEquals(advancedEntityResult, advancedEntityResult1);
 
 
@@ -97,6 +96,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).insert(branchDao, attributes);
             EntityResult entityResult1 = branchService.branchInsert(attributes);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
         }
@@ -114,6 +114,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).update(branchDao, attributes, keysValues);
             EntityResult entityResult1 = branchService.branchUpdate(attributes, keysValues);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
         }
@@ -129,6 +130,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).delete(branchDao, keysValues);
             EntityResult entityResult1 = branchService.branchDelete(keysValues);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
 
@@ -153,6 +155,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).query(accountDao, keysValues, attributes, AccountDao.ACCOUNT_BALANCE_QUERY_KEY);
             EntityResult entityResult1 = branchService.accountQuery(keysValues, attributes);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
         }
@@ -171,6 +174,7 @@ class BranchServiceTest {
             advancedEntityResult.addRecord(record);
             Mockito.doReturn(advancedEntityResult).when(daoHelper).paginationQuery(accountDao, keysValues, attributes, recordNumber, startIndex, orderBy, AccountDao.ACCOUNT_BALANCE_QUERY_KEY);
             AdvancedEntityResult advancedEntityResult1 = branchService.accountPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
+            assertNotNull(advancedEntityResult1);
 
             assertEquals(advancedEntityResult, advancedEntityResult1);
         }
@@ -193,6 +197,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).query(accountDao, keysValues, attributes, AccountDao.ACCOUNT_CONCEPTS_QUERY_KEY);
             EntityResult entityResult1 = branchService.accountConceptsQuery(keysValues, attributes);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
         }
@@ -218,6 +223,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).query(accountDao, keysValues, attributes, AccountDao.ACCOUNT_MOVEMENTTYPES_QUERY_KEY);
             EntityResult entityResult1 = branchService.accountMovementTypesQuery(keysValues, attributes);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
         }
@@ -250,6 +256,8 @@ class BranchServiceTest {
 
             EntityResult entityResult1 = branchService.accountInsert(attributes);
             assertEquals(toRet, entityResult1);
+            assertNotNull(entityResult1);
+
 
         }
 
@@ -268,6 +276,7 @@ class BranchServiceTest {
             assertThrows(OntimizeJEERuntimeException.class, () -> {
                 branchService.accountInsert(attributes);
             });
+
 
         }
 
@@ -316,7 +325,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).update(accountDao, attributes, keysValues);
             EntityResult entityResult1 = branchService.accountUpdate(attributes, keysValues);
-
+            assertNotNull(entityResult1);
             assertEquals(entityResult, entityResult1);
         }
 
@@ -331,6 +340,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).delete(accountDao, keysValues);
             EntityResult entityResult1 = branchService.accountDelete(keysValues);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
         }
@@ -347,6 +357,7 @@ class BranchServiceTest {
             entityResult.addRecord(record);
             Mockito.doReturn(entityResult).when(daoHelper).query(accountTypeDao, keysValues, attributes, AccountTypeDao.AGGREGATE_QUERY_KEY);
             EntityResult entityResult1 = branchService.accountTypeAggregateQuery(keysValues, attributes);
+            assertNotNull(entityResult1);
 
             assertEquals(entityResult, entityResult1);
         }
