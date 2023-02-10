@@ -39,7 +39,7 @@ public class EmployeeDao extends OntimizeJdbcDaoSupport {
 	@Override
 	public AdvancedEntityResult paginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy, String queryId) {
 
-		checkKeysValues(keysValues);
+		this.checkKeysValues(keysValues);
 
 		return super.paginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy, queryId);
 	}

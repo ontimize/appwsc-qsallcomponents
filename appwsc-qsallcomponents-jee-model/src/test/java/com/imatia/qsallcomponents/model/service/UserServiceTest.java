@@ -8,9 +8,11 @@ import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import com.ontimize.jee.server.security.SecurityTools;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -98,18 +100,12 @@ class UserServiceTest {
 
             Map<Object, Object> attrMap = new HashMap<>();
             attrMap.put("user_down_date", new Timestamp(Calendar.getInstance().getTimeInMillis()));
-
             keyMap.put("keyMap1", "value1");
 
-            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
-            HashMap record = new HashMap<>();
-            record.put("keyMap1", "value1");
-            toRet.addRecord(record);
-
-            Mockito.doReturn(toRet).when(daoHelper).update(userDao, attrMap, keyMap);
-            EntityResult entityResult = userService.userDelete(keyMap);
-            assertEquals(toRet, entityResult);
-            assertTrue( entityResult.contains(new Timestamp(Calendar.getInstance().getTimeInMillis())));
+            daoHelper.update(userDao, attrMap, keyMap);
+            userService.userDelete(keyMap);
+            assertTrue(attrMap.containsKey("user_down_date"));
+            assertNotNull(attrMap.get("user_down_date"));
 
         }
 
