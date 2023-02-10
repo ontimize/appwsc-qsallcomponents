@@ -130,9 +130,6 @@
                     <exportLineCoverage>true</exportLineCoverage>
                     <failWhenNoMutations>false</failWhenNoMutations>
                     <timestampedReports>false</timestampedReports>
-                    <excludedClasses>
-                        <param>com.imatia.qsallcomponents.boot.*</param>
-                    </excludedClasses>
                     <verbose>false
                     </verbose>  <!-- Flag to exclude mutation in module with no tests such as the clients  -->+
                     <skip>${pitest.skip}</skip>
