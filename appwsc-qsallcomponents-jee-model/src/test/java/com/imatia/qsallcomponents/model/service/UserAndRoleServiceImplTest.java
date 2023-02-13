@@ -12,7 +12,6 @@ import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.dto.EntityResultMapImpl;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import com.ontimize.jee.server.security.SecurityTools;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,8 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserAndRoleServiceImplTest {
@@ -50,15 +48,10 @@ class UserAndRoleServiceImplTest {
 
     @Nested
     class UserCRUD {
-
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        Map<String, Object> attributesMap = new HashMap<>();
-
-        List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
-
         @Test
         void when_userQuery_receive_keysValues_and_attributes_expected_EntityResult() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
 
             keysValuesMap.put("keysvaluesMap1", "value1");
 
@@ -70,12 +63,18 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).query(userDao, keysValuesMap, attributesList);
             EntityResult entityResult = userAndRoleService.userQuery(keysValuesMap, attributesList);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
 
         @Test
         void when_userPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+
+            Map<String, Object> keysValuesMap = new HashMap<>();
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
+
             keysValuesMap.put("keysValuesMap1", "value1");
             int recordNumber = 5;
             int startIndex = 3;
@@ -90,11 +89,17 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(userDao, keysValuesMap, attributesList, recordNumber, startIndex, orderBy);
             AdvancedEntityResult advancedEntityResult = userAndRoleService.userPaginationQuery(keysValuesMap, attributesList, recordNumber, startIndex, orderBy);
             assertEquals(advancedEResult, advancedEntityResult);
+            assertNotNull(advancedEntityResult);
+
         }
 
 
         @Test
         void when_userUpdate_receive_attributes_and_keyValues_expected_EntityResult() {
+
+            Map<String, Object> keysValuesMap = new HashMap<>();
+
+            Map<String, Object> attributesMap = new HashMap<>();
 
             attributesMap.put("attributesMap1", "value1");
             keysValuesMap.put("keysvaluesMap1", "value1");
@@ -108,12 +113,14 @@ class UserAndRoleServiceImplTest {
             EntityResult entityResult = userAndRoleService.userUpdate(attributesMap, keysValuesMap);
             SecurityTools.invalidateSecurityManager(daoHelper.getApplicationContext());
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
         }
 
 
         @Test
         void when_userDelete_receive_keysValues_expected_EntityResult() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
             Map<String, Object> updateValues = new HashMap<String, Object>();
             updateValues.put(User.DOWN_DATE, new Date());
@@ -122,10 +129,12 @@ class UserAndRoleServiceImplTest {
 
             EntityResult entityResult = userAndRoleService.userDelete(keysValuesMap);
             assertEquals(result, entityResult);
+            assertNull(entityResult);
         }
 
         @Test
         void when_userInsert_receive_keysValues_expected_EntityResult() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             HashMap record = new HashMap<>();
@@ -134,6 +143,7 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).insert(userDao, keysValuesMap);
             EntityResult entityResult = userAndRoleService.userInsert(keysValuesMap);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
         }
 
@@ -142,15 +152,11 @@ class UserAndRoleServiceImplTest {
     @Nested
     class RoleCRUD {
 
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        Map<String, Object> attributesMap = new HashMap<>();
-
-        List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
-
         @Test
         void when_roleQuery_receive_keysValues_and_attributes_expected_EntityResult() {
 
+            Map<String, Object> keysValuesMap = new HashMap<>();
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
             keysValuesMap.put("keysvaluesMap1", "value1");
 
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -161,6 +167,7 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).query(roleDao, keysValuesMap, attributesList);
             EntityResult entityResult = userAndRoleService.roleQuery(keysValuesMap, attributesList);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
         }
 
@@ -168,6 +175,8 @@ class UserAndRoleServiceImplTest {
         @Test
         void when_roleUpdate_receive_attributes_and_keyValues_expected_EntityResult() {
 
+            Map<String, Object> keysValuesMap = new HashMap<>();
+            Map<String, Object> attributesMap = new HashMap<>();
             attributesMap.put("attributesMap1", "value1");
             keysValuesMap.put("keysvaluesMap1", "value1");
 
@@ -180,6 +189,7 @@ class UserAndRoleServiceImplTest {
             EntityResult entityResult = userAndRoleService.roleUpdate(attributesMap, keysValuesMap);
             SecurityTools.invalidateSecurityManager(daoHelper.getApplicationContext());
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
         }
 
@@ -187,6 +197,7 @@ class UserAndRoleServiceImplTest {
         @Test
         void when_roleDelete_receive_keyValues_expected_EntityResult() {
 
+            Map<String, Object> keysValuesMap = new HashMap<>();
             keysValuesMap.put("keysvaluesMap1", "value1");
 
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -199,13 +210,14 @@ class UserAndRoleServiceImplTest {
             EntityResult entityResult = userAndRoleService.roleDelete(keysValuesMap);
             SecurityTools.invalidateSecurityManager(daoHelper.getApplicationContext());
             assertEquals(toRet, entityResult);
-
+            assertNotNull(entityResult);
         }
 
 
         @Test
         void when_roleInsert_receive_keyValues_expected_EntityResult() {
 
+            Map<String, Object> keysValuesMap = new HashMap<>();
             keysValuesMap.put("keysvaluesMap1", "value1");
 
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -216,7 +228,7 @@ class UserAndRoleServiceImplTest {
             EntityResult entityResult = userAndRoleService.roleInsert(keysValuesMap);
             SecurityTools.invalidateSecurityManager(daoHelper.getApplicationContext());
             assertEquals(toRet, entityResult);
-
+            assertNotNull(entityResult);
         }
 
 
@@ -226,12 +238,12 @@ class UserAndRoleServiceImplTest {
     @Nested
     class ServerRoleQuery {
 
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
 
         @Test
         void when_serverRoleQuery_receive_keysValues_and_attributes_expected_EntityResult_with_ServerRoleDao_ID_SERVER_ROLE_ALL_QUERY() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
+
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
 
             keysValuesMap.put("keysValuesMap1", "value1");
 
@@ -243,11 +255,14 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).query(serverRoleDao, keysValuesMap, attributesList, ServerRoleDao.ID_SERVER_ROLE_ALL_QUERY);
             EntityResult entityResult = userAndRoleService.serverRoleQuery(keysValuesMap, attributesList);
             assertEquals(toRet, entityResult);
-
+            assertNotNull(entityResult);
         }
 
         @Test
         void when_serverRoleQuery_receive_keysValues_and_attributes_expected_EntityResult_with_ServerRoleDao_ID_SERVER_ROLE_QUERY() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
+
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
 
             keysValuesMap.put(Role.ID_ROLE, "value1");
 
@@ -259,6 +274,8 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).query(serverRoleDao, keysValuesMap, attributesList, ServerRoleDao.ID_SERVER_ROLE_QUERY);
             EntityResult entityResult = userAndRoleService.serverRoleQuery(keysValuesMap, attributesList);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
         }
 
 
@@ -268,14 +285,12 @@ class UserAndRoleServiceImplTest {
     @Nested
     class ServerRoleUpdate {
 
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        Map<String, Object> attributesValues = new HashMap<>();
-
-
         @Test
         void when_serverRoleUpdate_receive_attributesValues_and_keysValues_expected_null() {
 
+            Map<String, Object> keysValuesMap = new HashMap<>();
+
+            Map<String, Object> attributesValues = new HashMap<>();
             attributesValues.put(RoleServerPermission.ACTIVED, "ACTIVED");
             keysValuesMap.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
 
@@ -297,7 +312,9 @@ class UserAndRoleServiceImplTest {
 
         @Test
         void when_serverRoleUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_insert() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            Map<String, Object> attributesValues = new HashMap<>();
             attributesValues.put(RoleServerPermission.ACTIVED, "S");
             keysValuesMap.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
 
@@ -315,13 +332,15 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).insert(serverRoleDao, valuesToInsert);
             EntityResult entityResult = userAndRoleService.serverRoleUpdate(attributesValues, keysValuesMap);
             assertEquals(toRet, entityResult);
-
+            assertNotNull(entityResult);
 
         }
 
         @Test
         void when_serverRoleUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_delete() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            Map<String, Object> attributesValues = new HashMap<>();
             attributesValues.put(RoleServerPermission.ACTIVED, "ACTIVED");
             keysValuesMap.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
 
@@ -339,7 +358,7 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).delete(serverRoleDao, valuesToDelete);
             EntityResult entityResult = userAndRoleService.serverRoleUpdate(attributesValues, keysValuesMap);
             assertEquals(toRet, entityResult);
-
+            assertNotNull(entityResult);
 
         }
     }
@@ -348,14 +367,12 @@ class UserAndRoleServiceImplTest {
     @Nested
     class RoleForUserQuery {
 
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
-
 
         @Test
         void when_rolesForUserQuery_receive_keysValues_and_attributes_expected_EntityResult_UserRoleDao_ROLES_WITHOUT_USER_QUERY() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
             attributesList.add("ACTIVED");
             keysValuesMap.put(UserRoleDao.ROLES_WITHOUT_USER_QUERY, "rolesWithoutUser");
 
@@ -369,11 +386,14 @@ class UserAndRoleServiceImplTest {
 
             EntityResult entityResult = userAndRoleService.rolesForUserQuery(keysValuesMap, attributesList);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
         }
 
         @Test
         void when_rolesForUserQuery_receive_keysValues_and_attributes_expected_EntityResult_UserRoleDao_ROLES_WITH_USER_QUERY() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
             attributesList.add("ACTIVED");
             keysValuesMap.put(User.ID_USER, "rolesWithoutUser");
 
@@ -387,6 +407,7 @@ class UserAndRoleServiceImplTest {
 
             EntityResult entityResult = userAndRoleService.rolesForUserQuery(keysValuesMap, attributesList);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
         }
 
@@ -395,14 +416,11 @@ class UserAndRoleServiceImplTest {
     @Nested
     class RolesForUserUpdate {
 
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        Map<String, Object> attributesValues = new HashMap<>();
-
-
         @Test
         void when_rolesForUserUpdate_receive_attributesValues_and_keysValues_expected_null() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            Map<String, Object> attributesValues = new HashMap<>();
             attributesValues.put(RoleServerPermission.ACTIVED, "ACTIVED");
             keysValuesMap.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
 
@@ -419,12 +437,13 @@ class UserAndRoleServiceImplTest {
             EntityResult entityResult = userAndRoleService.rolesForUserUpdate(attributesValues, keysValuesMap);
             assertNull(entityResult);
 
-
         }
 
         @Test
         void when_rolesForUserUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_insert() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            Map<String, Object> attributesValues = new HashMap<>();
             attributesValues.put(RoleServerPermission.ACTIVED, "S");
             keysValuesMap.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
 
@@ -442,12 +461,15 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).insert(userRolesDao, valuesToInsert);
             EntityResult entityResult = userAndRoleService.rolesForUserUpdate(attributesValues, keysValuesMap);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
         }
 
         @Test
         void when_rolesForUserUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_delete() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            Map<String, Object> attributesValues = new HashMap<>();
             attributesValues.put(RoleServerPermission.ACTIVED, "ACTIVED");
             keysValuesMap.put(UserRole.ID_USER_ROLE, "ID_USER_ROLE");
 
@@ -463,7 +485,7 @@ class UserAndRoleServiceImplTest {
             Mockito.doReturn(toRet).when(daoHelper).delete(userRolesDao, valuesToDelete);
             EntityResult entityResult = userAndRoleService.rolesForUserUpdate(attributesValues, keysValuesMap);
             assertEquals(toRet, entityResult);
-
+            assertNotNull(entityResult);
 
         }
     }
@@ -472,13 +494,11 @@ class UserAndRoleServiceImplTest {
     @Nested
     class SearchUsersCRUD {
 
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
-
         @Test
         void when_searchUsersQuery_receive_keysValues_and_attributes_expected_EntityResult_put_User_ID_USER() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
             attributesList.add(User.ID_USER);
             keysValuesMap.put("keysvaluesMap1", "value1");
 
@@ -496,7 +516,9 @@ class UserAndRoleServiceImplTest {
 
         @Test
         void when_searchUsersQuery_receive_keysValues_and_attributes_expected_EntityResult_containsKey_User_ID_USER() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
 
+            List<String> attributesList = new ArrayList<>(Arrays.asList("attributeList1"));
             attributesList.add(User.ID_USER);
             keysValuesMap.put("keysvaluesMap1", "value1");
 
@@ -518,13 +540,12 @@ class UserAndRoleServiceImplTest {
 
     @Nested
     class SearchUsersUpdate {
-
-        Map<String, Object> keysValuesMap = new HashMap<>();
-
-        Map<String, Object> attributesMap = new HashMap<>();
-
         @Test
         void when_searchUsersUpdate_receive_attributes_and_keyValues_expected_EntityResult() {
+            Map<String, Object> keysValuesMap = new HashMap<>();
+
+            Map<String, Object> attributesMap = new HashMap<>();
+
             attributesMap.put("attributesMap1", "value1");
             keysValuesMap.put("keysvaluesMap1", "value1");
 
@@ -537,6 +558,7 @@ class UserAndRoleServiceImplTest {
             EntityResult entityResult = userAndRoleService.searchUsersUpdate(attributesMap, keysValuesMap);
             SecurityTools.invalidateSecurityManager(daoHelper.getApplicationContext());
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
         }
 
@@ -556,7 +578,6 @@ class UserAndRoleServiceImplTest {
 
             EntityResult entityResult = userAndRoleService.searchUsersDelete(keysValuesMap);
             assertEquals(result, entityResult);
-
         }
 
     }

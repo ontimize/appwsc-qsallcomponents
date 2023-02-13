@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -40,12 +41,10 @@ class EmployeeServiceTest {
     @Nested
     class Employees {
 
-        Map<String, Object> keysValues = new HashMap<>();
-        List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
-
         @Test
         void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_BytesBlock() {
-
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, "value1");
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             HashMap record = new HashMap<>();
@@ -58,12 +57,15 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).query(employeeDao, keysValues, attributes);
             EntityResult entityResult = employeeService.employeeQuery(keysValues, attributes);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
         @Test
         void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
-
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("EPHOTO", "EPhoto");
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             HashMap record = new HashMap<>();
@@ -75,11 +77,15 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).query(employeeDao, keysValues, attributes);
             EntityResult entityResult = employeeService.employeeQuery(keysValues, attributes);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
         @Test
         void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("EMPLOYEEPHOTO", 1);
             int recordNumber = 5;
             int startIndex = 3;
@@ -94,11 +100,16 @@ class EmployeeServiceTest {
             Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
             AdvancedEntityResult advancedEntityResult = employeeService.employeePaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
             assertEquals(advancedEResult, advancedEntityResult);
+            assertNotNull(advancedEntityResult);
+
 
         }
 
+
         @Test
         void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_BytesBlock() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("EMPLOYEEPHOTO", 1);
             int recordNumber = 5;
             int startIndex = 3;
@@ -115,6 +126,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
             AdvancedEntityResult advancedEntityResult = employeeService.employeePaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
             assertEquals(advancedEResult, advancedEntityResult);
+            assertNotNull(advancedEntityResult);
+
 
         }
 
@@ -133,6 +146,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).insert(employeeDao, attributes);
             EntityResult entityResult = employeeService.employeeInsert(attributes);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
@@ -153,6 +168,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).insert(Mockito.eq(employeeDao), Mockito.any(Map.class));
             EntityResult entityResult = employeeService.employeeInsert(attributes);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
@@ -173,6 +190,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).update(employeeDao, attributes, keyValues);
             EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
@@ -195,6 +214,7 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).update(Mockito.eq(employeeDao), Mockito.any(Map.class), Mockito.any(Map.class));
             EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
 
 
         }
@@ -204,6 +224,9 @@ class EmployeeServiceTest {
             Map<String, Object> keyValues = new HashMap<>();
             keyValues.put("field1", "value1");
 
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
+
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
             HashMap record = new HashMap<>();
             record.put("attributes1", "value1");
@@ -212,6 +235,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).delete(employeeDao, keysValues);
             EntityResult entityResult = employeeService.employeeDelete(keysValues);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
@@ -220,12 +245,10 @@ class EmployeeServiceTest {
     @Nested
     class EmployeesType {
 
-        Map<String, Object> keysValues = new HashMap<>();
-        List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
-
-
         @Test
         void when_employeeTypeQuery_receive_keysValues_and_attributes_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>();
             attributes.add("employeeTypeQuery");
             keysValues.put("keysvalues1", "value1");
 
@@ -237,6 +260,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).query(employeeTypeDao, keysValues, attributes);
             EntityResult entityResult = employeeService.employeeTypeQuery(keysValues, attributes);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
@@ -253,6 +278,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).insert(employeeTypeDao, attributes);
             EntityResult entityResult = employeeService.employeeTypeInsert(attributes);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
@@ -261,6 +288,7 @@ class EmployeeServiceTest {
 
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("attributes1", "value1");
+            Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("keysvalues1", "value1");
 
             EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -271,6 +299,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).update(employeeTypeDao, attributes, keysValues);
             EntityResult entityResult = employeeService.employeeTypeUpdate(attributes, keysValues);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
@@ -287,11 +317,15 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).delete(employeeTypeDao, keyValues);
             EntityResult entityResult = employeeService.employeeTypeDelete(keyValues);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 
         @Test
         void when_employeeTypeAggregateQuery_receive_keysValues_and_attributes_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             attributes.add(EmployeeTypeDao.AGGREGATE_QUERY_KEY);
             keysValues.put("keysvalues1", "value1");
 
@@ -303,6 +337,8 @@ class EmployeeServiceTest {
             Mockito.doReturn(toRet).when(daoHelper).query(employeeTypeDao, keysValues, attributes, EmployeeTypeDao.AGGREGATE_QUERY_KEY);
             EntityResult entityResult = employeeService.employeeTypeAggregateQuery(keysValues, attributes);
             assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
 
         }
 

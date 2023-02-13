@@ -42,11 +42,11 @@ class BranchServiceTest {
     @Nested
     class Branch {
 
-        Map<String, Object> keysValues = new HashMap<>();
-        List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
 
         @Test
         void when_branchQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
 
             keysValues.put("field1", "value1");
 
@@ -65,6 +65,8 @@ class BranchServiceTest {
 
         @Test
         void when_branchPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("BRANCHID", 1);
             int recordNumber = 5;
             int startIndex = 3;
@@ -105,6 +107,7 @@ class BranchServiceTest {
         void when_branchUpdate_receive_attributes_and_keysValues_expected_EntityResult() {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("attribute1", 1);
+            Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("field1", "value1");
 
             EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -121,6 +124,8 @@ class BranchServiceTest {
 
         @Test
         void when_branchDelete_receive_keyValues_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("field1", "value1");
 
             EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -140,12 +145,11 @@ class BranchServiceTest {
 
     @Nested
     class Accounts {
-        Map<String, Object> keysValues = new HashMap<>();
-        List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
 
         @Test
         void when_accountQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
-
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("VACCOUNTBALANCE", "value1");
 
             EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -162,6 +166,8 @@ class BranchServiceTest {
 
         @Test
         void when_accountPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("VACCOUNTBALANCE", 1);
             int recordNumber = 5;
             int startIndex = 3;
@@ -208,12 +214,11 @@ class BranchServiceTest {
     @Nested
     class AccountsMovementTypes {
 
-        Map<String, Object> keysValues = new HashMap<>();
-        List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
 
         @Test
         void when_accountMovementTypesQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
-
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("VACCOUNTMOVEMENTTYPES", "value1");
 
             EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -316,6 +321,7 @@ class BranchServiceTest {
         void when_accountUpdate_receive_attributes_and_keysValues_expected_EntityResult() {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("attribute1", 1);
+            Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("field1", "value1");
 
             EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -331,6 +337,8 @@ class BranchServiceTest {
 
         @Test
         void when_accountDelete_receive_keyValues_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("field1", "value1");
 
             EntityResult entityResult = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
@@ -347,6 +355,8 @@ class BranchServiceTest {
 
         @Test
         void when_accountTypeAggregateQuery_receive_attributes_and_keysValues_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             attributes.add("attribute1");
             keysValues.put("field1", "value1");
 
