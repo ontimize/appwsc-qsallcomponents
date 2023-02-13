@@ -1,0 +1,7 @@
+ontimize:
+  jdbc:
+    name-convention: upper
+    sqlhandler: hsqldb
+    sql-condition-processor:
+      upper-string: true
+      upper-like: true
