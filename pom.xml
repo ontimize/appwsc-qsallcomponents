@@ -35,7 +35,7 @@
         <!-- =========================================================== -->
         <sonar.organization>ontimize</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>jacoco-report-aggregate/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>appwsc-qsallcomponents/jacoco-report-aggregate/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         
         <!-- Jacoco -->
         <jacoco.version>0.8.6</jacoco.version>
