@@ -40,6 +40,9 @@
         <jacoco.version>0.8.6</jacoco.version>
         <surefire.version>3.0.0-M5</surefire.version>
         <failsafe.version>3.0.0-M5</failsafe.version>
+        
+
+        <aggregate.report.dir>jacoco-report-aggregate/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
     </properties>
 
     <build>
