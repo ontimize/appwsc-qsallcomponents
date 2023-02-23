@@ -218,6 +218,27 @@ class EmployeeServiceTest {
 
 
         }
+        @Test
+        void when_employeeUpdate_receive_attributes_and_keyValues_expected_EntityResult_without_ATTR_PHOTO() {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("Foto", 1);
+            Map<String, Object> keyValues = new HashMap<>();
+            keyValues.put("keyvalues1", "value1");
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("Foto", "value1");
+            toRet.addRecord(record);
+
+            Mockito.doReturn(toRet).when(daoHelper).update(employeeDao, attributes, keyValues);
+            EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
+            assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+
+
+        }
+
 
         @Test
         void when_employeeDelete_receive_keyValues_expected_EntityResult() {
