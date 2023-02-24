@@ -19,3 +19,4 @@ spring:
     password:
     initial-size: 10
     test-on-borrow: true
+    connectionTimeout: 90000
