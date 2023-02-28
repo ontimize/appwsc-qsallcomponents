@@ -5,7 +5,6 @@ import com.imatia.qsallcomponents.model.dao.EmployeeDao;
 import com.imatia.qsallcomponents.model.dao.EmployeeTypeDao;
 import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
-import com.ontimize.jee.common.util.remote.BytesBlock;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,14 +109,11 @@ public class EmployeeServiceIT {
         }
 
 
-        @Disabled
         @Test
         void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_BytesBlock() {
-            byte[] bytes = new byte[]{};
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("EMPLOYEEID", 1001);
-            keysValues.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, new BytesBlock(bytes));
 
             List<String> attributes = new ArrayList();
             attributes.add("EMPLOYEEID");
@@ -123,8 +122,11 @@ public class EmployeeServiceIT {
             attributes.add("EMPLOYEEPHOTO");
             attributes.add("OFFICEID");
 
-            EntityResult entityResult = iemployeeService.employeeQuery(keysValues, attributes);
-            assertNotNull(entityResult);
+            EntityResult result = iemployeeService.employeeQuery(keysValues, attributes);
+            Map recordValues = result.getRecordValues(0);
+
+            assertEquals(1001, recordValues.get("EMPLOYEEID"));
+            assertNotNull(result.get("EMPLOYEEPHOTO"));
 
         }
 
@@ -149,15 +151,11 @@ public class EmployeeServiceIT {
             assertEquals("Vinod", eResult.getRecordValues(0).get("NAME"));
         }
 
-        @Disabled
         @Test
         void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvacedEntityResult_with_bytesBlock() {
-            byte[] bytes = new byte[]{};
-            BytesBlock bytesBlock = new BytesBlock(bytes);
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("EMPLOYEEID", 1001);
-            keysValues.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, bytesBlock);
 
 
             List<Object> attributes = new ArrayList();
@@ -169,12 +167,18 @@ public class EmployeeServiceIT {
 
             List<Object> orderBy = new ArrayList();
             orderBy.add("NAME");
+
             AdvancedEntityResult eResult = iemployeeService.employeePaginationQuery(keysValues, attributes, 3, 0, orderBy);
 
             assertEquals(1, eResult.calculateRecordNumber());
             assertEquals("Vinod", eResult.getRecordValues(0).get("NAME"));
 
+            Map recordValues = eResult.getRecordValues(0);
+
+            assertEquals(1001, recordValues.get("EMPLOYEEID"));
+
             assertNotNull(eResult.get("EMPLOYEEPHOTO"));
+
         }
 
 
