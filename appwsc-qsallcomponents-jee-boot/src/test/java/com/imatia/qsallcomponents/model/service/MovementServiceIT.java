@@ -4,6 +4,7 @@ package com.imatia.qsallcomponents.model.service;
 import com.imatia.qsallcomponents.api.services.IMovementService;
 import com.imatia.qsallcomponents.model.dao.MovementDao;
 import com.imatia.qsallcomponents.model.dao.MovementTypeDao;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest(classes = {MovementService.class,
         MovementDao.class,
@@ -108,7 +110,7 @@ public class MovementServiceIT {
 
 
         @Test
-        void when_branchQuery_receive_keysValues_and_attributes_expected_EntityResult() {
+        void when_movementQuery_receive_keysValues_and_attributes_expected_EntityResult() {
             Map<String, Object> keysValues = new HashMap();
             keysValues.put("MOVEMENTID", 75739);
 
@@ -127,6 +129,215 @@ public class MovementServiceIT {
             assertEquals(75739, recordValues.get("MOVEMENTID"));
 
             assertEquals("First movement", recordValues.get("CONCEPT"));
+
+        }
+
+        @Test
+        void when_movementPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTID", 75739);
+
+            List<String> attributes = new ArrayList();
+            attributes.add("MOVEMENTID");
+            attributes.add("ACCOUNTID");
+            attributes.add("CONCEPT");
+            attributes.add("MOVEMENTTYPEID");
+            attributes.add("MOVEMENT");
+
+            List<Object> orderBy = new ArrayList();
+            orderBy.add("CONCEPT");
+
+            AdvancedEntityResult eResult = iMovementService.movementPaginationQuery(keysValues, attributes, 3, 0, orderBy);
+
+            assertEquals(1, eResult.calculateRecordNumber());
+            Map recordValues = eResult.getRecordValues(0);
+
+            assertEquals(75739, recordValues.get("MOVEMENTID"));
+
+            assertEquals("First movement", recordValues.get("CONCEPT"));
+
+        }
+
+        @Test
+        void when_movementInsert_receive_attributes_expected_EntityResult() {
+
+            Map<String, Object> attributesValues = new HashMap();
+            attributesValues.put("MOVEMENTID", 75742);
+            attributesValues.put("ACCOUNTID", 3);
+            attributesValues.put("CONCEPT", "First movement");
+            attributesValues.put("MOVEMENTTYPEID", 1);
+            attributesValues.put("MOVEMENT", 3225.54E0);
+
+            iMovementService.movementInsert(attributesValues);
+
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTID", 75742);
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("MOVEMENTID");
+            attributesList.add("ACCOUNTID");
+            attributesList.add("CONCEPT");
+            attributesList.add("MOVEMENTTYPEID");
+            attributesList.add("MOVEMENT");
+            EntityResult eResultQuery = iMovementService.movementQuery(keysValues, attributesList);
+
+            assertEquals(75742, eResultQuery.getRecordValues(0).get("MOVEMENTID"));
+
+            assertEquals("First movement", eResultQuery.getRecordValues(0).get("CONCEPT"));
+            assertEquals(3225.54E0, eResultQuery.getRecordValues(0).get("MOVEMENT"));
+
+        }
+
+        @Test
+        void when_movementUpdate_receive_attributes_and_keysValues_expected_EntityResult() {
+
+            Map<String, Object> attributesValues = new HashMap();
+            attributesValues.put("CONCEPT", "Coincidir");
+
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTID", 75741);
+
+            iMovementService.movementUpdate(attributesValues, keysValues);
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("MOVEMENTID");
+            attributesList.add("ACCOUNTID");
+            attributesList.add("CONCEPT");
+            attributesList.add("MOVEMENTTYPEID");
+            attributesList.add("MOVEMENT");
+            EntityResult eResultQuery = iMovementService.movementQuery(keysValues, attributesList);
+
+            assertEquals(1, eResultQuery.calculateRecordNumber());
+            Map recordValues = eResultQuery.getRecordValues(0);
+
+            assertEquals("Coincidir", eResultQuery.getRecordValues(0).get("CONCEPT"));
+
+            assertEquals(75741, recordValues.get("MOVEMENTID"));
+
+
+        }
+
+        @Test
+        void when_movementDelete_receive_keysValues_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTID", 75742);
+
+            iMovementService.movementDelete(keysValues);
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("MOVEMENTID");
+            attributesList.add("ACCOUNTID");
+            attributesList.add("CONCEPT");
+            attributesList.add("MOVEMENTTYPEID");
+            attributesList.add("MOVEMENT");
+            EntityResult eResultQuery = iMovementService.movementQuery(keysValues, attributesList);
+            assertNull(eResultQuery.getRecordValues(0).get("MOVEMENTID"));
+
+        }
+
+    }
+
+
+    @Nested
+    class MovementTypeCRUD {
+        @Test
+        void when_movementTypeQuery_receive_keysValues_and_attributes_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTTYPEID", 1);
+
+            List<String> attributes = new ArrayList();
+            attributes.add("MOVEMENTTYPEID");
+            attributes.add("DESCRIPTION");
+            attributes.add("DESCRIPTION_EN_US");
+            attributes.add("DESCRIPTION_ES_ES");
+            attributes.add("DESCRIPTION_GL_ES");
+
+            EntityResult result = iMovementService.movementTypeQuery(keysValues, attributes);
+
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+
+            assertEquals(1, recordValues.get("MOVEMENTTYPEID"));
+
+            assertEquals("Transfer", recordValues.get("DESCRIPTION"));
+
+        }
+
+        @Test
+        void when_movementTypeInsert_receive_attributes_expected_EntityResult() {
+
+            Map<String, Object> attributes = new HashMap();
+            attributes.put("MOVEMENTTYPEID", 4);
+            attributes.put("DESCRIPTION", "Salary");
+            attributes.put("DESCRIPTION_EN_US", "Salary");
+            attributes.put("DESCRIPTION_ES_ES", "Salary");
+            attributes.put("DESCRIPTION_GL_ES", "Salary");
+
+            iMovementService.movementTypeInsert(attributes);
+
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTTYPEID", 4);
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("MOVEMENTTYPEID");
+            attributesList.add("DESCRIPTION");
+            attributesList.add("DESCRIPTION_EN_US");
+            attributesList.add("DESCRIPTION_ES_ES");
+            attributesList.add("DESCRIPTION_GL_ES");
+
+            EntityResult eResultQuery = iMovementService.movementTypeQuery(keysValues, attributesList);
+
+            assertEquals(4, eResultQuery.getRecordValues(0).get("MOVEMENTTYPEID"));
+
+            assertEquals("Salary", eResultQuery.getRecordValues(0).get("DESCRIPTION"));
+
+        }
+
+
+        @Test
+        void when_movementTypeUpdate_receive_attributes_and_keysValues_expected_EntityResult() {
+            Map<String, Object> attributesValues = new HashMap();
+            attributesValues.put("DESCRIPTION", "Coincidir");
+
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTTYPEID", 3);
+
+            iMovementService.movementTypeUpdate(attributesValues,keysValues);
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("MOVEMENTTYPEID");
+            attributesList.add("DESCRIPTION");
+            attributesList.add("DESCRIPTION_EN_US");
+            attributesList.add("DESCRIPTION_ES_ES");
+            attributesList.add("DESCRIPTION_GL_ES");
+
+            EntityResult eResultQuery = iMovementService.movementTypeQuery(keysValues, attributesList);
+
+            assertEquals(1, eResultQuery.calculateRecordNumber());
+            Map recordValues = eResultQuery.getRecordValues(0);
+
+            assertEquals("Coincidir", eResultQuery.getRecordValues(0).get("DESCRIPTION"));
+
+            assertEquals(3, recordValues.get("MOVEMENTTYPEID"));
+
+        }
+
+        @Test
+        void when_movementDelete_receive_keysValues_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("MOVEMENTTYPEID", 4);
+
+            iMovementService.movementTypeDelete(keysValues);
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("MOVEMENTTYPEID");
+            attributesList.add("DESCRIPTION");
+            attributesList.add("DESCRIPTION_EN_US");
+            attributesList.add("DESCRIPTION_ES_ES");
+            attributesList.add("DESCRIPTION_GL_ES");
+
+            EntityResult eResultQuery = iMovementService.movementTypeQuery(keysValues, attributesList);
+            assertNull(eResultQuery.getRecordValues(0).get("MOVEMENTTYPEID"));
 
         }
     }
