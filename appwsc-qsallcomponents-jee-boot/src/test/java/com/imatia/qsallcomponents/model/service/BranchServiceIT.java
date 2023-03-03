@@ -7,7 +7,6 @@ import com.imatia.qsallcomponents.model.dao.AccountTypeDao;
 import com.imatia.qsallcomponents.model.dao.BranchDao;
 import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
-import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,18 +42,6 @@ public class BranchServiceIT {
 
     @Autowired
     DataSource dataSource;
-
-    @Autowired
-    BranchDao branchDao;
-
-    @Autowired
-    AccountDao accountDao;
-
-    @Autowired
-    AccountTypeDao accountTypeDao;
-
-    @Autowired
-    DefaultOntimizeDaoHelper daoHelper;
 
 
     @BeforeAll
@@ -417,12 +404,10 @@ public class BranchServiceIT {
             attributes.add("ACCOUNTTYP");
             attributes.add("ACCOUNTTYPEID");
 
-            EntityResult entityResult = iBranchService.accountTypeAggregateQuery(keysValues,attributes);
+            EntityResult entityResult = iBranchService.accountTypeAggregateQuery(keysValues, attributes);
             assertNotNull(entityResult);
 
         }
-
-
 
 
     }
@@ -488,7 +473,6 @@ public class BranchServiceIT {
         }
 
     }
-
 
 
 }
