@@ -11,5 +11,7 @@ import com.ontimize.jee.server.services.dms.dao.IDMSRelatedDocumentDao;
 @Lazy
 @ConfigurationFile(configurationFile = "base-dao/dms/DMSRelatedDocumentDao.xml", configurationFilePlaceholder = "base-dao/placeholders.properties")
 public class DMSRelatedDocumentDao extends OntimizeJdbcDaoSupport implements IDMSRelatedDocumentDao {
-
+    public static final String ATTR_ID_DMS_RELATED_PROPERTY = "ID_DMS_RELATED_PROPERTY";
+    public static final String ATTR_ID_DMS_DOC_MASTER = "ID_DMS_DOC_MASTER";
+    public static final String ATTR_ID_DMS_DOC_CHILD = "ID_DMS_DOC_CHILD";
 }
