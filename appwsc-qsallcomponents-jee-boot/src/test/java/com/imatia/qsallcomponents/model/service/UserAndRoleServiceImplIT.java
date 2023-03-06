@@ -2,14 +2,16 @@ package com.imatia.qsallcomponents.model.service;
 
 
 import com.imatia.qsallcomponents.api.services.IUserAndRoleService;
-import com.imatia.qsallcomponents.model.dao.CustomerAccountDao;
-import com.imatia.qsallcomponents.model.dao.CustomerDao;
-import com.imatia.qsallcomponents.model.dao.CustomerTypeDao;
+import com.imatia.qsallcomponents.model.dao.*;
+import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.services.dms.IDMSService;
+import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
+import com.ontimize.jee.server.security.SecurityTools;
 import com.ontimize.jee.server.services.dms.DMSCreationHelper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,38 +22,38 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(classes = {CustomerService.class,
         CustomerDao.class,
         CustomerTypeDao.class,
-        CustomerAccountDao.class
+        CustomerAccountDao.class,
+        UserAndRoleServiceImpl.class,
+        UserDao.class,
+        UserRoleDao.class,
+        RoleDao.class,
+        ServerRoleDao.class
 })
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserAndRoleServiceImplIT {
 
-    @MockBean
-    IUserAndRoleService iUserAndRoleService;
-
     @Autowired
-    DataSource dataSource;
+    IUserAndRoleService iUserAndRoleService;
 
     @MockBean
     DMSCreationHelper dmsCreationHelper;
 
     @MockBean
-    IDMSService idmsService;
+    DefaultOntimizeDaoHelper daoHelper;
+
 
     @BeforeAll
-    void initDataBase() throws SQLException {
+    static void initDataBase(@Autowired DataSource dataSource) throws SQLException {
 
         Connection con = dataSource.getConnection();
         Statement statement = con.createStatement();
@@ -85,7 +87,7 @@ public class UserAndRoleServiceImplIT {
 
 
     @AfterAll
-    void tearDown() throws SQLException {
+    static void tearDown(@Autowired DataSource dataSource) throws SQLException {
 
         Connection con = dataSource.getConnection();
         Statement statement = con.createStatement();
@@ -100,7 +102,7 @@ public class UserAndRoleServiceImplIT {
     class UserCRUD {
 
         @Test
-        void when_receive_keysValues_and_attributes_expected_EntityResult() {
+        void when_userQuery_receive_keysValues_and_attributes_expected_EntityResult() {
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("USER_", "block");
 
@@ -112,16 +114,93 @@ public class UserAndRoleServiceImplIT {
             attributes.add("EMAIL");
             attributes.add("NIF");
 
-
             EntityResult result = iUserAndRoleService.userQuery(keysValues, attributes);
-            //assertEquals(1, result.calculateRecordNumber());
+            assertEquals(1, result.calculateRecordNumber());
             Map recordValues = result.getRecordValues(0);
             assertEquals("block", recordValues.get("USER_"));
             assertEquals("demouser", recordValues.get("PASSWORD"));
 
-            assertNotNull(result);
+        }
+
+        @Test
+        void when_userPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("USER_", "block");
+
+            List<String> attributes = new ArrayList<>();
+            attributes.add("USER_");
+            attributes.add("PASSWORD");
+            attributes.add("NAME");
+            attributes.add("SURNAME");
+            attributes.add("EMAIL");
+            attributes.add("NIF");
+
+            int recordNumber = 5;
+            int startIndex = 3;
+            List<String> orderBy = new ArrayList<>();
+
+            AdvancedEntityResult result = iUserAndRoleService.userPaginationQuery(keysValues, attributes,3,0,orderBy);
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals("block", recordValues.get("USER_"));
+            assertEquals("demouser", recordValues.get("PASSWORD"));
 
         }
+
+        @Disabled
+        @Test
+        void when_userUpdate_receive_attributesValues_and_keyValues_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("USER_", "demo");
+
+            Map<String, Object> attributesValues = new HashMap();
+            attributesValues.put("PASSWORD", "Update");
+
+            iUserAndRoleService.userUpdate(attributesValues, keysValues);
+
+            List<String> attributes = new ArrayList<>();
+            attributes.add("USER_");
+            attributes.add("PASSWORD");
+
+            EntityResult result = iUserAndRoleService.userQuery(keysValues, attributes);
+
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals("demo", recordValues.get("USER_"));
+            assertEquals("Update", recordValues.get("PASSWORD"));
+
+        }
+
+        @Test
+        void when_userInsert_receive_keysValues_expected_EntityResult() {
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("USER_", "insert");
+            keysValues.put("PASSWORD", "password");
+            keysValues.put("NAME", "name");
+            keysValues.put("SURNAME", "surname");
+            keysValues.put("EMAIL", "correo");
+            keysValues.put("NIF", "36363636T");
+
+            iUserAndRoleService.userInsert(keysValues);
+
+            List<String> attributes = new ArrayList<>();
+            attributes.add("USER_");
+            attributes.add("PASSWORD");
+            attributes.add("NAME");
+            attributes.add("SURNAME");
+            attributes.add("EMAIL");
+            attributes.add("NIF");
+
+            EntityResult result = iUserAndRoleService.userQuery(keysValues, attributes);
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals("insert", recordValues.get("USER_"));
+            assertEquals("password", recordValues.get("PASSWORD"));
+
+
+
+        }
+
     }
 
 

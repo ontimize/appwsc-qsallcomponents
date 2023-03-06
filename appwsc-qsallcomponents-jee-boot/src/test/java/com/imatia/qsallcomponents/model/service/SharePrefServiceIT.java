@@ -141,15 +141,15 @@ public class SharePrefServiceIT {
         }
 
         @Test
-        void when_shareUpdate_receive_keysValues_and_attributesValues_expected_EntityResult() {
-
-            Map<String, Object> keysValues = new HashMap();
-            keysValues.put("NAME", "Update");
+        void when_shareUpdate_receive_attributesValues_and_keysValues_expected_EntityResult() {
 
             Map<String, Object> attributesValues = new HashMap();
-            attributesValues.put("ID_SHARE", 2);
+            attributesValues.put("NAME", "Update");
 
-            iSharePrefService.shareUpdate(keysValues, attributesValues);
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("ID_SHARE", 2);
+
+            iSharePrefService.shareUpdate(attributesValues, keysValues);
 
             List<String> attributesList = new ArrayList();
             attributesList.add("ID_SHARE");
