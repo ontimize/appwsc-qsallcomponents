@@ -5,12 +5,13 @@ import com.imatia.qsallcomponents.api.services.ICustomerService;
 import com.imatia.qsallcomponents.model.dao.CustomerAccountDao;
 import com.imatia.qsallcomponents.model.dao.CustomerDao;
 import com.imatia.qsallcomponents.model.dao.CustomerTypeDao;
+import com.imatia.qsallcomponents.model.dao.dms.*;
+import com.ontimize.boot.autoconfigure.dms.ODMSAutoConfigure;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.services.dms.IDMSService;
-import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
-import com.ontimize.jee.server.services.dms.DMSCreationHelper;
 import com.ontimize.jee.server.services.dms.DMSServiceFileHelper;
-import com.ontimize.jee.server.services.dms.dao.IDMSDocumentFileVersionDao;
+import com.ontimize.jee.server.services.dms.DMSServiceImpl;
+import com.ontimize.jee.server.services.dms.OntimizeDMSEngine;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,42 +35,36 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Disabled
 @SpringBootTest(classes = {
         CustomerDao.class,
-        CustomerService.class,
         CustomerAccountDao.class,
         CustomerTypeDao.class,
-        IDMSService.class,
-        DMSServiceFileHelper.class
+        DMSServiceImpl.class,
+        DMSServiceFileHelper.class,
+        DMSDocumentDao.class,
+        DMSDocumentPropertyDao.class,
+        DMSRelatedDocumentDao.class,
+        DMSCategoryDao.class,
+        DMSDocumentFileDao.class,
+        DMSDocumentFileVersionDao.class,
+        ODMSAutoConfigure.class
 })
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles({"test-dms"})
 @EnableAutoConfiguration
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CustomerServiceIT {
 
     @Autowired
-    ICustomerService iCustomerService;
+    ICustomerService customerService;
 
     @Autowired
     DataSource dataSource;
 
     @Autowired
-    IDMSDocumentFileVersionDao idmsDocumentFileVersionDao;
-    @Autowired
-    CustomerDao customerDao;
-
-    @Autowired
-    CustomerTypeDao customerTypeDao;
-
-    @Autowired
-    CustomerAccountDao customerAccountDao;
-    @Autowired
-    DefaultOntimizeDaoHelper daoHelper;
-
-    @Autowired
-    DMSCreationHelper dmsHelper;
+    IDMSService dmsService;
 
 
     @BeforeAll
-    static void initDataBase(@Autowired DataSource dataSource) throws SQLException {
+    void initDataBase() throws SQLException {
 
         Connection con = dataSource.getConnection();
         Statement statement = con.createStatement();
@@ -174,7 +169,7 @@ public class CustomerServiceIT {
 
 
     @AfterAll
-    static void tearDown(@Autowired DataSource dataSource) throws SQLException {
+    void tearDown() throws SQLException {
 
         Connection con = dataSource.getConnection();
         Statement statement = con.createStatement();
@@ -210,7 +205,7 @@ public class CustomerServiceIT {
             attributes.add("PHOTO");
             attributes.add("ADDRESS");
 
-            EntityResult result = iCustomerService.customerQuery(keysValues, attributes);
+            EntityResult result = customerService.customerQuery(keysValues, attributes);
             Map recordValues = result.getRecordValues(0);
 
             assertEquals(7511, recordValues.get("EMPLOYEEID"));
