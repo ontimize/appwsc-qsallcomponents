@@ -137,8 +137,8 @@ public class CustomerService implements ICustomerService {
 	}
 
 	@Override
-	public EntityResult customerAccountUpdate(Map<String, Object> attributes, Map<String, Object> KeyValues) throws OntimizeJEERuntimeException {
-		return this.daoHelper.update(this.customerAccountDao, attributes, attributes);
+	public EntityResult customerAccountUpdate(Map<String, Object> attributes, Map<String, Object> keyValues) throws OntimizeJEERuntimeException {
+		return this.daoHelper.update(this.customerAccountDao, attributes, keyValues);
 	}
 
 	@Override

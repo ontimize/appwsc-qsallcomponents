@@ -37,6 +37,7 @@
 	<properties>
 		<ontimize.openapi.generator.maven.plugin.packageName>com.imatia.qsallcomponents.openapi</ontimize.openapi.generator.maven.plugin.packageName>
 		<ontimize.openapi.generator.maven.plugin.importMappings>AdministrationTest=com.imatia.qsallcomponents.api.constants.entities.Test</ontimize.openapi.generator.maven.plugin.importMappings>
+		<pitest.skip>false</pitest.skip>
 	</properties>
 	<build>
 		<plugins>
