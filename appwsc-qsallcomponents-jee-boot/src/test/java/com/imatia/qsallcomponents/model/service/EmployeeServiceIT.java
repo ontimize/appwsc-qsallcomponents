@@ -132,7 +132,7 @@ public class EmployeeServiceIT {
 
 
         @Test
-        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvacedEntityResult() {
+        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("EMPLOYEEID", 1001);
