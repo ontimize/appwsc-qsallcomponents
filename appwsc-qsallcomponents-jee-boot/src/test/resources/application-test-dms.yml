@@ -1,4 +1,4 @@
 ontimize:
   dms:
     engine: odms
-    base-path: file:/${java.io.tmpdir}/applications/QSAllComponents_Jee/test-dms
+    base-path: file:/${java.io.tmpdir}applications/QSAllComponents_Jee/test-dms
