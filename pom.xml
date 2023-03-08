@@ -82,9 +82,9 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <!-- Sets the VM argument line used when unit tests are run. -->
-                    <argLine>${surefireArgLine}</argLine>
+<!--                    <argLine>${surefireArgLine}</argLine>-->
                     <!-- Skips unit tests if the value of skip.unit.tests property is true -->
-                    <skipTests>${skip.unit.tests}</skipTests>
+<!--                    <skipTests>${skip.unit.tests}</skipTests>-->
                     <!-- Excludes integration tests when unit tests are run. -->
                     <excludes>
                         <exclude>**/*IT.java</exclude>
@@ -103,8 +103,8 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <argLine>${failsafeArgLine}</argLine>
-                            <skipTests>${skip.integration.tests}</skipTests>
+<!--                            <argLine>${failsafeArgLine}</argLine>-->
+<!--                            <skipTests>${skip.integration.tests}</skipTests>-->
                         </configuration>
                     </execution>
                 </executions>
@@ -113,28 +113,28 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.6.4</version>
-                <configuration>
-                    <targetClasses>
-                        <param>com.imatia.qsallcomponents.model.*</param>
-                    </targetClasses>
-                    <targetTests>
-                        <param>com.imatia.qsallcomponents.model.*</param>
-                    </targetTests>
-                    <threads>4</threads>
-                    <timeoutFactor>3.0</timeoutFactor>
-                    <timeoutConstant>120000</timeoutConstant>
-                    <outputFormats>
-                        <outputFormat>XML</outputFormat>
-                        <outputFormat>HTML</outputFormat>    <!-- OPTIONAL -->
-                        <outputFormat>CSV</outputFormat>    <!-- OPTIONAL -->
-                    </outputFormats>
-                    <exportLineCoverage>true</exportLineCoverage>
-                    <failWhenNoMutations>false</failWhenNoMutations>
-                    <timestampedReports>false</timestampedReports>
-                    <verbose>false
-                    </verbose>  <!-- Flag to exclude mutation in module with no tests such as the clients  -->+
-                    <skip>${pitest.skip}</skip>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <targetClasses>-->
+<!--                        <param>com.imatia.qsallcomponents.model.*</param>-->
+<!--                    </targetClasses>-->
+<!--                    <targetTests>-->
+<!--                        <param>com.imatia.qsallcomponents.model.*</param>-->
+<!--                    </targetTests>-->
+<!--                    <threads>4</threads>-->
+<!--                    <timeoutFactor>3.0</timeoutFactor>-->
+<!--                    <timeoutConstant>120000</timeoutConstant>-->
+<!--                    <outputFormats>-->
+<!--                        <outputFormat>XML</outputFormat>-->
+<!--                        <outputFormat>HTML</outputFormat>    &lt;!&ndash; OPTIONAL &ndash;&gt;-->
+<!--                        <outputFormat>CSV</outputFormat>    &lt;!&ndash; OPTIONAL &ndash;&gt;-->
+<!--                    </outputFormats>-->
+<!--                    <exportLineCoverage>true</exportLineCoverage>-->
+<!--                    <failWhenNoMutations>false</failWhenNoMutations>-->
+<!--                    <timestampedReports>false</timestampedReports>-->
+<!--                    <verbose>false-->
+<!--                    </verbose>  &lt;!&ndash; Flag to exclude mutation in module with no tests such as the clients  &ndash;&gt;+-->
+<!--                    <skip>${pitest.skip}</skip>-->
+<!--                </configuration>-->
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
