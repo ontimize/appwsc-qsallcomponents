@@ -323,7 +323,7 @@ public class MovementServiceIT {
         }
 
         @Test
-        void when_movementDelete_receive_keysValues_expected_EntityResult() {
+        void when_movementTypeDelete_receive_keysValues_expected_EntityResult() {
             Map<String, Object> keysValues = new HashMap();
             keysValues.put("MOVEMENTTYPEID", 4);
 

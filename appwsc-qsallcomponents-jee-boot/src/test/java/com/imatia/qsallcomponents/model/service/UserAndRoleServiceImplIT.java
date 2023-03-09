@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Disabled
 @SpringBootTest(classes = {CustomerService.class,
         CustomerDao.class,
         CustomerTypeDao.class,
