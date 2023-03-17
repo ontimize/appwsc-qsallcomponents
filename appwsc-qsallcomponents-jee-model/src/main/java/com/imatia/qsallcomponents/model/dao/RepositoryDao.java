@@ -13,8 +13,5 @@ public class RepositoryDao extends OntimizeJdbcDaoSupport {
 	
 	public static final String ATTR_NAME = "REPOSITORY_NAME";
 	public static final String ATTR_DEFINITION = "REPOSITORY_DEFINITION";
-	
-	public RepositoryDao() {
-		super();
-	}
+
 }

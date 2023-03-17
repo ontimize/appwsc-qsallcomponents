@@ -11,8 +11,5 @@ import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 @ConfigurationFile(configurationFile = "base-dao/setup/OCDatabaseBundleValueDao.xml", configurationFilePlaceholder = "base-dao/placeholders.properties")
 public class OCDatabaseBundleValueDao extends OntimizeJdbcDaoSupport {
 
-	public OCDatabaseBundleValueDao() {
-
-		super();
-	}
+	
 }

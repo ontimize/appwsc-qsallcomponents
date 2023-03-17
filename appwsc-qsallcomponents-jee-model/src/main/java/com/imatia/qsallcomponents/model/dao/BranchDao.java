@@ -18,8 +18,4 @@ public class BranchDao extends OntimizeJdbcDaoSupport {
 	public static final String ATTR_DETAILS = "DETAILS";
 	public static final String ATTR_PHONE = "PHONE";
 
-	public BranchDao() {
-		super();
-	}
-
 }

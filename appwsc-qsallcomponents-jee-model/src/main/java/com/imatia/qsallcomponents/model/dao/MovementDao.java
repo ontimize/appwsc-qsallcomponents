@@ -27,8 +27,4 @@ public class MovementDao extends OntimizeJdbcDaoSupport {
 	public static final String	ATTR_COMMENTS_ES_ES	= "COMMENTS_ES_ES";
 	public static final String	ATTR_COMMENTS_GL_ES	= "COMMENTS_GL_ES";
 
-	public MovementDao() {
-		super();
-	}
-
 }

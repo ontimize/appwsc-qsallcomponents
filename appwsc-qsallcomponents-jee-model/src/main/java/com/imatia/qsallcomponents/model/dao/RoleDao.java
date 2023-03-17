@@ -11,8 +11,4 @@ import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 @ConfigurationFile(configurationFile = "base-dao/RoleDao.xml", configurationFilePlaceholder = "base-dao/placeholders.properties")
 public class RoleDao extends OntimizeJdbcDaoSupport {
 
-	public RoleDao() {
-
-		super();
-	}
 }

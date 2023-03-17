@@ -13,8 +13,4 @@ public class CustomerAccountDao extends OntimizeJdbcDaoSupport {
 
 	public static final String CUSTOMER_ACCOUNT_BALANCE_QUERY_KEY = "VCUSTOMERACCOUNTBALANCE";
 
-	public CustomerAccountDao() {
-		super();
-	}
-
 }
