@@ -21,12 +21,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @SpringBootTest(classes = {CustomerService.class,
         CustomerDao.class,
@@ -46,6 +44,7 @@ public class UserServiceIT {
     @Autowired
     DataSource dataSource;
 
+
     @MockBean
     IDMSService dmsService;
 
@@ -61,10 +60,11 @@ public class UserServiceIT {
                 "NAME VARCHAR(50)," +
                 "SURNAME VARCHAR(50)," +
                 "EMAIL VARCHAR(50)," +
-                "NIF VARCHAR(50))");
-        statement.executeUpdate("INSERT INTO TUSER VALUES('block','demouser','User blocked','Bloqueo','User Bloked',NULL)");
-        statement.executeUpdate("INSERT INTO TUSER VALUES('demo','demouser','demo','demo',NULL,'44460713B')");
-        statement.executeUpdate("INSERT INTO TUSER VALUES('pablo.martinez','pablo.martinez','Pablo','Martu00ednez Kirsten','pablo.martinez@imatia.com',NULL)");
+                "NIF VARCHAR(50)," +
+                "DOWN_DATE TIMESTAMP)");
+        statement.executeUpdate("INSERT INTO TUSER VALUES('block','demouser','User blocked','Bloqueo','User Bloked',NULL, NULL)");
+        statement.executeUpdate("INSERT INTO TUSER VALUES('demo','demouser','demo','demo',NULL,'44460713B', NULL)");
+        statement.executeUpdate("INSERT INTO TUSER VALUES('pablo.martinez','pablo.martinez','Pablo','Martinez Kirsten','pablo.martinez@imatia.com',NULL, NULL)");
 
     }
 
@@ -82,7 +82,7 @@ public class UserServiceIT {
     class UserCRUD {
 
         @Test
-        void when_receive_keysValues_and_attributes_expected_EntityResult() {
+        void when_userQuery_receive_keysValues_and_attributes_expected_EntityResult() {
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("USER_", "block");
 
@@ -94,14 +94,90 @@ public class UserServiceIT {
             attributes.add("EMAIL");
             attributes.add("NIF");
 
-
             EntityResult result = iUserService.userQuery(keysValues, attributes);
-            //assertEquals(1, result.calculateRecordNumber());
-            //Map recordValues = result.getRecordValues(0);
-            //assertEquals("block", recordValues.get("USER_"));
-            //assertEquals("demouser", recordValues.get("PASSWORD"));
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals("block", recordValues.get("USER_"));
+            assertEquals("demouser", recordValues.get("PASSWORD"));
 
-            //assertNull(result);
+        }
+
+        @Test
+        void when_userInsert_receive_attrMap_expected_EntityResult() {
+            Map<String, Object> attrMap = new HashMap<>();
+            attrMap.put("USER_", "cuatro");
+            attrMap.put("PASSWORD", "password");
+            attrMap.put("NAME", "name");
+            attrMap.put("SURNAME","surname");
+
+            iUserService.userInsert(attrMap);
+
+            List<String> attributes = new ArrayList<>();
+            attributes.add("USER_");
+            attributes.add("PASSWORD");
+            attributes.add("NAME");
+            attributes.add("SURNAME");
+            attributes.add("EMAIL");
+            attributes.add("NIF");
+
+            EntityResult result = iUserService.userQuery(attrMap, attributes);
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals("cuatro", recordValues.get("USER_"));
+            assertEquals("password", recordValues.get("PASSWORD"));
+
+        }
+
+
+        @Test
+        void when_userUpdate_receive_attrMap_and_keyMap_expected_EntityResult() {
+            Map<String, Object> keyMap = new HashMap<>();
+            keyMap.put("USER_", "demo");
+            keyMap.put("PASSWORD", "update");
+
+            Map<String, Object> attrMap = new HashMap<>();
+            attrMap.put("PASSWORD", "update");
+
+            iUserService.userUpdate(attrMap,keyMap);
+
+            List<String> attributes = new ArrayList<>();
+            attributes.add("USER_");
+            attributes.add("PASSWORD");
+            attributes.add("NAME");
+            attributes.add("SURNAME");
+            attributes.add("EMAIL");
+            attributes.add("NIF");
+
+            EntityResult result = iUserService.userQuery(keyMap, attributes);
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals("demo", recordValues.get("USER_"));
+            assertEquals("update", recordValues.get("PASSWORD"));
+
+        }
+
+        @Test
+        void when_userDelete_receive_keyMap_expected_EntityResult() {
+            Map<String, Object> keyMap = new HashMap<>();
+            keyMap.put("USER_", "pablo.martinez");
+            keyMap.put("PASSWORD", "pablo.martinez");
+
+            iUserService.userDelete(keyMap);
+
+            List<String> attributes = new ArrayList<>();
+            attributes.add("USER_");
+            attributes.add("PASSWORD");
+            attributes.add("NAME");
+            attributes.add("SURNAME");
+            attributes.add("EMAIL");
+            attributes.add("NIF");
+            attributes.add("DOWN_DATE");
+
+            EntityResult result = iUserService.userQuery(keyMap, attributes);
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals("pablo.martinez", recordValues.get("USER_"));
+            assertNotNull("DOWN_DATE");
 
         }
     }
