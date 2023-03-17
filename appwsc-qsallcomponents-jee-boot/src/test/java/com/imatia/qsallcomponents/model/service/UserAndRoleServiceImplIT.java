@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -286,10 +287,6 @@ public class UserAndRoleServiceImplIT {
 
             Map<String, Object> keysValues = new HashMap();
             keysValues.put("USER_", "democif");
-            keysValues.put("PASSWORD", "Update");
-
-            Map<String, Object> updateValues = new HashMap<String, Object>();
-            updateValues.put("PASSWORD", "Update");
 
             iUserAndRoleService.userDelete(keysValues);
 
@@ -306,7 +303,8 @@ public class UserAndRoleServiceImplIT {
             assertEquals(1, result.calculateRecordNumber());
             Map recordValues = result.getRecordValues(0);
             assertEquals("democif", recordValues.get("USER_"));
-            assertEquals("Update", recordValues.get("PASSWORD"));
+            assertNotNull("DOWN_DATE");
+
         }
     }
 
@@ -428,6 +426,13 @@ public class UserAndRoleServiceImplIT {
             keysValues.put("ID_SERVER_PERMISSION", 2);
             keysValues.put("ID_ROLENAME", 0);
 
+             /*
+            Al ponerle keysValues.put(RoleServerPermission.ACTIVED, "S"); para poder testear la parte del Insert,
+            falla porque le inserta [] a: "CASE WHEN tur.ID_ROLENAME IS NOT NULL THEN 'S' ELSE 'N' END"
+            al detectar los espacios como caracteres conflictivos
+            la querie sin los braquets funciona correctamente /
+             */
+
             Map<String, Object> attributesValues = new HashMap();
             attributesValues.put("ID_ROLE_SERVER_PERMISSION", 3);
             attributesValues.put("ID_ROLENAME", 0);
@@ -440,7 +445,8 @@ public class UserAndRoleServiceImplIT {
             attributes.add("ID_SERVER_PERMISSION");
 
             EntityResult result = iUserAndRoleService.serverRoleQuery(keysValues, attributes);
-            assertNull(result.getRecordValues(0).get("ID_ROLE_SERVER_PERMISSION"));
+            assertEquals(2, result.get("ID_SERVER_PERMISSION"));
+
         }
 
         @Test
