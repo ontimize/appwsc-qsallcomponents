@@ -20,8 +20,5 @@ public class OCSharePreferences extends OntimizeJdbcDaoSupport {
 
 	public static final String QUERY_DEFAULT = "default";
 
-	public OCSharePreferences() {
-		super();
-	}
 
 }
