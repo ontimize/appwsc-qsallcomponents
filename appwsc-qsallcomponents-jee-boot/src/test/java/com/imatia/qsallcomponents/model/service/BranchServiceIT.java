@@ -320,23 +320,6 @@ public class BranchServiceIT {
             assertEquals(4, toRet.get("ACCOUNTID"));
         }
 
-        @Disabled
-        @Test
-        void when_accountInsert_receive_attributes_expected_accountUpdate_EntityResult_OPERATION_WRONG() {
-            Map<String, Object> attributes = new HashMap<>();
-            attributes.put("OFFICEID", 0);
-            attributes.remove(AccountDao.ATTR_ANID);
-            attributes.remove(AccountDao.ATTR_CDID);
-
-            EntityResult toRet = iBranchService.accountInsert(attributes);
-            toRet.put("ACCOUNTID", 1);
-            toRet.setCode(1);
-            System.out.println(toRet.toString());
-
-           /* assertThrows(OntimizeJEERuntimeException.class, () -> {
-                iBranchService.accountInsert(attributes);
-            });*/
-        }
 
         @Test
         void when_accountUpdate_receive_attributes_and_keysValues_expected_EntityResult() {
