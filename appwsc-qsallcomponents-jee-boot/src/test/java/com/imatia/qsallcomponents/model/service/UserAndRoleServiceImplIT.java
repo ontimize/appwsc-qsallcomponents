@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class UserAndRoleServiceImplIT {
+class UserAndRoleServiceImplIT {
 
     @Autowired
     IUserAndRoleService iUserAndRoleService;

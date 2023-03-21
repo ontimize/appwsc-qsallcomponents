@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
 @TestInstance(Lifecycle.PER_CLASS)
-public class EmployeeServiceIT {
+class EmployeeServiceIT {
 
     @Autowired
     IEmployeeService iemployeeService;

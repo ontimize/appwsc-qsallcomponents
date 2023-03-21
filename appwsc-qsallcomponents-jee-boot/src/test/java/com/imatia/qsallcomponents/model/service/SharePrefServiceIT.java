@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
         OCSharePreferencesTarget.class})
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
-public class SharePrefServiceIT {
+class SharePrefServiceIT {
 
     @Autowired
     ISharePrefService iSharePrefService;

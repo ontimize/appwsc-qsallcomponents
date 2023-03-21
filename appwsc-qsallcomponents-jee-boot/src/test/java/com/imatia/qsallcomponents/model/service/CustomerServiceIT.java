@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles({"test-dms"})
 @EnableAutoConfiguration
-public class CustomerServiceIT {
+class CustomerServiceIT {
 
     @Autowired
     ICustomerService customerService;
