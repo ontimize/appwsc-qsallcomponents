@@ -418,13 +418,12 @@ public class UserAndRoleServiceImplIT {
 
         }
 
-        @Disabled
-        @Test
+        /*@Test
         void when_serverRoleUpdate_receive_attributesValues_and_keysValues_expected_insert() {
             Map<String, Object> keysValues = new HashMap();
             keysValues.put(RoleServerPermission.ACTIVED, "S");
             keysValues.put("ID_SERVER_PERMISSION", 2);
-            keysValues.put("ID_ROLENAME", 0);
+            keysValues.put("ID_ROLENAME", 0);*/
 
              /*
             Al ponerle keysValues.put(RoleServerPermission.ACTIVED, "S"); para poder testear la parte del Insert,
@@ -433,7 +432,7 @@ public class UserAndRoleServiceImplIT {
             la querie sin los braquets funciona correctamente /
              */
 
-            Map<String, Object> attributesValues = new HashMap();
+           /* Map<String, Object> attributesValues = new HashMap();
             attributesValues.put("ID_ROLE_SERVER_PERMISSION", 3);
             attributesValues.put("ID_ROLENAME", 0);
             attributesValues.put("ID_SERVER_PERMISSION", 2);
@@ -447,7 +446,7 @@ public class UserAndRoleServiceImplIT {
             EntityResult result = iUserAndRoleService.serverRoleQuery(keysValues, attributes);
             assertEquals(2, result.get("ID_SERVER_PERMISSION"));
 
-        }
+        }*/
 
         @Test
         void when_serverRoleUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_delete() {
