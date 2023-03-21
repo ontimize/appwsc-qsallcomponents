@@ -5,12 +5,7 @@ import com.imatia.qsallcomponents.api.services.ICustomerService;
 import com.imatia.qsallcomponents.model.dao.CustomerAccountDao;
 import com.imatia.qsallcomponents.model.dao.CustomerDao;
 import com.imatia.qsallcomponents.model.dao.CustomerTypeDao;
-import com.imatia.qsallcomponents.model.dao.dms.DMSCategoryDao;
-import com.imatia.qsallcomponents.model.dao.dms.DMSDocumentDao;
-import com.imatia.qsallcomponents.model.dao.dms.DMSDocumentFileDao;
-import com.imatia.qsallcomponents.model.dao.dms.DMSDocumentFileVersionDao;
-import com.imatia.qsallcomponents.model.dao.dms.DMSDocumentPropertyDao;
-import com.imatia.qsallcomponents.model.dao.dms.DMSRelatedDocumentDao;
+import com.imatia.qsallcomponents.model.dao.dms.*;
 import com.ontimize.boot.autoconfigure.dms.ODMSAutoConfigure;
 import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
@@ -38,9 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = {
         CustomerService.class,
@@ -433,7 +426,7 @@ public class CustomerServiceIT {
     class CustomerAccountCRUD {
 
         @Test
-        void when_customerAccountQuery_receive_keysValues_and_attributes_and_expected_EntityResult(){
+        void when_customerAccountQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("CUSTOMERACCOUNTID", 1);
 
@@ -443,23 +436,6 @@ public class CustomerServiceIT {
             attributes.add("ACCOUNTID");
             attributes.add("ISOWNER");
 
-//            Connection con = null;
-//            try {
-//                con = dataSource.getConnection();
-//                Statement statement = con.createStatement();
-//                ResultSet resultSet = statement.executeQuery("SELECT * FROM( SELECT CUSTOMERID, ACCOUNTID, ENTITYID, OFFICEID, CDID, ANID, BALANCE, ACCOUNT, STARTDATE, ENDDATE, ACCOUNTTYP, INTERESRATE, CUSTOMERACCOUNTID, CUSTOMERTYPEID, NAME, SURNAME, NAME + ' ' + SURNAME AS CUSTOMER, ADDRESS, COMMENTS, ID, PHONE, EMAIL, COMMENTS_EN_US, COMMENTS_ES_ES, COMMENTS_GL_ES, LONGITUDE, LATITUDE, SIGNATURE, ISOWNER FROM (SELECT CUSTOMERACCOUNTS.CUSTOMERID, VACCOUNTBALANCE.ACCOUNTID, VACCOUNTBALANCE.ENTITYID, VACCOUNTBALANCE.OFFICEID, VACCOUNTBALANCE.CDID, VACCOUNTBALANCE.ANID, VACCOUNTBALANCE.BALANCE AS BALANCE, VACCOUNTBALANCE.ENTITYID + ' ' + VACCOUNTBALANCE.OFFICEID + ' ' + VACCOUNTBALANCE.CDID + ' ' + VACCOUNTBALANCE.ANID AS ACCOUNT, VACCOUNTBALANCE.STARTDATE, VACCOUNTBALANCE.ENDDATE, ACCOUNTTYP, INTERESRATE, CUSTOMERACCOUNTID, ISOWNER FROM (SELECT ACCOUNTS.ACCOUNTID, ACCOUNTS.ENTITYID, ACCOUNTS.OFFICEID, ACCOUNTS.CDID, ACCOUNTS.ANID, SUM(MOVEMENTS.MOVEMENT) AS BALANCE, ACCOUNTS.STARTDATE, ACCOUNTS.ENDDATE, ACCOUNTS.INTERESRATE, ACCOUNTS.ACCOUNTTYP FROM ACCOUNTS LEFT OUTER JOIN MOVEMENTS ON ACCOUNTS.ACCOUNTID = MOVEMENTS.ACCOUNTID GROUP BY ACCOUNTS.ACCOUNTID, ACCOUNTS.ENTITYID, ACCOUNTS.OFFICEID, ACCOUNTS.CDID, ACCOUNTS.ANID, ACCOUNTS.STARTDATE, ACCOUNTS.ENDDATE, ACCOUNTS.INTERESRATE, ACCOUNTS.ACCOUNTTYP) AS VACCOUNTBALANCE INNER JOIN CUSTOMERACCOUNTS ON VACCOUNTBALANCE.ACCOUNTID = CUSTOMERACCOUNTS.ACCOUNTID) AS VTEMP INNER JOIN CUSTOMERS ON CUSTOMERS.CUSTOMERID = VTEMP.CUSTOMERID)");
-//                while (resultSet.next()) {
-//                    for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-//                        if (i > 1) System.out.print(",  ");
-//                        String columnValue = resultSet.getString(i);
-//                        System.out.print(resultSet.getMetaData().getColumnName(i) + " → " + columnValue);
-//                    }
-//                    System.out.println("");
-//                }
-//            } catch (SQLException e) {
-//            }
-
-
             EntityResult result = customerService.customerAccountQuery(keysValues, attributes);
 
             Map<String, Object> recordValues = result.getRecordValues(0);
@@ -467,7 +443,7 @@ public class CustomerServiceIT {
             assertEquals(1, recordValues.get("CUSTOMERACCOUNTID"));
             assertEquals(2, recordValues.get("ACCOUNTID"));
 
-            assertNotNull(result.get("ACCOUNTID"));//
+            assertNotNull(result.get("ACCOUNTID"));
         }
 
 
@@ -498,6 +474,47 @@ public class CustomerServiceIT {
 
         }
 
+        @Test
+        void when_customerAccountUpdate_receive_attributes_and_keyValues_and_expected_EntityResult() {
+
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("ACCOUNTID", 2);
+
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("CUSTOMERACCOUNTID", 2);
+
+            customerService.customerAccountUpdate(attributes, keysValues);
+
+            List<String> attributesList = new ArrayList<>();
+            attributesList.add("CUSTOMERACCOUNTID");
+            attributesList.add("CUSTOMERID");
+            attributesList.add("ACCOUNTID");
+            attributesList.add("ISOWNER");
+
+            EntityResult result = customerService.customerAccountQuery(keysValues, attributesList);
+            Map<String, Object> recordValues = result.getRecordValues(0);
+            assertEquals(1, result.calculateRecordNumber());
+            assertEquals(2, recordValues.get("CUSTOMERACCOUNTID"));
+            assertEquals(2, recordValues.get("ACCOUNTID"));
+
+        }
+
+        @Test
+        void when_customerAccountDelete_receive_keyValues_expected_EntityResult() {
+
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("CUSTOMERACCOUNTID", 3);
+
+            customerService.customerAccountDelete(keysValues);
+
+            List<String> attributesList = new ArrayList<>();
+            attributesList.add("CUSTOMERACCOUNTID");
+            attributesList.add("CUSTOMERID");
+            attributesList.add("ACCOUNTID");
+            attributesList.add("ISOWNER");
+            EntityResult result = customerService.customerAccountQuery(keysValues, attributesList);
+            assertNull(result.getRecordValues(0).get("CUSTOMERACCOUNTID"));
+        }
 
     }
 
