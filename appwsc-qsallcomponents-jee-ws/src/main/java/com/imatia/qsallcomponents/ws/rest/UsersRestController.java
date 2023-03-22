@@ -24,6 +24,7 @@ public class UsersRestController extends ORestController<IUserAndRoleService> im
 
 	@Override
 	public ResponseEntity<Void> login() {
+
 		return ResponseEntity.ok().build();
 	}
 }
