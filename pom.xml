@@ -113,28 +113,27 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.6.4</version>
-<!--                <configuration>-->
-<!--                    <targetClasses>-->
-<!--                        <param>com.imatia.qsallcomponents.model.*</param>-->
-<!--                    </targetClasses>-->
-<!--                    <targetTests>-->
-<!--                        <param>com.imatia.qsallcomponents.model.*</param>-->
-<!--                    </targetTests>-->
-<!--                    <threads>4</threads>-->
-<!--                    <timeoutFactor>3.0</timeoutFactor>-->
-<!--                    <timeoutConstant>120000</timeoutConstant>-->
-<!--                    <outputFormats>-->
-<!--                        <outputFormat>XML</outputFormat>-->
-<!--                        <outputFormat>HTML</outputFormat>    &lt;!&ndash; OPTIONAL &ndash;&gt;-->
-<!--                        <outputFormat>CSV</outputFormat>    &lt;!&ndash; OPTIONAL &ndash;&gt;-->
-<!--                    </outputFormats>-->
-<!--                    <exportLineCoverage>true</exportLineCoverage>-->
-<!--                    <failWhenNoMutations>false</failWhenNoMutations>-->
-<!--                    <timestampedReports>false</timestampedReports>-->
-<!--                    <verbose>false-->
-<!--                    </verbose>  &lt;!&ndash; Flag to exclude mutation in module with no tests such as the clients  &ndash;&gt;+-->
-<!--                    <skip>${pitest.skip}</skip>-->
-<!--                </configuration>-->
+                <configuration>
+                    <targetClasses>
+                        <param>com.imatia.qsallcomponents.model.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.imatia.qsallcomponents.model.*</param>
+                    </targetTests>
+                    <threads>4</threads>
+                    <timeoutFactor>3.0</timeoutFactor>
+                    <timeoutConstant>120000</timeoutConstant>
+                    <outputFormats>
+                        <outputFormat>XML</outputFormat>
+                        <outputFormat>HTML</outputFormat>
+                        <outputFormat>CSV</outputFormat>
+                    </outputFormats>
+                    <exportLineCoverage>true</exportLineCoverage>
+                    <failWhenNoMutations>false</failWhenNoMutations>
+                    <timestampedReports>false</timestampedReports>
+                    <verbose>false</verbose>
+                    <skip>${pitest.skip}</skip>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
