@@ -267,7 +267,7 @@ class BranchServiceTest {
         }
 
         @Test
-        void when_accountInsert_receive_attributes_expected_toRet_EntityResult_OPERATION_WRONG() {
+        void when_accountInsert_receive_attributes_expected_EntityResult_toRet_with_OPERATION_WRONG() {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put(AccountDao.ATTR_ENTITYID, 2095);
             attributes.remove(AccountDao.ATTR_ANID);
@@ -286,7 +286,7 @@ class BranchServiceTest {
         }
 
         @Test
-        void when_accountInsert_receive_attributes_expected_accountUpdate_EntityResult_OPERATION_WRONG() {
+        void when_accountInsert_receive_attributes_expected_accountUpdate_EntityResult_accountUpdate_with_OPERATION_WRONG() {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put(AccountDao.ATTR_ENTITYID, 2095);
             attributes.remove(AccountDao.ATTR_ANID);

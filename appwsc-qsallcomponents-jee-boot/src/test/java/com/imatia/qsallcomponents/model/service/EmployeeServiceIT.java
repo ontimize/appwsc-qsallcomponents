@@ -87,7 +87,7 @@ public class EmployeeServiceIT {
 
 
         @Test
-        void when_employeeQuery_receive_keysValues_and_attributes_expected_EntityResult() {
+        void when_employeeQuery_receive_keysValues_and_attributes_expected_EntityResult_without_EMPLOYEEPHOTO() {
             Map<String, Object> keysValues = new HashMap();
             keysValues.put("EMPLOYEEID", 1001);
 
@@ -110,7 +110,7 @@ public class EmployeeServiceIT {
 
 
         @Test
-        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_BytesBlock() {
+        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_EMPLOYEEPHOTO_with_BytesBlock() {
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("EMPLOYEEID", 1001);

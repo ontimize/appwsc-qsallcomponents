@@ -227,7 +227,7 @@ public class CustomerServiceIT {
     class CustomerCRUD {
 
         @Test
-        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_PHOTO_without_BytesBlock() {
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("CUSTOMERID", 1);
