@@ -23,7 +23,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled
 @ExtendWith(MockitoExtension.class)
 class BranchRestControllerTest {
 
@@ -53,7 +52,7 @@ class BranchRestControllerTest {
 
             List<MultipartFile> files = new ArrayList<>();
 
-            String data = "data";
+            String data ="{\"string1\":\"object1\"}";
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("string1", "object1");

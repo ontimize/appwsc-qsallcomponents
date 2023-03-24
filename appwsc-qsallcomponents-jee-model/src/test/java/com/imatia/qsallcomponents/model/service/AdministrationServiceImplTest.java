@@ -73,7 +73,7 @@ class AdministrationServiceImplTest {
         void when_test_receive_string_expected_Test(){
             String who = "who";
             com.imatia.qsallcomponents.api.constants.entities.Test test = administrationService.test(who);
-            assertEquals(who,administrationService.test(who).toString());
+            assertEquals(who,test.getWho());
         }
     }
 
