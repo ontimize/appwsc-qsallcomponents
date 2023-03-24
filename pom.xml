@@ -133,8 +133,8 @@
                     <failWhenNoMutations>false</failWhenNoMutations>
                     <timestampedReports>false</timestampedReports>
                     <verbose>false</verbose>
-                    <skip>${pitest.skip}</skip>-->
-                </configuration>-->
+                    <skip>${pitest.skip}</skip>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
