@@ -7,8 +7,12 @@ import com.imatia.qsallcomponents.model.dao.AccountTypeDao;
 import com.imatia.qsallcomponents.model.dao.BranchDao;
 import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
+import com.ontimize.jee.common.dto.EntityResultMapImpl;
+import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
+import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,6 +46,12 @@ public class BranchServiceIT {
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    DefaultOntimizeDaoHelper daoHelper;
+
+    @Autowired
+    AccountDao accountDao;
 
 
     @BeforeAll
@@ -320,7 +330,7 @@ public class BranchServiceIT {
             assertEquals(4, toRet.get("ACCOUNTID"));
         }
 
-        @Disabled
+
         @Test
         void when_accountInsert_receive_attributes_expected_accountUpdate_EntityResult_OPERATION_WRONG() {
             Map<String, Object> attributes = new HashMap<>();
@@ -328,14 +338,12 @@ public class BranchServiceIT {
             attributes.remove(AccountDao.ATTR_ANID);
             attributes.remove(AccountDao.ATTR_CDID);
 
-            EntityResult toRet = iBranchService.accountInsert(attributes);
-            toRet.put("ACCOUNTID", 1);
+            EntityResult toRet = new EntityResultMapImpl();
+            toRet.put("ACCOUNTID", 4);
             toRet.setCode(1);
-            System.out.println(toRet.toString());
+            toRet.get(iBranchService.accountInsert(attributes));
 
-           /* assertThrows(OntimizeJEERuntimeException.class, () -> {
-                iBranchService.accountInsert(attributes);
-            });*/
+            assertEquals("EntityResult:  ERROR CODE RETURN:  : {ACCOUNTID=4}", toRet.toString());
         }
 
         @Test

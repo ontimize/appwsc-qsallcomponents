@@ -11,10 +11,12 @@ import com.ontimize.jee.common.db.AdvancedEntityResult;
 import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.DmsException;
 import com.ontimize.jee.common.services.dms.IDMSService;
+import com.ontimize.jee.common.util.remote.BytesBlock;
 import com.ontimize.jee.server.services.dms.DMSServiceFileHelper;
 import com.ontimize.jee.server.services.dms.DMSServiceImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -227,6 +229,48 @@ public class CustomerServiceIT {
     class CustomerCRUD {
 
         @Test
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_PHOTO_with_BytesBlock() {
+
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("CUSTOMERID", 1);
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            keysValues.put("PHOTO", bytesBlock);
+
+            List<String> attributes = new ArrayList();
+            attributes.add("CUSTOMERID");
+            attributes.add("CUSTOMERTYPEID");
+            attributes.add("NAME");
+            attributes.add("PHOTO");
+            attributes.add("ADDRESS");
+
+            EntityResult result = customerService.customerQuery(keysValues, attributes);
+            Map recordValues = result.getRecordValues(0);
+            assertEquals(1, result.calculateRecordNumber());
+            assertEquals(1, recordValues.get("CUSTOMERID"));
+            assertNotNull(result.get("PHOTO"));
+        }
+
+        @Test
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_without_PHOTO_without_BytesBlock() {
+
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("CUSTOMERID", 1);
+
+            List<String> attributes = new ArrayList();
+            attributes.add("CUSTOMERID");
+            attributes.add("CUSTOMERTYPEID");
+            attributes.add("NAME");
+            attributes.add("ADDRESS");
+
+            EntityResult result = customerService.customerQuery(keysValues, attributes);
+            Map recordValues = result.getRecordValues(0);
+            assertEquals(1, result.calculateRecordNumber());
+            assertEquals(1, recordValues.get("CUSTOMERID"));
+            assertNull(result.get("PHOTO"));
+        }
+
+        @Test
         void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_PHOTO_without_BytesBlock() {
 
             Map<String, Object> keysValues = new HashMap<>();
@@ -244,11 +288,10 @@ public class CustomerServiceIT {
             assertEquals(1, result.calculateRecordNumber());
             assertEquals(1, recordValues.get("CUSTOMERID"));
             assertNotNull(result.get("PHOTO"));
-
         }
 
         @Test
-        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_PHOTO_and_without_BytesBlock() {
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("CUSTOMERID", 1);
 
@@ -268,9 +311,57 @@ public class CustomerServiceIT {
             assertEquals(1, eResult.calculateRecordNumber());
             assertEquals("James", recordValues.get("NAME"));
             assertEquals(1, recordValues.get("CUSTOMERID"));
-
             assertNotNull(eResult.get("PHOTO"));
+        }
 
+        @Test
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_PHOTO_and_with_BytesBlock() {
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("CUSTOMERID", 1);
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            keysValues.put("PHOTO", bytesBlock);
+
+            List<String> attributes = new ArrayList();
+            attributes.add("CUSTOMERID");
+            attributes.add("CUSTOMERTYPEID");
+            attributes.add("NAME");
+            attributes.add("PHOTO");
+            attributes.add("ADDRESS");
+
+            List<Object> orderBy = new ArrayList();
+            orderBy.add("NAME");
+
+            AdvancedEntityResult eResult = customerService.customerPaginationQuery(keysValues, attributes, 3, 0, orderBy);
+            Map recordValues = eResult.getRecordValues(0);
+
+            assertEquals(1, eResult.calculateRecordNumber());
+            assertEquals("James", recordValues.get("NAME"));
+            assertEquals(1, recordValues.get("CUSTOMERID"));
+            assertNotNull(eResult.get("PHOTO"));
+        }
+
+        @Test
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_without_PHOTO_and_without_BytesBlock() {
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("CUSTOMERID", 1);
+
+            List<String> attributes = new ArrayList();
+            attributes.add("CUSTOMERID");
+            attributes.add("CUSTOMERTYPEID");
+            attributes.add("NAME");
+            attributes.add("ADDRESS");
+
+            List<Object> orderBy = new ArrayList();
+            orderBy.add("NAME");
+
+            AdvancedEntityResult eResult = customerService.customerPaginationQuery(keysValues, attributes, 3, 0, orderBy);
+            Map recordValues = eResult.getRecordValues(0);
+
+            assertEquals(1, eResult.calculateRecordNumber());
+            assertEquals("James", recordValues.get("NAME"));
+            assertEquals(1, recordValues.get("CUSTOMERID"));
+            assertNull(eResult.get("PHOTO"));
         }
 
         @Test
