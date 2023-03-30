@@ -130,9 +130,37 @@ public class EmployeeServiceIT {
 
         }
 
+        @Test
+        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_EMPLOYEEPHOTO_without_BytesBlock() {
+
+            /*como evito q sea un BytesBlock??????????????
+            si lo pongo en keysvlaues como null, falla
+            */
+
+
+
+
+            Map<String, Object> keysValues = new HashMap<>();
+            keysValues.put("EMPLOYEEID", 1001);
+
+            List<String> attributes = new ArrayList();
+            attributes.add("EMPLOYEEID");
+            attributes.add("NAME");
+            attributes.add("EMAIL");
+            attributes.add("EMPLOYEEPHOTO");
+            attributes.add("OFFICEID");
+
+            EntityResult result = iemployeeService.employeeQuery(keysValues, attributes);
+            Map recordValues = result.getRecordValues(0);
+
+            assertEquals(1001, recordValues.get("EMPLOYEEID"));
+            assertNull(result.get("EMPLOYEEPHOTO"));
+
+        }
+
 
         @Test
-        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_without_EMPLOYEEPHOTO() {
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("EMPLOYEEID", 1001);
@@ -147,16 +175,14 @@ public class EmployeeServiceIT {
             AdvancedEntityResult eResult = iemployeeService.employeePaginationQuery(keysValues, attributes, 3, 0, orderBy);
 
             assertEquals(1, eResult.calculateRecordNumber());
-
             assertEquals("Vinod", eResult.getRecordValues(0).get("NAME"));
         }
 
         @Test
-        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvacedEntityResult_with_bytesBlock() {
+        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvacedEntityResult_with_EMPLOYEEPHOTO_and_with_bytesBlock() {
 
             Map<String, Object> keysValues = new HashMap<>();
             keysValues.put("EMPLOYEEID", 1001);
-
 
             List<Object> attributes = new ArrayList();
             attributes.add("EMPLOYEEID");
@@ -176,21 +202,18 @@ public class EmployeeServiceIT {
             Map recordValues = eResult.getRecordValues(0);
 
             assertEquals(1001, recordValues.get("EMPLOYEEID"));
-
             assertNotNull(eResult.get("EMPLOYEEPHOTO"));
-
         }
 
 
         @Test
-        void when_employeeInsert_receive_attributes_expected_EntityResult() {
+        void when_employeeInsert_receive_attributes_expected_EntityResult_with_EMPLOYEEPHOTO_and_without_string() {
 
             Map<String, Object> attributesValues = new HashMap();
-            attributesValues.put("EMPLOYEEID", 1004);
+            attributesValues.put("EMPLOYEEID", 1003);
             attributesValues.put("NAME", "Elsa");
             attributesValues.put("EMAIL", "elsa@imatia.com");
             attributesValues.put("OFFICEID", "0001");
-
 
             iemployeeService.employeeInsert(attributesValues);
 
@@ -203,13 +226,12 @@ public class EmployeeServiceIT {
             attributesList.add("EMAIL");
             EntityResult eResultQuery = iemployeeService.employeeQuery(keysValues, attributesList);
 
-            assertEquals(1004, eResultQuery.getRecordValues(0).get("EMPLOYEEID"));
-
+            assertEquals(1003, eResultQuery.getRecordValues(0).get("EMPLOYEEID"));
             assertEquals("elsa@imatia.com", eResultQuery.getRecordValues(0).get("EMAIL"));
         }
 
         @Test
-        void when_employeeInsert_receive_attributes_expected_EntityResult_with_string() {
+        void when_employeeInsert_receive_attributes_expected_EntityResult_with_EMPLOYEEPHOTO_and_with_string() {
             String str = "string1";
 
             Map<String, Object> attributesValues = new HashMap();
@@ -231,12 +253,34 @@ public class EmployeeServiceIT {
             EntityResult eResultQuery = iemployeeService.employeeQuery(keysValues, attributesList);
 
             assertEquals(1003, eResultQuery.getRecordValues(0).get("EMPLOYEEID"));
-
             assertEquals("elsa@imatia.com", eResultQuery.getRecordValues(0).get("EMAIL"));
         }
 
         @Test
-        void when_employeeUpdate_receive_attributes_and_keysValues_expected_EntityResult() {
+        void when_employeeInsert_receive_attributes_expected_EntityResult_without_EMPLOYEEPHOTO_and_without_string() {
+            Map<String, Object> attributesValues = new HashMap();
+            attributesValues.put("EMPLOYEEID", 1003);
+            attributesValues.put("NAME", "Elsa");
+            attributesValues.put("EMAIL", "elsa@imatia.com");
+            attributesValues.put("OFFICEID", "0001");
+
+            iemployeeService.employeeInsert(attributesValues);
+
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("NAME", "Elsa");
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("EMPLOYEEID");
+            attributesList.add("NAME");
+            attributesList.add("EMAIL");
+            EntityResult eResultQuery = iemployeeService.employeeQuery(keysValues, attributesList);
+
+            assertEquals(1003, eResultQuery.getRecordValues(0).get("EMPLOYEEID"));
+            assertEquals("elsa@imatia.com", eResultQuery.getRecordValues(0).get("EMAIL"));
+        }
+
+        @Test
+        void when_employeeUpdate_receive_attributes_and_keysValues_expected_EntityResult_without_EMPLOYEEPHOTO() {
 
             Map<String, Object> attributes = new HashMap();
             attributes.put("NAME", "Coincidir");
@@ -256,21 +300,41 @@ public class EmployeeServiceIT {
             Map recordValues = result.getRecordValues(0);
 
             assertEquals("Coincidir", result.getRecordValues(0).get("NAME"));
-
             assertEquals(1002, recordValues.get("EMPLOYEEID"));
-
-
         }
 
         @Test
-        void when_employeeUpdate_receive_attributes_and_keysValues_expected_EntityResult_with_string() {
-
+        void when_employeeUpdate_receive_attributes_and_keysValues_expected_EntityResult_with_EMPLOYEEPHOTO_and_with_string() {
             String str = "string1";
 
             Map<String, Object> attributes = new HashMap();
             attributes.put("NAME", "Coincidir");
             attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, str);
 
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("EMPLOYEEID", 1002);
+
+            iemployeeService.employeeUpdate(attributes, keysValues);
+
+            List<String> attributesList = new ArrayList();
+            attributesList.add("EMPLOYEEID");
+            attributesList.add("NAME");
+
+            EntityResult result = iemployeeService.employeeQuery(keysValues, attributesList);
+
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+
+            assertEquals("Coincidir", result.getRecordValues(0).get("NAME"));
+            assertEquals(1002, recordValues.get("EMPLOYEEID"));
+        }
+
+        @Test
+        void when_employeeUpdate_receive_attributes_and_keysValues_expected_EntityResult_with_EMPLOYEEPHOTO_and_without_string() {
+
+            Map<String, Object> attributes = new HashMap();
+            attributes.put("NAME", "Coincidir");
+            attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, null);
 
             Map<String, Object> keysValues = new HashMap();
             keysValues.put("EMPLOYEEID", 1002);
@@ -287,10 +351,7 @@ public class EmployeeServiceIT {
             Map recordValues = result.getRecordValues(0);
 
             assertEquals("Coincidir", result.getRecordValues(0).get("NAME"));
-
             assertEquals(1002, recordValues.get("EMPLOYEEID"));
-
-
         }
 
         @Test

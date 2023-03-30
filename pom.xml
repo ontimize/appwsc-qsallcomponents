@@ -82,9 +82,9 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <!-- Sets the VM argument line used when unit tests are run. -->
-<!--                    <argLine>${surefireArgLine}</argLine>-->
+                    <argLine>${surefireArgLine}</argLine>
                     <!-- Skips unit tests if the value of skip.unit.tests property is true -->
-<!--                    <skipTests>${skip.unit.tests}</skipTests>-->
+                    <skipTests>${skip.unit.tests}</skipTests>
                     <!-- Excludes integration tests when unit tests are run. -->
                     <excludes>
                         <exclude>**/*IT.java</exclude>
@@ -103,8 +103,8 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-<!--                            <argLine>${failsafeArgLine}</argLine>-->
-<!--                            <skipTests>${skip.integration.tests}</skipTests>-->
+                            <argLine>${failsafeArgLine}</argLine>
+                            <skipTests>${skip.integration.tests}</skipTests>
                         </configuration>
                     </execution>
                 </executions>

@@ -399,7 +399,7 @@ public class UserAndRoleServiceImplIT {
 
 
         @Test
-        void when_serverRoleQuery_receive_keysValues_and_attributes_expected_EntityResult() {
+        void when_serverRoleQuery_receive_keysValues_and_attributes_expected_EntityResult_with_ID_SERVER_ROLE_QUERY() {
             Map<String, Object> keysValues = new HashMap();
             keysValues.put("ID_ROLE_SERVER_PERMISSION", 0);
             keysValues.put("ID_ROLENAME", 0);
@@ -415,6 +415,28 @@ public class UserAndRoleServiceImplIT {
             Map recordValues = result.getRecordValues(0);
             assertEquals(0, recordValues.get("ID_ROLE_SERVER_PERMISSION"));
             assertEquals(0, recordValues.get("ID_ROLENAME"));
+
+        }
+
+        @Test
+        void when_serverRoleQuery_receive_keysValues_and_attributes_expected_EntityResult_with_ID_SERVER_ROLE_ALL_QUERY() {
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("ID_ROLE_SERVER_PERMISSION", 0);
+
+            /*
+            si le quito el ID_ROLENAME si entra en el if, pero falla xq dice q no encuentra ID_ROLE_SERVER_PERMISSION
+            /
+             */
+
+            List<String> attributes = new ArrayList<>();
+            attributes.add("ID_ROLE_SERVER_PERMISSION");
+            attributes.add("ID_SERVER_PERMISSION");
+
+            EntityResult result = iUserAndRoleService.serverRoleQuery(keysValues, attributes);
+
+            assertEquals(1, result.calculateRecordNumber());
+            Map recordValues = result.getRecordValues(0);
+            assertEquals(0, recordValues.get("ID_ROLE_SERVER_PERMISSION"));
 
         }
 
@@ -452,8 +474,13 @@ public class UserAndRoleServiceImplIT {
         @Test
         void when_serverRoleUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_delete() {
             Map<String, Object> keysValues = new HashMap();
-            keysValues.put("ID_SERVER_PERMISSION", 2);
-            keysValues.put("ID_ROLENAME", 0);
+            keysValues.put("ID_ROLE_SERVER_PERMISSION", 3);
+
+            /*
+            si le quito ACTIVED entra en el else y pasa al if de serverRoleQuery
+            pero da fallo dice q no encuentra ID_ROLE_SERVER_PERMISSION
+             entonces tampoco dará el null q se espera como tercera opción en serverRoleUpdate/
+             */
 
             Map<String, Object> attributesValues = new HashMap();
             attributesValues.put("ID_ROLE_SERVER_PERMISSION", 3);
@@ -558,6 +585,28 @@ public class UserAndRoleServiceImplIT {
             EntityResult result = iUserAndRoleService.rolesForUserUpdate(keysValues, attributes);
 
             assertEquals(3, result.get("ID_USER_ROLE"));
+        }
+
+        @Test
+        void when_rolesForUserUpdate_receive_attributesValues_and_keysValues_expected_EntityResult_delete() {
+            Map<String, Object> keysValues = new HashMap();
+            keysValues.put("USER_", "demo2");
+            keysValues.put("ID_USER_ROLE", 3);
+
+
+            Map<String, Object> attributes = new HashMap();
+            attributes.put(ServerPermission.ID_SERVER_PERMISSION, "ID_SERVER_PERMISSION");
+            attributes.put("USER_", "demo2");
+            attributes.put("ID_ROLENAME", 0);
+            attributes.put("PASSWORD", "demo2");
+            attributes.put("NAME", "demo2");
+            attributes.put("SURNAME", "demo2");
+            attributes.put("EMAIL", "demo2");
+            attributes.put("NIF", "demo2");
+
+            EntityResult result = iUserAndRoleService.rolesForUserUpdate(keysValues, attributes);
+
+            assertNull(result.get("ID_USER_ROLE"));
         }
 
     }
