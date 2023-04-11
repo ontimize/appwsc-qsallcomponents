@@ -231,7 +231,7 @@ public class EmployeeServiceIT {
         void when_employeeInsert_receive_attributes_expected_EntityResult_with_EMPLOYEEPHOTO_and_without_string() {
 
             Map<String, Object> attributesValues = new HashMap();
-            attributesValues.put("EMPLOYEEID", 1003);
+            attributesValues.put("EMPLOYEEID", 1004);
             attributesValues.put("NAME", "Elsa");
             attributesValues.put("EMAIL", "elsa@imatia.com");
             attributesValues.put("OFFICEID", "0001");
@@ -280,7 +280,7 @@ public class EmployeeServiceIT {
         @Test
         void when_employeeInsert_receive_attributes_expected_EntityResult_without_EMPLOYEEPHOTO_and_without_string() {
             Map<String, Object> attributesValues = new HashMap();
-            attributesValues.put("EMPLOYEEID", 1003);
+            attributesValues.put("EMPLOYEEID", 1004);
             attributesValues.put("NAME", "Elsa");
             attributesValues.put("EMAIL", "elsa@imatia.com");
             attributesValues.put("OFFICEID", "0001");
@@ -296,7 +296,7 @@ public class EmployeeServiceIT {
             attributesList.add("EMAIL");
             EntityResult eResultQuery = iemployeeService.employeeQuery(keysValues, attributesList);
 
-            assertEquals(1003, eResultQuery.getRecordValues(0).get("EMPLOYEEID"));
+            assertEquals(1004, eResultQuery.getRecordValues(0).get("EMPLOYEEID"));
             assertEquals("elsa@imatia.com", eResultQuery.getRecordValues(0).get("EMAIL"));
         }
 
