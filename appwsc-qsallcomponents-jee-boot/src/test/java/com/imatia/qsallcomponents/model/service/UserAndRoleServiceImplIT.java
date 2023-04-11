@@ -430,6 +430,8 @@ public class UserAndRoleServiceImplIT {
             si le quito el ID_ROLENAME si entra en el if, pero falla xq dice q no encuentra ID_ROLE_SERVER_PERMISSION
 
             ServerRoleDao.ID_SERVER_ROLE_ALL_QUERY= "id_serverRole_all"
+            en ServerRoleDao.xml hay una parte comentada(para q funcionaran los tests unatorios)
+            pero no se sabe si esa parte es necesaria e imprescindible o no
             /
              */
 
@@ -459,6 +461,8 @@ public class UserAndRoleServiceImplIT {
             falla porque le inserta [] a: "CASE WHEN tur.ID_ROLENAME IS NOT NULL THEN 'S' ELSE 'N' END"
             al detectar los espacios como caracteres conflictivos
             la querie sin los braquets funciona correctamente /
+
+            para solucionarlo habría que modificar la clase que gestiona las BBDD HSQLDB
              */
 
             Map<String, Object> attributesValues = new HashMap();
