@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AdministrationServiceImplIT {
+class AdministrationServiceImplIT {
 
     @Autowired
     IAdministrationService iAdministrationService;

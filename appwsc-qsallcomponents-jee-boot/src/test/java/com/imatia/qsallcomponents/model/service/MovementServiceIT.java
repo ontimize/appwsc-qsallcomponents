@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class MovementServiceIT {
+class MovementServiceIT {
 
     @Autowired
     IMovementService iMovementService;

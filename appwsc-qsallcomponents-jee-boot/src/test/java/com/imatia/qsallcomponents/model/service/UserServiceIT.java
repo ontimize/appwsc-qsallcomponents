@@ -36,7 +36,7 @@ import static org.junit.Assert.*;
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class UserServiceIT {
+class UserServiceIT {
 
     @Autowired
     IUserService iUserService;

@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BranchServiceIT {
+class BranchServiceIT {
 
 
     @Autowired
@@ -329,7 +329,6 @@ public class BranchServiceIT {
 
             assertEquals(5, toRet.get("ACCOUNTID"));
         }
-
 
         @Test
         void when_accountInsert_receive_attributes_expected_accountUpdate_EntityResult_OPERATION_WRONG() {
