@@ -18,6 +18,7 @@ public class WebClientConfigRestController extends RemoteConfigurationRestContro
 
 	@Override
 	public IRemoteConfigurationService getService() {
+
 		return this.remoteConfigService;
 	}
 

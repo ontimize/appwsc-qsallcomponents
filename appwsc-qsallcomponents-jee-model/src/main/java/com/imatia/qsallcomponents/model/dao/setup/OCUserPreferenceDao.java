@@ -11,8 +11,4 @@ import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 @ConfigurationFile(configurationFile = "base-dao/setup/OCUserPreferenceDao.xml", configurationFilePlaceholder = "base-dao/placeholders.properties")
 public class OCUserPreferenceDao extends OntimizeJdbcDaoSupport {
 
-	public OCUserPreferenceDao() {
-
-		super();
-	}
 }

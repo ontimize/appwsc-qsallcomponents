@@ -17,9 +17,5 @@ public class UserRoleDao extends OntimizeJdbcDaoSupport {
 	public static final String ROLES_WITH_USER_QUERY = "fullRolesWithUser";
 	public static final String DEFAULT_QUERY = "default";
 
-	public UserRoleDao() {
-
-		super();
-	}
 }
 

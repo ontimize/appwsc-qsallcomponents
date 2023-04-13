@@ -18,7 +18,4 @@ public class ReportParameterDao extends OntimizeJdbcDaoSupport implements IRepor
 	public static final String	ATTR_NESTED_TYPE			= "NESTED_TYPE";
 	public static final String	ATTR_VALUE_CLASS			= "VALUE_CLASS";
 
-	public ReportParameterDao() {
-		super();
-	}
 }

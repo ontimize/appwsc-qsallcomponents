@@ -42,7 +42,7 @@ class EmployeeServiceTest {
     class Employees {
 
         @Test
-        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_BytesBlock() {
+        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_EMPLOYEEPHOTO_and_with_BytesBlock() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, "value1");
@@ -58,12 +58,28 @@ class EmployeeServiceTest {
             EntityResult entityResult = employeeService.employeeQuery(keysValues, attributes);
             assertEquals(toRet, entityResult);
             assertNotNull(entityResult);
+        }
+        @Test
+        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_EMPLOYEEPHOTO_and_without_BytesBlock() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
+            keysValues.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, "EPhoto");
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            record.put("attributes1", "value1");
+            record.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, "EPhoto");
+            toRet.addRecord(record);
 
-
+            Mockito.doReturn(toRet).when(daoHelper).query(employeeDao, keysValues, attributes);
+            EntityResult entityResult = employeeService.employeeQuery(keysValues, attributes);
+            assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
         }
 
         @Test
-        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+        void when_employeeQuery_receive_keysValues_and_attributes_and_expected_EntityResult_without_EMPLOYEEPHOTO_and_without_BytesBlock() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("EPHOTO", "EPhoto");
@@ -83,7 +99,7 @@ class EmployeeServiceTest {
         }
 
         @Test
-        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_EMPLOYEEPHOTO_without_Base64() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("EMPLOYEEPHOTO", 1);
@@ -107,7 +123,7 @@ class EmployeeServiceTest {
 
 
         @Test
-        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_BytesBlock() {
+        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_EMPLOYEEPHOTO_and_with_BytesBlock() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("EMPLOYEEPHOTO", 1);
@@ -127,12 +143,50 @@ class EmployeeServiceTest {
             AdvancedEntityResult advancedEntityResult = employeeService.employeePaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
             assertEquals(advancedEResult, advancedEntityResult);
             assertNotNull(advancedEntityResult);
-
-
         }
 
         @Test
-        void when_employeeInsert_receive_attributes_expected_EntityResult() {
+        void when_employeePaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_without_EMPLOYEEPHOTO_and_with_BytesBlock() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
+            keysValues.put("PHOTO", 1);
+            int recordNumber = 5;
+            int startIndex = 3;
+            List<String> orderBy = new ArrayList<>();
+
+            AdvancedEntityResult advancedEResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            record.put("attributes1", "value1");
+            record.put("PHOTO", 1);
+            advancedEResult.addRecord(record);
+
+            Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(employeeDao, keysValues, attributes, recordNumber, startIndex, orderBy, EmployeeDao.EMPLOYEE_OFFICE_QUERY_KEY);
+            AdvancedEntityResult advancedEntityResult = employeeService.employeePaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
+            assertEquals(advancedEResult, advancedEntityResult);
+            assertNotNull(advancedEntityResult);
+        }
+
+        @Test
+        void when_employeeInsert_receive_attributes_expected_EntityResult_without_EMPLOYEEPHOTO_and_without_String() {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("PHOTO", 1);
+
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            record.put("attributes1", "value1");
+            record.put("PHOTO", "value1");
+            toRet.addRecord(record);
+
+            attributes.containsKey(EmployeeDao.ATTR_EMPLOYEEPHOTO);
+            Mockito.doReturn(toRet).when(daoHelper).insert(employeeDao, attributes);
+            EntityResult entityResult = employeeService.employeeInsert(attributes);
+            assertEquals(toRet, entityResult);
+            assertNotNull(entityResult);
+        }
+        @Test
+        void when_employeeInsert_receive_attributes_expected_EntityResult_with_EMPLOYEEPHOTO_and_without_String() {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("EMPLOYEEPHOTO", 1);
 
@@ -152,7 +206,7 @@ class EmployeeServiceTest {
         }
 
         @Test
-        void when_employeeInsert_receive_attributes_expected_EntityResult_with_String() {
+        void when_employeeInsert_receive_attributes_expected_EntityResult_with_EMPLOYEEPHOTO_and_with_String() {
             String str = "string1";
             Map<String, Object> attributes = new HashMap<>();
             attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, str);
@@ -169,12 +223,10 @@ class EmployeeServiceTest {
             EntityResult entityResult = employeeService.employeeInsert(attributes);
             assertEquals(toRet, entityResult);
             assertNotNull(entityResult);
-
-
         }
 
         @Test
-        void when_employeeUpdate_receive_attributes_and_keyValues_expected_EntityResult() {
+        void when_employeeUpdate_receive_attributes_and_keyValues_expected_EntityResult_with_PHOTO_without_String() {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, 1);
             Map<String, Object> keyValues = new HashMap<>();
@@ -191,12 +243,10 @@ class EmployeeServiceTest {
             EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
             assertEquals(toRet, entityResult);
             assertNotNull(entityResult);
-
-
         }
 
         @Test
-        void when_employeeUpdate_receive_attributes_and_keyValues_expected_EntityResult_with_string() {
+        void when_employeeUpdate_receive_attributes_and_keyValues_expected_EntityResult_with_EMPLOYEEPHOTO_with_string() {
             String str = "string1";
             Map<String, Object> attributes = new HashMap<>();
             attributes.put(EmployeeDao.ATTR_EMPLOYEEPHOTO, str);
@@ -215,8 +265,6 @@ class EmployeeServiceTest {
             EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
             assertEquals(toRet, entityResult);
             assertNotNull(entityResult);
-
-
         }
         @Test
         void when_employeeUpdate_receive_attributes_and_keyValues_expected_EntityResult_without_ATTR_PHOTO() {
@@ -235,8 +283,6 @@ class EmployeeServiceTest {
             EntityResult entityResult = employeeService.employeeUpdate(attributes, keyValues);
             assertEquals(toRet, entityResult);
             assertNotNull(entityResult);
-
-
         }
 
 
@@ -257,8 +303,6 @@ class EmployeeServiceTest {
             EntityResult entityResult = employeeService.employeeDelete(keysValues);
             assertEquals(toRet, entityResult);
             assertNotNull(entityResult);
-
-
         }
 
     }

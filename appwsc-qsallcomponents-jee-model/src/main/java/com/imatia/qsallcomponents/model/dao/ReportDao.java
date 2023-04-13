@@ -19,8 +19,5 @@ public class ReportDao extends OntimizeJdbcDaoSupport implements IReportDao {
 	public static final String	ATTR_MAIN_REPORT_FILENAME	= "MAIN_REPORT_FILENAME";
 	public static final String	ATTR_ZIP					= "ZIP";
 	public static final String	ATTR_COMPILED				= "COMPILED";
-	
-	public ReportDao() {
-		super();
-	}
+
 }
