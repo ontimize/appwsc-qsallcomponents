@@ -454,7 +454,7 @@ class UserAndRoleServiceImplIT {
             Map<String, Object> keysValues = new HashMap();
             keysValues.put(RoleServerPermission.ACTIVED, "S");
             keysValues.put("ID_SERVER_PERMISSION", 2);
-            keysValues.put("ID_ROLENAME", 0);*/
+            keysValues.put("ID_ROLENAME", 0);
 
              /*
             Al ponerle keysValues.put(RoleServerPermission.ACTIVED, "S"); para poder testear la parte del Insert,
@@ -465,7 +465,7 @@ class UserAndRoleServiceImplIT {
             para solucionarlo habría que modificar la clase que gestiona las BBDD HSQLDB
              */
 
-           Map<String, Object> attributesValues = new HashMap();
+            Map<String, Object> attributesValues = new HashMap<>();
             attributesValues.put("ID_ROLE_SERVER_PERMISSION", 3);
             attributesValues.put("ID_ROLENAME", 0);
             attributesValues.put("ID_SERVER_PERMISSION", 2);
