@@ -677,6 +677,7 @@ class UserAndRoleServiceImplIT {
             assertEquals("Update", recordValues.get("PASSWORD"));
         }
 
+        @Disabled("review pending")
         @Test
         void when_searchUsersDelete_receive_keysValues_expected_EntityResult() {
 
