@@ -691,7 +691,7 @@ class UserAndRoleServiceImplIT {
 
             EntityResult result = iUserAndRoleService.searchUsersQuery(keysValuesMap, attributes);
             Map recordValues = result.getRecordValues(0);
-            assertNull( recordValues.get("USER_"));
+            assertEquals("democif", recordValues.get("USER_"));
 
         }
 
