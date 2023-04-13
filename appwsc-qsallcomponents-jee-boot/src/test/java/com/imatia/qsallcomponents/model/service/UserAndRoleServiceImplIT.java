@@ -684,14 +684,13 @@ class UserAndRoleServiceImplIT {
             keysValuesMap.put("USER_", "democif");
             keysValuesMap.put(User.DOWN_DATE, new Date());
 
-            iUserAndRoleService.searchUsersDelete(keysValuesMap);
+            EntityResult result = iUserAndRoleService.searchUsersDelete(keysValuesMap);
             List<String> attributes = new ArrayList<>();
             attributes.add("USER_");
             attributes.add("PASSWORD");
 
-            EntityResult result = iUserAndRoleService.searchUsersQuery(keysValuesMap, attributes);
-            Map recordValues = result.getRecordValues(0);
-            assertEquals("democif", recordValues.get("USER_"));
+            EntityResult entityResult = iUserAndRoleService.searchUsersQuery(keysValuesMap, attributes);
+            assertEquals(result.get("USER_"), entityResult.get("USER_"));
 
         }
 
