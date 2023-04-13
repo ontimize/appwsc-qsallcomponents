@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -18,26 +20,13 @@ class BundleRestControllerTest {
 
     @Nested
     class GetBundle {
-        @Test
-        void when_getBundle_receive_string_en_expected_ResponseEntity() {
-            String lang = "en";
+        @ParameterizedTest(name= "{index} - Testing String: {0}")
+        @ValueSource(strings = {"en","es","language"})
+        void when_getBundle_receive_string_expected_ResponseEntity(String lang) {
             ResponseEntity<EntityResult> bundle = bundleRestController.getBundle(lang);
             Assertions.assertEquals(HttpStatus.OK, bundle.getStatusCode());
         }
 
-        @Test
-        void when_getBundle_receive_string_es_expected_ResponseEntity() {
-            String lang = "es";
-            ResponseEntity<EntityResult> bundle = bundleRestController.getBundle(lang);
-            Assertions.assertEquals(HttpStatus.OK, bundle.getStatusCode());
-        }
-
-        @Test
-        void when_getBundle_receive_string_language_expected_ResponseEntity() {
-            String lang = "language";
-            ResponseEntity<EntityResult> bundle = bundleRestController.getBundle(lang);
-            Assertions.assertEquals(HttpStatus.OK, bundle.getStatusCode());
-        }
 
     }
 

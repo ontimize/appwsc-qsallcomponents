@@ -605,7 +605,7 @@ public class CustomerServiceIT {
         }
 
 
-        @Disabled
+        @Disabled("Unfinished test")
         @Test
         void when_customerAccountInsert_receive_attributes_expected_EntityResult() {
             Map<String, Object> attributes = new HashMap<>();

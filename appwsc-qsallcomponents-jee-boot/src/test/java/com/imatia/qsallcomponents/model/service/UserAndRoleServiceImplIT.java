@@ -419,7 +419,7 @@ class UserAndRoleServiceImplIT {
         }
 
 
-        @Disabled
+        @Disabled("Unfinished test")
         @Test
         void when_serverRoleQuery_receive_keysValues_and_attributes_expected_EntityResult_with_ID_SERVER_ROLE_ALL_QUERY() {
             Map<String, Object> keysValues = new HashMap();
@@ -448,7 +448,7 @@ class UserAndRoleServiceImplIT {
         }
 
 
-        @Disabled
+        @Disabled("Unfinished test")
         @Test
         void when_serverRoleUpdate_receive_attributesValues_and_keysValues_expected_insert() {
             Map<String, Object> keysValues = new HashMap();
