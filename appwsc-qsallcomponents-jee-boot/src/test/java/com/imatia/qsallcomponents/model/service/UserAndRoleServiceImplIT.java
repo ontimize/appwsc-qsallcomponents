@@ -60,16 +60,7 @@ class UserAndRoleServiceImplIT {
         Statement statement = con.createStatement();
 
 
-        statement.execute("CREATE TABLE TUSER(USER_ VARCHAR(50) NOT NULL PRIMARY KEY," +
-                "PASSWORD VARCHAR(50)," +
-                "NAME VARCHAR(50)," +
-                "SURNAME VARCHAR(50)," +
-                "EMAIL VARCHAR(50)," +
-                "NIF VARCHAR(50)," +
-                "USERBLOCKED TIMESTAMP," +
-                "LASTPASSWORDUPDATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
-                "FIRSTLOGIN BOOLEAN DEFAULT TRUE," +
-                "DOWN_DATE TIMESTAMP)");
+        statement.execute(" CREATE TABLE TUSER(USER_ VARCHAR(50) NOT NULL PRIMARY KEY, PASSWORD VARCHAR(50), NAME VARCHAR(50), SURNAME VARCHAR(50), EMAIL VARCHAR(50), NIF VARCHAR(50), USERBLOCKED TIMESTAMP, LASTPASSWORDUPDATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FIRSTLOGIN BOOLEAN DEFAULT TRUE, DOWN_DATE TIMESTAMP)");
         statement.executeUpdate("INSERT INTO TUSER VALUES('block','demouser','User blocked','Bloqueo','User Bloked',NULL,'2016-09-19 12:00:00.000000','2016-03-02 14:59:00.450000',FALSE,NULL)");
         statement.executeUpdate("INSERT INTO TUSER VALUES('demo','demouser','demo','demo',NULL,'44460713B',NULL,NULL,NULL,NULL)");
         statement.executeUpdate("INSERT INTO TUSER VALUES('democif','xYlJRMBKJs06a8c5tSjQn0eEju8=','democif','democif','democif',NULL,NULL,'2015-12-01 00:00:00.000000',FALSE,NULL)");
@@ -677,7 +668,6 @@ class UserAndRoleServiceImplIT {
             assertEquals("Update", recordValues.get("PASSWORD"));
         }
 
-        @Disabled("review pending")
         @Test
         void when_searchUsersDelete_receive_keysValues_expected_EntityResult() {
 
@@ -685,13 +675,17 @@ class UserAndRoleServiceImplIT {
             keysValuesMap.put("USER_", "democif");
             keysValuesMap.put(User.DOWN_DATE, new Date());
 
-            EntityResult result = iUserAndRoleService.searchUsersDelete(keysValuesMap);
+            iUserAndRoleService.searchUsersDelete(keysValuesMap);
             List<String> attributes = new ArrayList<>();
             attributes.add("USER_");
-            attributes.add("PASSWORD");
+            attributes.add("DOWN_DATE");
 
-            EntityResult entityResult = iUserAndRoleService.searchUsersQuery(keysValuesMap, attributes);
-            assertNotNull(entityResult.get("USER_"));
+            keysValuesMap.remove(User.DOWN_DATE);
+
+            EntityResult entityResult = iUserAndRoleService.userQuery(keysValuesMap, attributes);
+            Map recordValues = entityResult.getRecordValues(0);
+            assertEquals(1, entityResult.calculateRecordNumber());
+            assertNotNull(recordValues.get("DOWN_DATE"));
 
         }
 
