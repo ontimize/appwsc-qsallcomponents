@@ -1,5 +1,6 @@
 package com.imatia.qsallcomponents.ws.rest;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,10 @@ public class DummyController implements IDummyApi {
 	@Override
 	public ResponseEntity<EntityResult> dummyTest() {
 		EntityResult er = new EntityResultMapImpl();
-		Hashtable<String, String> result = new Hashtable<>();
+		HashMap<String, String> result = new HashMap<>();
 		result.put("Ontimize", "works");
 		er.addRecord(result);
-		return new ResponseEntity<EntityResult>(er, HttpStatus.OK);
+		return new ResponseEntity<>(er, HttpStatus.OK);
 	}
 
 	/*
@@ -30,10 +31,10 @@ public class DummyController implements IDummyApi {
 	@Override
 	public ResponseEntity<EntityResult> dummyPermission() {
 		EntityResult er = new EntityResultMapImpl();
-		Hashtable<String, String> result = new Hashtable<>();
+		HashMap<String, String> result = new HashMap<>();
 		result.put("permission", DUMMY_PERMISSION);
 		er.addRecord(result);
-		return new ResponseEntity<EntityResult>(er, HttpStatus.OK);
+		return new ResponseEntity<>(er, HttpStatus.OK);
 	}
 
 }

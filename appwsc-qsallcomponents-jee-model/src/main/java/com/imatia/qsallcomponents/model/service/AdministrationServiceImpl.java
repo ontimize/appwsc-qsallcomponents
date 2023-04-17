@@ -47,7 +47,7 @@ public class AdministrationServiceImpl implements IAdministrationService {
 	@Override
 	@Secured({ PermissionsProviderSecured.SECURED })
 	public String getServerPermissionsSql() {
-		StringBuffer sql = new StringBuffer();
+		StringBuilder sql = new StringBuilder();
 
 //		List<List<String>> find = ClassPathSeeker.find(new IClassPathEntryChecker<List<String>>() {
 //

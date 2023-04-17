@@ -62,9 +62,6 @@ public class UserAndRoleServiceImpl implements IUserAndRoleService {
     @Autowired
     private DefaultOntimizeDaoHelper daoHelper;
 
-//	@Autowired
-//	private IPasswordEncryptHelper passwordEncryptHelper;
-
     @Override
     @Secured({PermissionsProviderSecured.SECURED})
     @Transactional(readOnly = true)
@@ -94,7 +91,7 @@ public class UserAndRoleServiceImpl implements IUserAndRoleService {
     @Override
     public EntityResult userDelete(Map<?, ?> keysValues) throws OntimizeJEERuntimeException {
 
-        Map<String, Object> updateValues = new HashMap<String, Object>();
+        Map<String, Object> updateValues = new HashMap<>();
 
         updateValues.put(User.DOWN_DATE, new Date());
 

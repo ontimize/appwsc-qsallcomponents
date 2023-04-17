@@ -35,9 +35,6 @@ public class BranchService implements IBranchService {
     @Autowired
     private DefaultOntimizeDaoHelper daoHelper;
 
-//	@Autowired
-//	private IMailService				mailService;
-
 
     @Override
     public EntityResult branchQuery(Map<String, Object> keysValues, List<String> attributes) throws OntimizeJEERuntimeException {
@@ -114,11 +111,11 @@ public class BranchService implements IBranchService {
         int accountNumber = this.accountDao.createAccountNumber((int) accountKey);
         int accountDC = this.accountDao.calculateCDID(builderfDC.toString(), accountNumber);
 
-        Map<String, Object> mapAccountData = new HashMap<String, Object>();
+        HashMap<String, Object> mapAccountData = new HashMap<>();
         mapAccountData.put(AccountDao.ATTR_CDID, accountDC);
         mapAccountData.put(AccountDao.ATTR_ANID, accountNumber);
 
-        Map<String, Object> mapAccountKey = new HashMap<String, Object>();
+        HashMap<String, Object> mapAccountKey = new HashMap<>();
         mapAccountKey.put(AccountDao.ATTR_ID, accountKey);
 
         EntityResult accountUpdate = this.daoHelper.update(this.accountDao, mapAccountData, mapAccountKey);

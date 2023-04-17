@@ -6,7 +6,6 @@ import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.HttpStatusRequestRejectedHandler;
 import org.springframework.security.web.firewall.RequestRejectedHandler;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 @Configuration
 public class LoggingConfiguration {
@@ -18,9 +17,7 @@ public class LoggingConfiguration {
 
     @Bean
     public HttpFirewall allowUrlSemicolonHttpFirewall() {
-        DefaultHttpFirewall firewall = new DefaultHttpFirewall();
-//        firewall.setAllowUrlEncodedSlash(true);
-        return firewall;
+        return new DefaultHttpFirewall();
     }
 
 }

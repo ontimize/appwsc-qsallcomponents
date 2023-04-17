@@ -44,7 +44,7 @@ public class EmployeeDao extends OntimizeJdbcDaoSupport {
 		return super.paginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy, queryId);
 	}
 
-	public Map<?,?> checkKeysValues(Map<?, ?> keysValues) {
+	public Map<String, Object> checkKeysValues(Map<?, ?> keysValues) {
 		if (keysValues.containsKey(EmployeeDao.ATTR_ID)) {
 			Object value = keysValues.get(EmployeeDao.ATTR_ID);
 			if (value instanceof String) {
@@ -53,7 +53,7 @@ public class EmployeeDao extends OntimizeJdbcDaoSupport {
 				} catch (Exception ex) {}
 			}
 		}
-		return keysValues;
+		return (Map<String, Object>) keysValues;
 	}
 
 }
