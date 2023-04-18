@@ -11,8 +11,5 @@ import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 @ConfigurationFile(configurationFile = "base-dao/setup/OCLoginProfilesDao.xml", configurationFilePlaceholder = "base-dao/placeholders.properties")
 public class OCLoginProfilesDao extends OntimizeJdbcDaoSupport {
 
-	public OCLoginProfilesDao() {
 
-		super();
-	}
 }

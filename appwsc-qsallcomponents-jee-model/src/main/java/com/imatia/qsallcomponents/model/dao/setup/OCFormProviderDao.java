@@ -15,8 +15,6 @@ public class OCFormProviderDao extends OntimizeJdbcDaoSupport {
 	public static final String ATTR_NAME = "FORMNAME";
 	public static final String ATTR_XML = "FORMXML";
 
-	public OCFormProviderDao() {
-		super();
-	}
+
 
 }

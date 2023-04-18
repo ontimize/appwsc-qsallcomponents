@@ -16,8 +16,4 @@ public class CustomerTypeDao extends OntimizeJdbcDaoSupport {
 	public static final String	ATTR_ID				= "CUSTOMERTYPEID";
 	public static final String	ATTR_DESCRIPTION	= "DESCRIPTION";
 
-	public CustomerTypeDao() {
-		super();
-	}
-
 }

@@ -1,0 +1,22 @@
+ontimize:
+  jdbc:
+    name-convention: upper
+    sqlhandler: hsqldb
+    sql-condition-processor:
+      upper-string: true
+      upper-like: true
+spring:
+  autoconfigure:
+    exclude: |
+      org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration, 
+      org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration, 
+      org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration,
+      com.ontimize.boot.autoconfigure.security.MethodSecurityConfiguration
+  datasource:
+    driver-class-name: org.hsqldb.jdbcDriver
+    jdbc-url: jdbc:hsqldb:mem:templateDB
+    username: SA
+    password:
+    initial-size: 10
+    test-on-borrow: true
+    connectionTimeout: 90000

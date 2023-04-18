@@ -52,7 +52,7 @@ class CustomerServiceTest {
 
 
         @Test
-        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_BytesBlock() {
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_PHOTO_with_BytesBlock() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
@@ -71,7 +71,26 @@ class CustomerServiceTest {
         }
 
         @Test
-        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult() {
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_with_PHOTO_without_BytesBlock() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
+            keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
+            EntityResult toRet = new EntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            toRet.addRecord(record);
+
+            Mockito.doReturn(toRet).when(daoHelper).query(customerDao, keysValues, attributes);
+            EntityResult entityResult = customerService.customerQuery(keysValues, attributes);
+            assertNotNull(entityResult);
+            assertEquals(toRet, entityResult);
+        }
+
+        @Test
+        void when_customerQuery_receive_keysValues_and_attributes_and_expected_EntityResult_without_PHOTO() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put("CUSTOMERPHOTO", "value1");
@@ -90,7 +109,7 @@ class CustomerServiceTest {
 
 
         @Test
-        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_BytesBlock() {
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_PHOTO_with_BytesBlock() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
@@ -114,7 +133,31 @@ class CustomerServiceTest {
         }
 
         @Test
-        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult() {
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_with_PHOTO_without_BytesBlock() {
+            Map<String, Object> keysValues = new HashMap<>();
+            List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
+            keysValues.put(CustomerDao.ATTR_PHOTO, "value1");
+            int recordNumber = 5;
+            int startIndex = 3;
+            List<String> orderBy = new ArrayList<>();
+
+            AdvancedEntityResult advancedEResult = new AdvancedEntityResultMapImpl(EntityResult.OPERATION_SUCCESSFUL, EntityResult.DATA_RESULT);
+            HashMap record = new HashMap<>();
+            byte[] bytes = new byte[]{};
+            BytesBlock bytesBlock = new BytesBlock(bytes);
+            record.put("attributes1", "value1");
+            record.put(CustomerDao.ATTR_PHOTO, "value1");
+            advancedEResult.addRecord(record);
+            advancedEResult.containsKey(CustomerDao.ATTR_PHOTO);
+            Mockito.doReturn(advancedEResult).when(daoHelper).paginationQuery(customerDao, keysValues, attributes, recordNumber, startIndex, orderBy);
+            AdvancedEntityResult advancedEntityResult = customerService.customerPaginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy);
+            assertEquals(advancedEResult, advancedEntityResult);
+            assertNotNull(advancedEntityResult);
+
+        }
+
+        @Test
+        void when_customerPaginationQuery_receive_keysValues_and_attributes_and_recordNumber_and_startIndex_and_orderBy_expected_AdvancedEntityResult_without_PHOTO() {
             Map<String, Object> keysValues = new HashMap<>();
             List<String> attributes = new ArrayList<>(Arrays.asList("attribute1"));
             keysValues.put(CustomerDao.ATTR_PHOTO, "value1");

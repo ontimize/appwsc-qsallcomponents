@@ -36,7 +36,7 @@
         <sonar.organization>ontimize</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/jacoco-report-aggregate/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-        
+
         <!-- Jacoco -->
         <jacoco.version>0.8.6</jacoco.version>
         <surefire.version>3.0.0-M5</surefire.version>
@@ -125,14 +125,13 @@
                     <timeoutConstant>120000</timeoutConstant>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
-                        <outputFormat>HTML</outputFormat>    <!-- OPTIONAL -->
-                        <outputFormat>CSV</outputFormat>    <!-- OPTIONAL -->
+                        <outputFormat>HTML</outputFormat>
+                        <outputFormat>CSV</outputFormat>
                     </outputFormats>
                     <exportLineCoverage>true</exportLineCoverage>
                     <failWhenNoMutations>false</failWhenNoMutations>
                     <timestampedReports>false</timestampedReports>
-                    <verbose>false
-                    </verbose>  <!-- Flag to exclude mutation in module with no tests such as the clients  -->+
+                    <verbose>false</verbose>
                     <skip>${pitest.skip}</skip>
                 </configuration>
                 <dependencies>

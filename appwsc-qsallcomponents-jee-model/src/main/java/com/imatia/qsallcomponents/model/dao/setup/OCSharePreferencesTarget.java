@@ -15,8 +15,5 @@ public class OCSharePreferencesTarget extends OntimizeJdbcDaoSupport {
 	public static final String ATTR_ID_SHARE = "ID_SHARE";
 	public static final String ATTR_USER_TARGET = "USER_TARGET";
 
-	public OCSharePreferencesTarget() {
-		super();
-	}
-
+	
 }

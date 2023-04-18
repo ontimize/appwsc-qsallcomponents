@@ -12,9 +12,6 @@ import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 @ConfigurationFile(configurationFile = "base-dao/UserDao.xml", configurationFilePlaceholder = "base-dao/placeholders.properties")
 public class UserDao extends OntimizeJdbcDaoSupport {
 
-	public UserDao() {
 
-		super();
-	}
 }
 

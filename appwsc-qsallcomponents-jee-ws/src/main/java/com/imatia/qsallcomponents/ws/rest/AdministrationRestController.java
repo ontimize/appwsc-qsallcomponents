@@ -19,6 +19,7 @@ public class AdministrationRestController extends ORestController<IAdministratio
 
 	@Override
 	public IAdministrationService getService() {
+
 		return this.iAdministrationService;
 	}
 	
