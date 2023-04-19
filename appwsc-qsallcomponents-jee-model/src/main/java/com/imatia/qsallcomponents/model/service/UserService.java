@@ -27,11 +27,6 @@ public class UserService implements IUserService {
 	@Autowired
 	private DefaultOntimizeDaoHelper daoHelper;
 
-	public void  loginQuery(Map<?, ?> key, List<?> attr) {
-	}
-
-	//Sample to permission
-	//@Secured({ PermissionsProviderSecured.SECURED })
 	public EntityResult userQuery(Map<?, ?> keyMap, List<?> attrList) {
 		return this.daoHelper.query(userDao, keyMap, attrList);
 	}

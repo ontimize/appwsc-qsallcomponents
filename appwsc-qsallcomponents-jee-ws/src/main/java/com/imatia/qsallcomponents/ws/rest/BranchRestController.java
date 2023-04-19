@@ -1,7 +1,5 @@
 package com.imatia.qsallcomponents.ws.rest;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imatia.qsallcomponents.api.services.IBranchService;
 import com.imatia.qsallcomponents.openapi.IBranchesApi;

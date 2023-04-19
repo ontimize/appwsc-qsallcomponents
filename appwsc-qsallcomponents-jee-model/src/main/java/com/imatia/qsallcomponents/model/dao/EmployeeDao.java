@@ -39,21 +39,21 @@ public class EmployeeDao extends OntimizeJdbcDaoSupport {
 	@Override
 	public AdvancedEntityResult paginationQuery(Map<?, ?> keysValues, List<?> attributes, int recordNumber, int startIndex, List<?> orderBy, String queryId) {
 
-		this.checkKeysValues(keysValues);
+		this.checkKeysValues((Map<String, Object>) keysValues);
 
 		return super.paginationQuery(keysValues, attributes, recordNumber, startIndex, orderBy, queryId);
 	}
 
-	public Map<String, Object> checkKeysValues(Map<?, ?> keysValues) {
+	public Map<String, Object> checkKeysValues(Map<String, Object> keysValues) {
 		if (keysValues.containsKey(EmployeeDao.ATTR_ID)) {
 			Object value = keysValues.get(EmployeeDao.ATTR_ID);
 			if (value instanceof String) {
 				try {
-					((Map<Object, Object>) keysValues).put(EmployeeDao.ATTR_ID, Integer.parseInt(value.toString()));
+					(keysValues).put(EmployeeDao.ATTR_ID, Integer.parseInt(value.toString()));
 				} catch (Exception ex) {}
 			}
 		}
-		return (Map<String, Object>) keysValues;
+		return keysValues;
 	}
 
 }

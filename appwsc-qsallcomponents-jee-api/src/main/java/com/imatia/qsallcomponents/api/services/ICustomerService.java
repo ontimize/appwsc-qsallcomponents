@@ -20,9 +20,9 @@ public interface ICustomerService {
 
 	public EntityResult customerInsert(Map<?, ?> attributes) throws OntimizeJEERuntimeException, DmsException;
 
-	public EntityResult customerUpdate(Map<?, ?> attributes, Map<?, ?> KeysValues) throws OntimizeJEERuntimeException;
+	public EntityResult customerUpdate(Map<?, ?> attributes, Map<?, ?> keysValues) throws OntimizeJEERuntimeException;
 
-	public EntityResult customerDelete(Map<?, ?> keyValues) throws OntimizeJEERuntimeException;
+	public EntityResult customerDelete(Map<?, ?> keysValues) throws OntimizeJEERuntimeException;
 
 	// ---- CUSTOMER TYPE ----
 
@@ -30,10 +30,10 @@ public interface ICustomerService {
 
 	public EntityResult customerTypeInsert(Map<?, ?> attributes) throws OntimizeJEERuntimeException;
 
-	public EntityResult customerTypeUpdate(Map<?, ?> attributes, Map<?, ?> KeysValues)
+	public EntityResult customerTypeUpdate(Map<?, ?> attributes, Map<?, ?> keysValues)
 			throws OntimizeJEERuntimeException;
 
-	public EntityResult customerTypeDelete(Map<?, ?> keyValues) throws OntimizeJEERuntimeException;
+	public EntityResult customerTypeDelete(Map<?, ?> keysValues) throws OntimizeJEERuntimeException;
 
 	public EntityResult customerTypeAggregateQuery(Map<?, ?> keysValues, List<?> attributes)
 			throws OntimizeJEERuntimeException;
@@ -45,9 +45,9 @@ public interface ICustomerService {
 
 	public EntityResult customerAccountInsert(Map<String, Object> attributes) throws OntimizeJEERuntimeException;
 
-	public EntityResult customerAccountUpdate(Map<String, Object> attributes, Map<String, Object> KeysValues)
+	public EntityResult customerAccountUpdate(Map<String, Object> attributes, Map<String, Object> keysValues)
 			throws OntimizeJEERuntimeException;
 
-	public EntityResult customerAccountDelete(Map<String, Object> keyValues) throws OntimizeJEERuntimeException;
+	public EntityResult customerAccountDelete(Map<String, Object> keysValues) throws OntimizeJEERuntimeException;
 
 }

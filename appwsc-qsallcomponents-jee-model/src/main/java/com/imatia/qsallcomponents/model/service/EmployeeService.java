@@ -8,8 +8,6 @@ import com.ontimize.jee.common.dto.EntityResult;
 import com.ontimize.jee.common.exceptions.OntimizeJEERuntimeException;
 import com.ontimize.jee.common.util.remote.BytesBlock;
 import com.ontimize.jee.server.dao.DefaultOntimizeDaoHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +18,6 @@ import java.util.Map;
 
 @Service("EmployeeService")
 public class EmployeeService implements IEmployeeService {
-
-    private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
     @Autowired
     private EmployeeDao employeeDao;
