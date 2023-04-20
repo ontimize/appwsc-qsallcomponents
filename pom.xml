@@ -484,7 +484,7 @@
             
     <module>jacoco-report-aggregate</module>
           
-    <module>karate-testing</module>
+    <module>config_test/e2e/definitions/karate</module>
       
   </modules>
   
