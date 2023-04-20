@@ -1,9 +1,0 @@
-components:
-  schemas:
-    ColumnsParameter:
-      in: query
-      name: columns
-      description: Columns
-      schema:
-        type: string
-      required: false

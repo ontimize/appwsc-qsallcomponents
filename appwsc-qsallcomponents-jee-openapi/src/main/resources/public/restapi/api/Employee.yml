@@ -1,0 +1,261 @@
+default:
+  post:
+    tags:
+      - Employees
+    summary: Inserts an Employee.
+    description: >
+      This resource represents an employee in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/InsertParameter.yml#/components/schemas/InsertParameter'
+          examples:
+            Christopher Burdock:
+              value:
+                data:
+                  EMPLOYEETYPEID: 6380
+                  EMPLOYEENAME: 'Christopher'
+                  EMPLOYEESURNAME: 'Burdock'
+                  EMPLOYEEADDRESS: '46th & 48th Street, 156 Avenue, San Andres Colony. London'
+                  EMPLOYEESTARTDATE: '2009-06-10'
+                  EMPLOYEEEMAIL: 'Christopher.Burdock@hotmail.com'
+                  OFFICEID: '0103'
+                  EMPLOYEEPHONE: '0800 177 7086'
+                sqltypes:
+                  EMPLOYEETYPEID: 4
+                  EMPLOYEENAME: 12
+                  EMPLOYEESURNAME: 12
+                  EMPLOYEEADDRESS: 12
+                  EMPLOYEESTARTDATE: 93
+                  EMPLOYEEEMAIL: 12
+                  OFFICEID: 12
+                  EMPLOYEEPHONE: 12
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  get:
+    tags:
+      - Employees
+    summary: Returns a list of employees.
+    description: >
+      This resource represents a list of employees in the system.
+    x-restcontroller: orestcontroller
+    parameters:
+      - in: query
+        name: filter
+        description: Filter
+        schema:
+          type: string
+        required: false
+        examples:
+          name:
+            value: 'EMPLOYEENAME=Christopher'
+          surname:
+            value: 'EMPLOYEESURNAME=Burdock'
+          address:
+            value: 'EMPLOYEEADDRESS=46th & 48th Street, 156 Avenue, San Andres Colony. London'
+          email:
+            value: 'EMPLOYEEEMAIL=Christopher.Burdock@hotmail.com'
+          officeid:
+            value: 'OFFICEID=0103'
+          phone:
+            value: 'EMPLOYEEPHONE=0800 177 7086'
+      - in: query
+        name: columns
+        description: Columns
+        required: false
+        schema:
+          type: string
+          example: EMPLOYEEID,EMPLOYEETYPEID,EMPLOYEENAME,EMPLOYEESURNAME,EMPLOYEEADDRESS,EMPLOYEECOMMENTS,EMPLOYEESTARTDATE,EMPLOYEEEMAIL,OFFICEID,EMPLOYEEPHONE,LONGITUDE,LATITUDE
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  put:
+    tags:
+      - Employees
+    summary: Updates an Employee.
+    description: >
+      This resource represents an employee in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/UpdateParameter.yml#/components/schemas/UpdateParameter'
+          examples:
+            comment:
+              value:
+                data:
+                  EMPLOYEECOMMENTS: 'Call him next monday.'
+                filter:
+                  EMPLOYEEID: 21036
+                sqltypes:
+                  EMPLOYEEID: 4
+            email:
+              value:
+                data:
+                  EMAIL: 'ChristopherBurdock@gmail.com'
+                filter:
+                  EMPLOYEEID: 21036
+                sqltypes:
+                  EMPLOYEEID: 4
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+  delete:
+    tags:
+      - Employees
+    summary: Deletes an Employee.
+    description: >
+      This resource represents an employee in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../base/DeleteParameter.yml#/components/schemas/DeleteParameter'
+          examples:
+            employeeid:
+              value:
+                filter:
+                  EMPLOYEEID: 21036
+                sqltypes:
+                  EMPLOYEEID: 4
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+search:
+  post:
+    tags:
+      - Employees
+    summary: Searchs and returns a list of employees.
+    description: >
+      This resource represents a list of employees in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../base/QueryParameter.yml#/components/schemas/QueryParameter'
+          examples:
+            surname:
+              value:
+                filter:
+                  EMPLOYEESURNAME: 'Burdock'
+                columns:
+                  - EMPLOYEEID
+                  - EMPLOYEETYPEID
+                  - EMPLOYEENAME
+                  - EMPLOYEESURNAME
+                  - EMPLOYEEADDRESS
+                  - EMPLOYEECOMMENTS
+                  - EMPLOYEESTARTDATE
+                  - EMPLOYEEEMAIL
+                  - OFFICEID
+                  - EMPLOYEEPHONE
+                  - LONGITUDE
+                  - LATITUDE
+                sqltypes:
+                  EMPLOYEESURNAME: 12
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/EntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'
+
+advancedsearch:
+  post:
+    tags:
+      - Employees
+    summary: Performs an advanced search and returns a list of employees.
+    description: >
+      This resource represents a list of employees in the system.
+    x-restcontroller: orestcontroller
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../base/AdvancedQueryParameter.yml#/components/schemas/AdvancedQueryParameter'
+          examples:
+            surname:
+              value:
+                filter:
+                  EMPLOYEESURNAME: 'Burdock'
+                columns:
+                  - EMPLOYEEID
+                  - EMPLOYEETYPEID
+                  - EMPLOYEENAME
+                  - EMPLOYEESURNAME
+                  - EMPLOYEEADDRESS
+                  - EMPLOYEECOMMENTS
+                  - EMPLOYEESTARTDATE
+                  - EMPLOYEEEMAIL
+                  - OFFICEID
+                  - EMPLOYEEPHONE
+                  - LONGITUDE
+                  - LATITUDE
+                sqltypes:
+                  EMPLOYEESURNAME: 12
+                pageSize: 20
+                offset: 0
+                orderBy:
+                  - columnName: NAME
+                    ascendent: true
+    responses:
+      '200':
+        $ref: '../base/Responses.yml#/components/responses/AdvancedEntityResult'
+      '400':
+        $ref: '../base/Responses.yml#/components/responses/BadRequest'
+      '401':
+        $ref: '../base/Responses.yml#/components/responses/Unauthorized'
+      '404':
+        $ref: '../base/Responses.yml#/components/responses/NotFound'
+      default:
+        $ref: '../base/Responses.yml#/components/responses/Unexpected'

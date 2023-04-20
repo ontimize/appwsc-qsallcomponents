@@ -1,9 +1,0 @@
-components:
-  schemas:
-    FilterParameter:
-      in: query
-      name: filter
-      description: Filter
-      schema:
-        type: string
-      required: false

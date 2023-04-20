@@ -1,7 +1,0 @@
-components:
-  schemas:
-    AdministrationTest:
-      type: object
-      properties:
-        who:
-          type: string
