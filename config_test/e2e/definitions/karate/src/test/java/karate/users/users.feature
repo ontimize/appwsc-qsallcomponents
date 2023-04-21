@@ -2,7 +2,7 @@ Feature: sample karate test script
   for help, see: https://github.com/karatelabs/karate/wiki/IDE-Support
 
   Background:
-    * url 'https://jsonplaceholder.typicode.com'
+   * url 'https://jsonplaceholder.typicode.com'
 
   Scenario: get all users and then get the first user by id
     Given path 'users'
