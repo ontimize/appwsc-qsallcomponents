@@ -20,7 +20,7 @@ Feature: sample karate test script
     And def authToken = response
 
 
-  Scenario: get all employees and then get the first employee by id
+  Scenario: get all employees and then get the one employee
     Given url 'http://localhost:8080/qsallcomponents-jee/employees/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method get
@@ -30,24 +30,87 @@ Feature: sample karate test script
     And  match $..EMPLOYEEID contains 6892
 
 
-  Scenario: As a <description>, I want to get the corresponding response_code <status_code>
+  Scenario: Testing a POST endpoint with request body
     * def employee =
 
   """
   {
-    "EMPLOYEEID": "1001",
-    "EMPLOYEENAME": "Vinod",
-    "EMPLOYEEEMAIL": "vinod@imatia.com",
-	"EMPLOYEETYPEID": "6380",
-	"EMPLOYEEPHOTO": "NULL"
-  }
+    "data": {
+        "EMPLOYEEID": "1002",
+        "EMPLOYEENAME": "Vinod",
+        "EMPLOYEEEMAIL": "vinod@imatia.com",
+        "EMPLOYEETYPEID": "6380",
+        "EMPLOYEEPHOTO": "NULL"
+    }
+}
   """
-    Given url 'http://localhost:8080/qsallcomponents-jee/employees/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
-    And request { 'EMPLOYEEID': '1001', 'EMPLOYEENAME': 'Vinod' , 'EMPLOYEEEMAIL': 'vinod@imatia.com' }
+    Given url 'http://localhost:8080/qsallcomponents-jee/employees/employee/'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request employee
     When method post
     Then status 200
     * print response
-    Then response.status == <status_code>
-    And match $ contains {EMPLOYEEID:"#notnull"}
 
+
+  Scenario: check that the previous employee was added
+    Given url 'http://localhost:8080/qsallcomponents-jee/employees/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    When method get
+    Then status 200
+    And  match $..EMPLOYEEID contains '#notnull'
+    And  match $..EMPLOYEENAME contains 'Vinod'
+    And  match $..EMPLOYEETYPEID contains 6380
+    And  match $..EMPLOYEEID contains 21040
+
+
+
+
+
+
+  Scenario: Testing a POST endpoint with request body
+    * def employeeSecond =
+
+  """
+  {
+    "data": {
+        "EMPLOYEEID": "1002",
+        "EMPLOYEENAME": "Sara",
+        "EMPLOYEEEMAIL": "sara@imatia.com",
+        "EMPLOYEETYPEID": "6381",
+        "EMPLOYEEPHOTO": "NULL",
+        "EMPLOYEEPHONE": "98754321"
+    }
+}
+  """
+    Given url 'http://localhost:8080/qsallcomponents-jee/employees/employee/'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request employeeSecond
+    And remove employeeSecond.EMPLOYEEPHONE
+    When method post
+    Then status 200
+    * print response
+
+
+  Scenario: check that the previous employee was added
+    * def employeeSecond =
+
+  """
+  {
+    "data": {
+        "EMPLOYEEID": "1002",
+        "EMPLOYEENAME": "Sara",
+        "EMPLOYEEEMAIL": "sara@imatia.com",
+        "EMPLOYEETYPEID": "6381",
+        "EMPLOYEEPHOTO": "NULL",
+        "EMPLOYEEPHONE": "98754321"
+    }
+}
+  """
+    Given url 'http://localhost:8080/qsallcomponents-jee/employees/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    When method get
+    Then status 200
+    And match $.EMPLOYEEID == employeeSecond.EMPLOYEEID
+    And match $.EMPLOYEENAME == employeeSecond.EMPLOYEENAME
+    And match $.EMPLOYEEEMAIL == employeeSecond.EMPLOYEEEMAIL
+    And match $.EMPLOYEETYPEID == employeeSecond.EMPLOYEETYPEID
