@@ -1,7 +1,7 @@
 Feature: sample karate test script
 
   Background:
-    * def urlBase = 'http://localhost:8080/qsallcomponents-jee/employees/employee'
+    * def urlBase = 'http://localhost:8080/qsallcomponents-jee/employees'
     * def getAuth =
     """
     function(creds) {
@@ -12,8 +12,9 @@ Feature: sample karate test script
     }
     """
 
+
   Scenario:
-    Given url urlBase + '?columns=EMPLOYEEID'
+    Given url urlBase + '/employee?columns=EMPLOYEEID'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
@@ -21,7 +22,7 @@ Feature: sample karate test script
 
 
   Scenario: get all employees and then get the one employee
-    Given url urlBase + '?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL'
+    Given url urlBase + '/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method get
     Then status 200
@@ -44,16 +45,17 @@ Feature: sample karate test script
     }
 }
   """
-    Given url urlBase + '/'
+    Given url urlBase + '/employee/'
     And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request employee
     When method post
     Then status 200
+    And match $..EMPLOYEEID == '#present'
     * print 'postemployee-> ', employee
 
 
   Scenario: check that the previous employee was added
-    Given url urlBase + '?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
+    Given url urlBase + '/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method get
     Then status 200
@@ -78,7 +80,7 @@ Feature: sample karate test script
     }
 }
   """
-    Given url urlBase + '/'
+    Given url urlBase + '/employee/'
     And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request employeeSecond
     And remove employeeSecond.EMPLOYEEPHONE
@@ -88,16 +90,16 @@ Feature: sample karate test script
 
 
   Scenario Outline: As a <description>, I want to get the corresponding response_code <status_code>
-    Given url urlBase + '?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
+    Given url urlBase + '/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
     And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request { 'EMPLOYEEEMAIL': <employeeemail> , 'EMPLOYEENAME': <employeename> }
     When method POST
     * print 'employeePostExamples-> ', response
     Then response.status == <status_code>
     Examples:
-      |employeeemail |employeename | status_code | description |
-      |'sara@imatia.com' |'Sara' | 200 | valid user |
-      |'eveholt@imatia.com' |null | 400 | invalid user|
+      | employeeemail        | employeename | status_code | description  |
+      | 'sara@imatia.com'    | 'Sara'       | 200         | valid user   |
+      | 'eveholt@imatia.com' | null         | 400         | invalid user |
 
 
   Scenario: Testing a PUT endpoint with request body
@@ -105,7 +107,7 @@ Feature: sample karate test script
      """
   {
     "filter" :{
-		"EMPLOYEEID" :21036
+		"EMPLOYEEID" :21039
 	},
     "data": {
         "EMPLOYEENAME": "Carmen",
@@ -116,10 +118,28 @@ Feature: sample karate test script
     }
 }
   """
-    Given url urlBase + '/'
+    Given url urlBase + '/employee/'
     And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
     And print 'newPostBodyForPut-> ', newPostBodyForPut
+
+
+
+
+  Scenario: Delete request
+    * def deleteId =
+      """
+  {
+   "filter":{
+      "EMPLOYEEID":	21036
+     }
+  }
+    """
+    Given url urlBase + '/employee/'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request deleteId
+    When method DELETE
+    Then status 200
 

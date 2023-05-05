@@ -7,7 +7,7 @@ class EmployeeRunner {
 
     @Karate.Test
     Karate testEmployee() {
-        return Karate.run("employee").relativeTo(getClass());
+        return Karate.run("employee","employeeType").relativeTo(getClass());
     }
 
 
