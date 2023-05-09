@@ -84,3 +84,17 @@ Feature: sample karate test script for Branches
     And print 'newPostBodyForPut-> ', newPostBodyForPut
 
 
+  Scenario: Delete request
+    * def deleteId =
+      """
+  {
+   "filter" :{
+		"OFFICEID" :1002
+	}
+  }
+    """
+    Given url urlBase + '/branch/'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request deleteId
+    When method DELETE
+    Then status 200

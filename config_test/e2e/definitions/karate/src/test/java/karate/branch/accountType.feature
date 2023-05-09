@@ -75,3 +75,17 @@ Feature: sample karate test script for AccountType
     And print 'newPostBodyForPut-> ', newPostBodyForPut
 
 
+  Scenario: Delete request
+    * def deleteId =
+      """
+  {
+   "filter" :{
+		"ACCOUNTTYPEID" :"1"
+	}
+  }
+    """
+    Given url urlBase + '/accountType/'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request deleteId
+    When method DELETE
+    Then status 200
