@@ -6,8 +6,8 @@ public class BranchRunner {
 
 
     @Karate.Test
-    Karate testEmployee() {
-        return Karate.run("branch").relativeTo(getClass());
+    Karate testBranch() {
+        return Karate.run("branch", "account", "accountType").relativeTo(getClass());
     }
 
 }
