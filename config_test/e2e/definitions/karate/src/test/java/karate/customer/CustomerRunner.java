@@ -6,6 +6,6 @@ public class CustomerRunner {
 
     @Karate.Test
     Karate testCustomer() {
-        return Karate.run("customer").relativeTo(getClass());
+        return Karate.run("customer", "customerType", "customerAccount").relativeTo(getClass());
     }
 }
