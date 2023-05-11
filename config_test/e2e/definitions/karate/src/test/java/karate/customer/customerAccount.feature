@@ -76,7 +76,8 @@ Feature: sample karate test script for CustomerAccount
       """
   {
    "filter" :{
-		"CUSTOMERACCOUNTID":20665
+        "CUSTOMERACCOUNTID":20668,
+		"CUSTOMERACCOUNTID":20668
 	}
   }
     """
