@@ -75,7 +75,9 @@ Feature: sample karate test script for CustomerType
       """
   {
    "filter" :{
-		"CUSTOMERTYPEID":7
+        "CUSTOMERTYPEID":8,
+        "CUSTOMERTYPEID":9,
+		"CUSTOMERTYPEID":10
 	}
   }
     """

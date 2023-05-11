@@ -29,14 +29,13 @@ Feature: sample karate test script for CustomerAccount
   """
   {
     "data": {
-        "CUSTOMERACCOUNTID":2,
-        "CUSTOMERID": 10600,
-        "ACCOUNTID":2,
+        "CUSTOMERID": 19274,
+        "ACCOUNTID":7309,
         "ISOWNER":"true"
         }
   }
   """
-    Given url urlBase + '/customerAccount/'
+    Given url urlBase + '/customerAccount'
     And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request customerAccount
     When method post
@@ -52,3 +51,37 @@ Feature: sample karate test script for CustomerAccount
     And def authToken = response
     And  match $..CUSTOMERACCOUNTID contains '#notnull'
     And  match $..CUSTOMERID contains '#notnull'
+
+
+  Scenario: Testing a PUT endpoint with request body
+    * def newPostBodyForPut =
+     """
+  {
+    "filter" :{
+		"CUSTOMERACCOUNTID":20665
+	},
+    "data": {
+        "ISOWNER":"false"
+    }
+}
+  """
+    Given url urlBase + '/customerAccount/'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request newPostBodyForPut
+    When method put
+    Then status 200
+
+  Scenario: Delete request
+    * def deleteId =
+      """
+  {
+   "filter" :{
+		"CUSTOMERACCOUNTID":20665
+	}
+  }
+    """
+    Given url urlBase + '/customerAccount/'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request deleteId
+    When method DELETE
+    Then status 200
