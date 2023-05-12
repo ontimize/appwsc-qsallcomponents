@@ -2,11 +2,10 @@ package karate.users;
 
 import com.intuit.karate.junit5.Karate;
 
-class UsersRunner {
-    
+public class usersRunner {
+
     @Karate.Test
     Karate testUsers() {
         return Karate.run("users").relativeTo(getClass());
-    }    
-
+    }
 }
