@@ -77,7 +77,7 @@ Feature: sample karate test script for User
   """
   {
     "data": {
-        "USER_": "demoHoyDos",
+        "USER_": "demoHoy",
         "PASSWORD":"demoHoy",
         "NAME":"name",
         "SURNAME":"SURNAME",

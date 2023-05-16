@@ -6,6 +6,6 @@ public class usersRunner {
 
     @Karate.Test
     Karate testUsers() {
-        return Karate.run("users").relativeTo(getClass());
+        return Karate.run("users", "roles").relativeTo(getClass());
     }
 }
