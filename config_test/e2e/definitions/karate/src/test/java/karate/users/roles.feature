@@ -57,7 +57,7 @@ Feature: sample karate test script for Roles
      """
   {
     "filter" :{
-		"ID_ROLENAME": 2
+		"ID_ROLENAME": 3
 	},
     "data": {
         "ROLENAME":"prueba"
@@ -75,8 +75,8 @@ Feature: sample karate test script for Roles
       """
   {
    "filter" :{
-		"ID_ROLENAME": 2
-	}
+        "ID_ROLENAME": 4
+      }
   }
     """
     Given url urlBase + '/role/'
