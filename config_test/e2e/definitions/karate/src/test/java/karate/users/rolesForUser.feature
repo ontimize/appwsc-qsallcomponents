@@ -14,9 +14,10 @@ Feature: sample karate test script for RolesForUser
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
-
   Scenario: Basic Get
     Given url urlBase + '/rolesForUser?columns=ID_USER_ROLE,ID_ROLENAME,USER_'
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+
     When method GET
     Then status 200
     And def authToken = response
@@ -41,7 +42,7 @@ Feature: sample karate test script for RolesForUser
 		"ID_USER_ROLE": 4
 	},
     "data": {
-        "ID_ROLENAME":0,
+        "ID_ROLENAME":4,
         "USER_":"name",
         "ACTIVED":"S"
     }
@@ -52,3 +53,19 @@ Feature: sample karate test script for RolesForUser
     When method put
     Then status 200
     * print 'postRolesForuser-> ', RolesForuser
+
+  Scenario: Delete request
+    * def deleteId =
+      """
+  {
+   "filter" :{
+        "ID_ROLENAME":4,
+        "ID_USER_ROLE": 4
+
+      }
+  }
+    """
+    Given url urlBase + '/rolesForUser/'
+    And request deleteId
+    When method put
+    Then status 200

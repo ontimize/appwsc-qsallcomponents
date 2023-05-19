@@ -38,7 +38,6 @@ Feature: sample karate test script for Roles
   """
   {
     "data": {
-        "ID_ROLENAME": 2,
         "ROLENAME":"demoHoy",
         "XMLCLIENTPERMISSION":"prueba.xml"
     }
@@ -75,7 +74,7 @@ Feature: sample karate test script for Roles
       """
   {
    "filter" :{
-        "ID_ROLENAME": 4
+        "ID_ROLENAME": 2
       }
   }
     """
