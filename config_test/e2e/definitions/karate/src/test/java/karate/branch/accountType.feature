@@ -89,3 +89,12 @@ Feature: sample karate test script for AccountType
     And request deleteId
     When method DELETE
     Then status 200
+
+
+  Scenario:AccountTypeAggregate
+    Given url urlBase + '/accountTypeAggregate?columns=ACCOUNTTYPEID,ACCOUNTTYPENAME'
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    When method GET
+    Then status 200
+    And def authToken = response
+    And  match $..ACCOUNTTYPEID contains '#notnull'

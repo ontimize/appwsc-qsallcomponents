@@ -16,10 +16,45 @@ Feature: sample karate test script for ServerRole
 
 
   Scenario: Basic Get
-    Given url urlBase + '/serverRole?columns=ID_ROLE_SERVER_PERMISSION,ID_ROLENAME,ID_SERVER_PERMISSION'
+    Given url urlBase + '/serverRole?columns=ID_SERVER_PERMISSION,PERMISSION_NAME'
     When method GET
     Then status 200
     And def authToken = response
-    And  match $..ID_ROLE_SERVER_PERMISSION contains '#notnull'
-    And  match $..ID_ROLENAME contains '#notnull'
-    And  match $..ID_SERVER_PERMISSION  == '#present'
+    And  match $..ID_SERVER_PERMISSION contains '#notnull'
+    And  match $..PERMISSION_NAME contains '#notnull'
+
+
+  Scenario: Testing a PUT endpoint with request body
+    * def serverRole =
+  """
+  {"filter" :{
+		"ID_ROLE_SERVER_PERMISSION": 76
+	},
+    "data": {
+        "ID_ROLE":4,
+        "ID_SERVER_PERMISSION":76,
+        "ACTIVED":"S"
+    }
+  }
+  """
+    Given url urlBase + '/serverRole/'
+    And request serverRole
+    When method put
+    Then status 200
+    * print 'postRolesForuser-> ', serverRole
+
+  Scenario: Delete request
+    * def deleteId =
+      """
+  {
+   "filter" :{
+        "ID_SERVER_PERMISSION":76,
+        "ID_ROLE_SERVER_PERMISSION": 76
+
+      }
+  }
+    """
+    Given url urlBase + '/serverRole/'
+    And request deleteId
+    When method put
+    Then status 200

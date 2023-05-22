@@ -77,7 +77,7 @@ Feature: sample karate test script for User
   """
   {
     "data": {
-        "USER_": "demoHoy",
+        "USER_": "demoHoyLunes",
         "PASSWORD":"demoHoy",
         "NAME":"name",
         "SURNAME":"SURNAME",
@@ -116,7 +116,7 @@ Feature: sample karate test script for User
       """
   {
    "filter" :{
-		"USER_": "demoHoy"
+		"USER_": "demoHoyLunes"
 	}
   }
     """
