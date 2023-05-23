@@ -11,11 +11,11 @@ Feature: sample karate test script for CustomerType
         return 'Basic ' + encoded;
     }
     """
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
   Scenario:
     Given url urlBase + '/customerType?columns=CUSTOMERTYPEID,DESCRIPTION'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -35,7 +35,6 @@ Feature: sample karate test script for CustomerType
   }
   """
     Given url urlBase + '/customerType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request customerType
     When method post
     Then status 200
@@ -44,7 +43,6 @@ Feature: sample karate test script for CustomerType
 
   Scenario:
     Given url urlBase + '/customerType?columns=CUSTOMERTYPEID,DESCRIPTION'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -65,7 +63,6 @@ Feature: sample karate test script for CustomerType
 }
   """
     Given url urlBase + '/customerType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -82,7 +79,16 @@ Feature: sample karate test script for CustomerType
   }
     """
     Given url urlBase + '/customerType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200
+
+
+
+
+  Scenario:customerTypeAggregateQuery
+    Given url urlBase + '/customerTypeAggregate?columns=CUSTOMERTYPEID,DESCRIPTION'
+    When method GET
+    Then status 200
+    And def authToken = response
+    And  match $..CUSTOMERTYPEID contains '#notnull'

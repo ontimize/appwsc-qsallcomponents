@@ -11,11 +11,11 @@ Feature: sample karate test script for Customer
         return 'Basic ' + encoded;
     }
     """
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
   Scenario:
     Given url urlBase + '/customer?columns=CUSTOMERID,CUSTOMERTYPEID,NAME,SURNAME,ADDRESS,PHONE,COUNTRY'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -40,7 +40,6 @@ Feature: sample karate test script for Customer
   }
   """
     Given url urlBase + '/customer/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request customer
     When method post
     Then status 200
@@ -50,7 +49,6 @@ Feature: sample karate test script for Customer
 
   Scenario:
     Given url urlBase + '/customer?columns=CUSTOMERID,CUSTOMERTYPEID,NAME,SURNAME,ADDRESS,PHONE,COUNTRY'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -78,7 +76,6 @@ Feature: sample karate test script for Customer
 }
   """
     Given url urlBase + '/customer/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -94,7 +91,36 @@ Feature: sample karate test script for Customer
   }
     """
     Given url urlBase + '/customer/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200
+
+
+
+  Scenario: Testing a PAGINATION QUERY endpoint with request body
+    * def customerPQ =
+
+  """
+      {
+    "filter": {},
+    "columns": [
+        "CUSTOMERID",
+        "CUSTOMERTYPEID",
+        "NAME",
+        "SURNAME",
+        "ADDRESS",
+        "PHONE",
+        "EMAIL"
+        ],
+    "offset": 0,
+    "pageSize": 10,
+    "orderBy": []
+}
+  """
+
+    Given url urlBase + '/customer/advancedsearch'
+    And request customerPQ
+    When method post
+    Then status 200
+    And match $..OFFICEID == '#present'
+    * print 'postcustomerPQ-> ', customerPQ

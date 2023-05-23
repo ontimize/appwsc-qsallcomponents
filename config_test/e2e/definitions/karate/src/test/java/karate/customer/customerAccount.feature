@@ -11,11 +11,11 @@ Feature: sample karate test script for CustomerAccount
         return 'Basic ' + encoded;
     }
     """
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
   Scenario:
     Given url urlBase + '/customerAccount?columns=CUSTOMERACCOUNTID,CUSTOMERID,ACCOUNTID,ISOWNER'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -36,7 +36,6 @@ Feature: sample karate test script for CustomerAccount
   }
   """
     Given url urlBase + '/customerAccount'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request customerAccount
     When method post
     Then status 200
@@ -45,7 +44,6 @@ Feature: sample karate test script for CustomerAccount
 
   Scenario:
     Given url urlBase + '/customerAccount?columns=CUSTOMERACCOUNTID,CUSTOMERID,ACCOUNTID,ISOWNER'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -66,7 +64,6 @@ Feature: sample karate test script for CustomerAccount
 }
   """
     Given url urlBase + '/customerAccount/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -77,12 +74,12 @@ Feature: sample karate test script for CustomerAccount
   {
    "filter" :{
         "CUSTOMERACCOUNTID":20668,
-		"CUSTOMERACCOUNTID":20668
+		"CUSTOMERACCOUNTID":20656
 	}
   }
     """
     Given url urlBase + '/customerAccount/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200
+
