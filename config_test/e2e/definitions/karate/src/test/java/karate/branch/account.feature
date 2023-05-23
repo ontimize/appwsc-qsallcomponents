@@ -28,13 +28,13 @@ Feature: sample karate test script for Account
   """
   {
     "data": {
-        "OFFICEID": "1313",
+        "OFFICEID": "1471",
         "ENTITYID": "2095",
         "CDID": "34"
     }
 }
   """
-    Given url urlBase + '/accounts/'
+    Given url urlBase + '/account/'
     And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request account
     When method post
@@ -51,7 +51,7 @@ Feature: sample karate test script for Account
     And def authToken = response
     And  match $..ACCOUNTTYPEID contains '#notnull'
     And  match $..OFFICEID contains '1471'
-    And  match $..ACCOUNTTYPEID contains '1'
+    And  match $..ACCOUNTTYPEID contains 1
     * print 'checkAddBranch-> ', response
 
   Scenario: Testing a PUT endpoint with request body
@@ -59,11 +59,14 @@ Feature: sample karate test script for Account
      """
   {
     "filter" :{
-		"ACCOUNTTYPEID" :"1"
+		"ACCOUNTID" :19983
 	},
     "data": {
-        "ACCOUNTTYPENAME":"AccountTypeNAme",
-        "OFFICEID" :1471
+        "ENTITYID":"2777",
+       "OFFICEID" :1471,
+       "CDID":"77",
+       "ANID":"7777777777"
+
     }
 }
   """
@@ -73,3 +76,41 @@ Feature: sample karate test script for Account
     When method put
     Then status 200
     And print 'newPostBodyForPut-> ', newPostBodyForPut
+
+
+
+
+  Scenario: Testing a PAGINATION QUERY endpoint with request body
+    * def accountPQ =
+
+  """
+      {
+    "filter": {},
+    "columns": [
+        "ACCOUNTID",
+        "ENTITYID",
+        "OFFICEID",
+        "CDID",
+        "ANID",
+        "BALANCE",
+        "STARTDATE",
+        "ENDDATE",
+        "INTERESRATE",
+        "ACCOUNTTYP",
+        "ACCOUNTTYPEID",
+        "ACCOUNTTYPENAME"
+        ],
+    "offset": 0,
+    "pageSize": 10,
+    "orderBy": []
+}
+  """
+
+    Given url 'http://localhost:8080/qsallcomponents-jee/branches/account/advancedsearch'
+    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    And request accountPQ
+    When method post
+    Then status 200
+    And match $..OFFICEID == '#present'
+    * print 'postaccountPQ-> ', accountPQ
+

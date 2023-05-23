@@ -22,73 +22,27 @@ Feature: sample karate test script for AccountType
     And  match $..ACCOUNTTYPEID contains '#notnull'
 
 
-  Scenario: Testing a POST endpoint with request body
-    * def account =
-
-  """
-  {
-    "data": {
-        "ACCOUNTTYPEID":1,
-        "ACCOUNTTYPENAME":"Savings",
-        "OFFICEID" :1471
-    }
-}
-  """
-    Given url urlBase + '/account'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
-    And request account
-    When method post
-    Then status 200
-    And match $..ACCOUNTTYPEID == '#present'
-    * print 'postaccount-> ', account
 
 
   Scenario:
-    Given url urlBase + '/account?columns=ACCOUNTTYPEID,ACCOUNTTYPENAME,OFFICEID'
+    Given url urlBase + '/accountConcepts?columns=ACCOUNTID,ACCOUNTTYPEID,CONCEPT,OFFICEID'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
-    And  match $..ACCOUNTTYPEID contains '#notnull'
-    And  match $..OFFICEID contains '1471'
-    And  match $..ACCOUNTTYPEID contains '1'
-    * print 'checkAddBranch-> ', response
 
-  Scenario: Testing a PUT endpoint with request body
-    * def newPostBodyForPut =
-     """
-  {
-    "filter" :{
-		"ACCOUNTTYPEID" :"1"
-	},
-    "data": {
-        "ACCOUNTTYPENAME":"AccountTypeNAme",
-        "OFFICEID" :1471
-    }
-}
-  """
-    Given url urlBase + '/account'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
-    And request newPostBodyForPut
-    When method put
+    * print 'accountConcepts-> ', response
+
+
+  Scenario:
+    Given url urlBase + '/accountMovementTypes?columns=ACCOUNTID,ACCOUNTTYPEID,MOVEMENT,CONCEPT,OFFICEID'
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    When method GET
     Then status 200
-    And print 'newPostBodyForPut-> ', newPostBodyForPut
+    And def authToken = response
 
+    * print 'accountMovementTypes-> ', response
 
-  Scenario: Delete request
-    * def deleteId =
-      """
-  {
-   "filter" :{
-		"ACCOUNTTYPEID" :"1"
-	}
-  }
-    """
-    Given url urlBase + '/accountType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
-    And request deleteId
-    When method DELETE
-    Then status 200
 
 
   Scenario:AccountTypeAggregate
