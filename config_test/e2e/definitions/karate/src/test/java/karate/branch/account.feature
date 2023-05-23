@@ -11,11 +11,11 @@ Feature: sample karate test script for Account
         return 'Basic ' + encoded;
     }
     """
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
   Scenario:
     Given url urlBase + '/account?columns=ACCOUNTID,OFFICEID,ENTITYID,CDID'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -35,7 +35,6 @@ Feature: sample karate test script for Account
 }
   """
     Given url urlBase + '/account/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request account
     When method post
     Then status 200
@@ -45,7 +44,6 @@ Feature: sample karate test script for Account
 
   Scenario:
     Given url urlBase + '/account?columns=ACCOUNTTYPEID,ACCOUNTTYPENAME,OFFICEID'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -71,7 +69,6 @@ Feature: sample karate test script for Account
 }
   """
     Given url urlBase + '/account'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -106,8 +103,7 @@ Feature: sample karate test script for Account
 }
   """
 
-    Given url 'http://localhost:8080/qsallcomponents-jee/branches/account/advancedsearch'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
+    Given url urlBase + '/account/advancedsearch'
     And request accountPQ
     When method post
     Then status 200

@@ -11,11 +11,12 @@ Feature: sample karate test script for AccountType
         return 'Basic ' + encoded;
     }
     """
-
-
-  Scenario:
-    Given url urlBase + '/account?columns=ACCOUNTTYPEID,ACCOUNTTYPENAME'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+
+
+
+  Scenario:Basic GET
+    Given url urlBase + '/account?columns=ACCOUNTTYPEID,ACCOUNTTYPENAME'
     When method GET
     Then status 200
     And def authToken = response
@@ -24,9 +25,8 @@ Feature: sample karate test script for AccountType
 
 
 
-  Scenario:
+  Scenario:accountConceptsQuery
     Given url urlBase + '/accountConcepts?columns=ACCOUNTID,ACCOUNTTYPEID,CONCEPT,OFFICEID'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -34,9 +34,8 @@ Feature: sample karate test script for AccountType
     * print 'accountConcepts-> ', response
 
 
-  Scenario:
+  Scenario:accountMovementTypesQuery
     Given url urlBase + '/accountMovementTypes?columns=ACCOUNTID,ACCOUNTTYPEID,MOVEMENT,CONCEPT,OFFICEID'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -45,9 +44,8 @@ Feature: sample karate test script for AccountType
 
 
 
-  Scenario:AccountTypeAggregate
+  Scenario:AccountTypeAggregateQuery
     Given url urlBase + '/accountTypeAggregate?columns=ACCOUNTTYPEID,ACCOUNTTYPENAME'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response

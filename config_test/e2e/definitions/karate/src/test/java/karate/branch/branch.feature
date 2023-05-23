@@ -11,11 +11,11 @@ Feature: sample karate test script for Branches
         return 'Basic ' + encoded;
     }
     """
+    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
   Scenario:
     Given url urlBase + '/branch?columns=OFFICEID,NAME,ADDRESS,PHONE,COUNTRY'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -39,7 +39,6 @@ Feature: sample karate test script for Branches
 }
   """
     Given url urlBase + '/branch/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request branch
     When method post
     Then status 200
@@ -49,7 +48,6 @@ Feature: sample karate test script for Branches
 
   Scenario:
     Given url urlBase + '/branch?columns=OFFICEID,NAME,ADDRESS,PHONE,COUNTRY'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -77,7 +75,6 @@ Feature: sample karate test script for Branches
 }
   """
     Given url urlBase + '/branch/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -94,10 +91,33 @@ Feature: sample karate test script for Branches
   }
     """
     Given url urlBase + '/branch/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200
 
 
+  Scenario: Testing a PAGINATION QUERY endpoint with request body
+    * def branchPQ =
 
+  """
+      {
+    "filter": {},
+    "columns": [
+        "OFFICEID",
+        "NAME",
+        "ADDRESS",
+        "PHONE",
+        "COUNTRY",
+        ],
+    "offset": 0,
+    "pageSize": 10,
+    "orderBy": []
+}
+  """
+
+    Given url urlBase + '/branch/advancedsearch'
+    And request branchPQ
+    When method post
+    Then status 200
+    And match $..OFFICEID == '#present'
+    * print 'postbranchPQ-> ', branchPQ
