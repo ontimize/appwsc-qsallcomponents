@@ -14,7 +14,7 @@ Feature: sample karate test script for Customer
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
-  Scenario:
+  Scenario:Basic GET
     Given url urlBase + '/customer?columns=CUSTOMERID,CUSTOMERTYPEID,NAME,SURNAME,ADDRESS,PHONE,COUNTRY'
     When method GET
     Then status 200
@@ -47,7 +47,7 @@ Feature: sample karate test script for Customer
     * print 'postcustomer-> ', customer
 
 
-  Scenario:
+  Scenario: GET to check the POST
     Given url urlBase + '/customer?columns=CUSTOMERID,CUSTOMERTYPEID,NAME,SURNAME,ADDRESS,PHONE,COUNTRY'
     When method GET
     Then status 200

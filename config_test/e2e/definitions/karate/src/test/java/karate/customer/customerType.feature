@@ -14,7 +14,7 @@ Feature: sample karate test script for CustomerType
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
 
 
-  Scenario:
+  Scenario:Basic GET
     Given url urlBase + '/customerType?columns=CUSTOMERTYPEID,DESCRIPTION'
     When method GET
     Then status 200
@@ -41,7 +41,7 @@ Feature: sample karate test script for CustomerType
     And match $..CUSTOMERTYPEID == '#present'
 
 
-  Scenario:
+  Scenario:GET to check the POST
     Given url urlBase + '/customerType?columns=CUSTOMERTYPEID,DESCRIPTION'
     When method GET
     Then status 200
