@@ -11,11 +11,11 @@ Feature: sample karate test script for MovementType
         return 'Basic ' + encoded;
     }
     """
-
-
-  Scenario:
-    Given url urlBase + '/movementType?columns=MOVEMENTTYPEID,DESCRIPTION'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+
+
+  Scenario:Basic GET
+    Given url urlBase + '/movementType?columns=MOVEMENTTYPEID,DESCRIPTION'
     When method GET
     Then status 200
     And def authToken = response
@@ -34,16 +34,14 @@ Feature: sample karate test script for MovementType
   }
   """
     Given url urlBase + '/movementType'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request movementType
     When method post
     Then status 200
     And match $..MOVEMENTID == '#present'
     * def postmovementType = response
 
-  Scenario:
+  Scenario:GET to check the POST
     Given url urlBase + '/movementType?columns=MOVEMENTTYPEID,DESCRIPTION'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -63,7 +61,6 @@ Feature: sample karate test script for MovementType
     """
 
     Given url urlBase + '/movementType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -82,7 +79,6 @@ Feature: sample karate test script for MovementType
   }
     """
     Given url urlBase + '/movementType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200

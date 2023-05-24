@@ -11,11 +11,12 @@ Feature: sample karate test script for Movement
         return 'Basic ' + encoded;
     }
     """
-
-
-  Scenario:
-    Given url urlBase + '/movement?columns=MOVEMENTID,ACCOUNTID,MOVEMENT,MOVEMENTTYPEID,CONCEPT'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+
+
+
+  Scenario:Basic GET
+    Given url urlBase + '/movement?columns=MOVEMENTID,ACCOUNTID,MOVEMENT,MOVEMENTTYPEID,CONCEPT'
     When method GET
     Then status 200
     And def authToken = response
@@ -39,16 +40,15 @@ Feature: sample karate test script for Movement
   }
   """
     Given url urlBase + '/movement'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request movement
     When method post
     Then status 200
     And match $..MOVEMENTID == '#present'
     * print 'postmovement-> ', movement
 
-  Scenario:
+
+  Scenario:GET to check the POST
     Given url urlBase + '/movement?columns=MOVEMENTID,ACCOUNTID,MOVEMENT,MOVEMENTTYPEID,CONCEPT'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method GET
     Then status 200
     And def authToken = response
@@ -69,7 +69,6 @@ Feature: sample karate test script for Movement
     """
 
     Given url urlBase + '/movement/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -86,8 +85,36 @@ Feature: sample karate test script for Movement
   }
     """
     Given url urlBase + '/movement/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200
+
+
+
+  Scenario: Testing a PAGINATION QUERY endpoint with request body
+    * def movementPQ =
+
+  """
+      {
+    "filter": {},
+    "columns": [
+        "MOVEMENTID",
+        "ACCOUNTID",
+        "MOVEMENT",
+        "MOVEMENTTYPEID",
+        "CONCEPT",
+        "DATE_"
+        ],
+    "offset": 0,
+    "pageSize": 10,
+    "orderBy": []
+}
+  """
+
+    Given url urlBase + '/movement/advancedsearch'
+    And request movementPQ
+    When method post
+    Then status 200
+    And match $..OFFICEID == '#present'
+    * print 'postmovementPQ-> ', movementPQ
 
