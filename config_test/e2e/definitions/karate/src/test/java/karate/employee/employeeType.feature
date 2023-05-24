@@ -11,18 +11,18 @@ Feature: sample karate test script
         return 'Basic ' + encoded;
     }
     """
-
-
-  Scenario:
-    Given url urlBase + '/employeeType?columns=EMPLOYEETYPEID'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+
+
+  Scenario:Basic GET
+    Given url urlBase + '/employeeType?columns=EMPLOYEETYPEID'
     When method GET
     Then status 200
     And def authToken = response
 
+
   Scenario: get all employees and then get the one employee
     Given url urlBase + '/employeeType?columns=EMPLOYEETYPEID,EMPLOYEETYPENAME'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method get
     Then status 200
     And  match $..EMPLOYEETYPEID contains '#notnull'
@@ -44,7 +44,6 @@ Feature: sample karate test script
 }
   """
     Given url urlBase + '/employeeType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request employeeType
     When method post
     Then status 200
@@ -55,7 +54,6 @@ Feature: sample karate test script
 
   Scenario: get all employees and then get the one employee
     Given url urlBase + '/employeeType?columns=EMPLOYEETYPEID,EMPLOYEETYPENAME,EMPLOYEETYPEDESC'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method get
     Then status 200
     And  match $..EMPLOYEETYPEID contains '#notnull'
@@ -79,7 +77,6 @@ Feature: sample karate test script
   """
 
     Given url urlBase + '/employeeType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -97,7 +94,16 @@ Feature: sample karate test script
   }
     """
     Given url urlBase + '/employeeType/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200
+
+
+
+
+  Scenario:employeeTypeAggregateQuery
+    Given url urlBase + '/employeeTypeAggregate?columns=EMPLOYEETYPEID,EMPLOYEETYPENAME'
+    When method GET
+    Then status 200
+    And def authToken = response
+    And  match $..EMPLOYEETYPEID == '#notnull'

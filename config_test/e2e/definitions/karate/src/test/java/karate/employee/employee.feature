@@ -11,11 +11,11 @@ Feature: sample karate test script
         return 'Basic ' + encoded;
     }
     """
-
-
-  Scenario:
-    Given url urlBase + '/employee?columns=EMPLOYEEID'
     * header Authorization = getAuth({username: 'demo', password: 'demouser'})
+
+
+  Scenario:Basic GET
+    Given url urlBase + '/employee?columns=EMPLOYEEID'
     When method GET
     Then status 200
     And def authToken = response
@@ -23,7 +23,6 @@ Feature: sample karate test script
 
   Scenario: get all employees and then get the one employee
     Given url urlBase + '/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method get
     Then status 200
     And  match $..EMPLOYEEID contains '#notnull'
@@ -46,7 +45,6 @@ Feature: sample karate test script
 }
   """
     Given url urlBase + '/employee/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request employee
     When method post
     Then status 200
@@ -56,7 +54,6 @@ Feature: sample karate test script
 
   Scenario: check that the previous employee was added
     Given url urlBase + '/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
-    * header Authorization = getAuth({username: 'demo', password: 'demouser'})
     When method get
     Then status 200
     And  match $..EMPLOYEEID contains '#notnull'
@@ -81,7 +78,6 @@ Feature: sample karate test script
 }
   """
     Given url urlBase + '/employee/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request employeeSecond
     And remove employeeSecond.EMPLOYEEPHONE
     When method post
@@ -91,7 +87,6 @@ Feature: sample karate test script
 
   Scenario Outline: As a <description>, I want to get the corresponding response_code <status_code>
     Given url urlBase + '/employee?columns=EMPLOYEEID,EMPLOYEENAME,EMPLOYEEEMAIL,EMPLOYEETYPEID,EMPLOYEEPHOTO'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request { 'EMPLOYEEEMAIL': <employeeemail> , 'EMPLOYEENAME': <employeename> }
     When method POST
     * print 'employeePostExamples-> ', response
@@ -119,7 +114,6 @@ Feature: sample karate test script
 }
   """
     Given url urlBase + '/employee/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request newPostBodyForPut
     When method put
     Then status 200
@@ -138,8 +132,6 @@ Feature: sample karate test script
   }
     """
     Given url urlBase + '/employee/'
-    And header Authorization = getAuth({username: 'demo', password: 'demouser'})
     And request deleteId
     When method DELETE
     Then status 200
-
