@@ -77,7 +77,7 @@ Feature: sample karate test script for User
   """
   {
     "data": {
-        "USER_": "demoHoyLunes",
+        "USER_": "demoHoy",
         "PASSWORD":"demoHoy",
         "NAME":"name",
         "SURNAME":"SURNAME",
@@ -116,7 +116,7 @@ Feature: sample karate test script for User
       """
   {
    "filter" :{
-		"USER_": "demoHoyLunes"
+		"USER_": "demoHoy"
 	}
   }
     """
@@ -124,3 +124,30 @@ Feature: sample karate test script for User
     And request deleteId
     When method DELETE
     Then status 200
+
+
+  Scenario: Testing a PAGINATION QUERY endpoint with request body
+    * def userPQ =
+
+  """
+      {
+    "filter": {},
+    "columns": [
+        "USER_",
+        "PASSWORD",
+        "NAME",
+        "SURNAME",
+        "EMAIL"
+        ],
+    "offset": 0,
+    "pageSize": 10,
+    "orderBy": []
+}
+  """
+
+    Given url urlBase + '/user/advancedsearch'
+    And request userPQ
+    When method post
+    Then status 200
+    And match $..OFFICEID == '#present'
+    * print 'postuserPQ-> ', userPQ

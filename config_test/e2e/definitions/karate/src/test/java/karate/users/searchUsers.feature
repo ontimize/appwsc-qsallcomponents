@@ -24,12 +24,14 @@ Feature: sample karate test script for User
     And  match $..PASSWORD contains '#notnull'
     And  match $..NAME  == '#present'
 
-  Scenario: Testing a POST endpoint with request body
+  Scenario: Testing a PUT endpoint with request body
     * def searchUsers =
   """
   {
+  "filter" :{
+		"USER_": "demoHoy"
+	},
     "data": {
-        "USER_": "searchUsersPrueba",
         "PASSWORD":"Prueba",
         "NAME":"name",
         "SURNAME":"SURNAME",
@@ -37,12 +39,12 @@ Feature: sample karate test script for User
     }
   }
   """
-    Given url urlBase + '/user/'
+    Given url urlBase + '/searchUsers/'
     And request searchUsers
-    When method post
+    When method put
     Then status 200
     And match $..USER_ == '#present'
-    * print 'postsearchUsers-> ', searchUsers
+    * print 'putsearchUsers-> ', searchUsers
 
 
   Scenario: Delete request
@@ -50,7 +52,7 @@ Feature: sample karate test script for User
       """
   {
    "filter" :{
-		"USER_": "searchUsersPrueba"
+		"USER_": "demoHoy"
 	}
   }
     """
