@@ -9,7 +9,7 @@ class KarateRunnerTest {
 
     @Test
     void testParallel() {
-        Results results = Runner.path("classpath:employee")
+        Results results = Runner.path("classpath:karate")
                 //.outputCucumberJson(true)
                 .parallel(5);
         assertEquals(0, results.getFailCount(), results.getErrorMessages());

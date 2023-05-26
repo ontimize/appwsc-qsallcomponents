@@ -1,7 +1,7 @@
-Feature: sample karate test script for FileManager
+Feature: sample karate test script for WebClientConfig
 
   Background:
-    * def urlBase = 'http://localhost:8080/qsallcomponents-jee/filemanager/'
+    * def urlBase = 'http://localhost:8080/qsallcomponents-jee/config'
     * def getAuth =
     """
     function(creds) {
@@ -15,15 +15,8 @@ Feature: sample karate test script for FileManager
 
 
 
-  Scenario: Basic Get
-    * def filemanager =
-
-  """
-    {"filter":{},"columns": ["id", "name", "size", "creationDate", "directory"]}
-  """
-
-    Given url urlBase + 'queryFiles/38'
-    And request filemanager
+  Scenario: Basic Post
+    Given url urlBase + '/search'
     When method POST
     Then status 200
-    * print 'fileManager-> ', response
+    * print 'WebClientConfig-> ', response
