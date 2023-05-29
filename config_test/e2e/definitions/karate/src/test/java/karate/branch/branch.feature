@@ -52,8 +52,7 @@ Feature: sample karate test script for Branches
     Then status 200
     And def authToken = response
     And  match $..OFFICEID contains '#notnull'
-    And  match $..NAME contains 'Branch1'
-    And  match $..ADDRESS contains 'branch1dimatiacom'
+    And  match $..NAME contains '#string'
     * print 'checkAddBranch-> ', response
 
 

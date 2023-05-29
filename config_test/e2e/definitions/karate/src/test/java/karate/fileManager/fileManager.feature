@@ -15,7 +15,7 @@ Feature: sample karate test script for FileManager
 
 
 
-  Scenario: Basic Get
+  Scenario: Basic POST
     * def filemanager =
 
   """
@@ -27,3 +27,11 @@ Feature: sample karate test script for FileManager
     When method POST
     Then status 200
     * print 'fileManager-> ', response
+
+
+
+  Scenario: Basic Get
+    Given url urlBase + 'getFiles/38
+    When method GET
+    Then status 200
+    * print 'getFile-> ', response

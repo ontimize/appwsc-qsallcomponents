@@ -1,6 +1,8 @@
 Feature: sample karate test script for User
 
-  Background:
+  Background:IMPORTANT: in the first execution of POST, insert the record. In the subsequent executions,
+  it gives error because it does not delete it, it only adds a deletion date.
+
     * def urlBase = 'http://localhost:8080/qsallcomponents-jee/users'
     * def getAuth =
     """
@@ -73,6 +75,8 @@ Feature: sample karate test script for User
 
 
   Scenario: Testing a POST endpoint with request body
+
+
     * def user =
   """
   {

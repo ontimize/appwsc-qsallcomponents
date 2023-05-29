@@ -16,7 +16,7 @@ Feature: sample karate test script for WebClientConfig
 
 
   Scenario: Basic Post
-    Given url urlBase + '/search'
-    When method POST
+    Given url urlBase + '/remoteConfiguration?columns=USER_,APP_UUID,CONFIGURATION'
+    When method GET
     Then status 200
     * print 'WebClientConfig-> ', response
