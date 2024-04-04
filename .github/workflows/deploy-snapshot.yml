@@ -32,17 +32,20 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Setup Java JDK and Maven
-        uses: actions/setup-java@v3
+        uses: ontimize/setup-java-maven-gitAction@v3
         with:
           distribution: 'temurin'
           java-version: '11'
-          server-id: imatia-artifactory
-          server-username: ARTIFACTORY_USER
-          server-password: ARTIFACTORY_PASS
+          server-id: ossrh
+          server-username: ${{ secrets.MAVEN_USERNAME }}
+          server-password: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
 
       - name: mvn build
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
         run: |
-          mvn clean install
+          mvn -U clean install
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
