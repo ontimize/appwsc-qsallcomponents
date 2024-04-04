@@ -1,0 +1,132 @@
+---
+name: Prepare Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      RELEASE_TYPE:
+        description: 'Release type'
+        required: true
+        default: 'minor'
+        type: choice
+        options:
+          - "minor"
+          - "hotfix"
+
+env:
+  NPM_REGISTRY: https://registry.npmjs.org/
+  CI_EMAIL: ${{ secrets.CI_COMMIT_MAIL }}
+  CI_USERNAME: ${{ secrets.CI_COMMIT_AUTHOR }}
+  MAIN_BRANCH: master
+  DEVELOP_BRANCH: develop
+  REPO_NAME: ${{ github.event.repository.name }}
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Get input parameters
+        id: parameters
+        run: |
+          if [ "${{ github.event.inputs.RELEASE_TYPE }}" = "hotfix" ]; then
+            BASELINE_BRANCH=${{ env.MAIN_BRANCH }}
+            isHotfix=1
+            isMinor=0
+          else
+            BASELINE_BRANCH=${{ env.DEVELOP_BRANCH }}
+            isHotfix=0
+            isMinor=1
+          fi
+          echo "BASELINE_BRANCH=$BASELINE_BRANCH" >> $GITHUB_ENV
+          echo "isHotfix=$isHotfix" >> $GITHUB_OUTPUT
+          echo "isMinor=$isMinor" >> $GITHUB_OUTPUT
+
+      - name: Checkout merge commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BASELINE_BRANCH }}
+          fetch-depth: 0
+
+      - name: Setup Maven Cache
+        uses: actions/cache@v4
+        continue-on-error: true
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Java 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: obtain pom.xml version
+        id: project
+        run: |
+          echo "version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
+
+      - name: Prepare git information
+        run: |
+          git config user.name "$CI_USERNAME"
+          git config user.email "$CI_EMAIL"
+
+      ## MINOR
+      - name: bumping minor version in package.json
+        if: ${{ steps.parameters.outputs.isMinor == true }}
+        run: |
+          version=$(echo "${{ steps.project.outputs.version }}" | sed 's/-SNAPSHOT//')
+          mvn versions:set -DnewVersion="$version" -DgenerateBackupPoms=false -DprocessAllModules=true
+          echo "RELEASE_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
+
+      ## HOTFIX
+#      TODO
+#      - name: bumping hotfix version in package.json
+#        if: ${{ steps.parameters.outputs.isHotfix == true }}
+#        run: |
+#          npm version patch --no-git-tag-version
+#          echo "RELEASE_VERSION=$(node -pe "require('./package.json')['version']")" >> $GITHUB_ENV
+
+      - name: Update Chart values.yml
+        run: |
+            version=$(cat ./charts/$REPO_NAME/values.yaml | grep version: | awk '{print $2}')
+            sed -i "s#$version#${{ env.RELEASE_VERSION }}#" ./charts/$REPO_NAME/values.yaml
+
+      - name: Create release branch
+        if: ${{ steps.parameters.outputs.isMinor == true }}
+        run: |
+          version=${{ env.RELEASE_VERSION }}
+          git checkout -b release/$version
+
+          git add .
+          git commit -m "Prepare release $version"
+          git push origin release/$version
+
+      - name: Create hotfix branch
+        if: ${{ steps.parameters.outputs.isHotfix == true }}
+        run: |
+          version=${{ env.RELEASE_VERSION }}
+          git checkout -b hotfix/$version
+
+          git add .
+          git commit -m "Prepare hotfix $version"
+          git push origin hotfix/$version
+
+      - name: Create Release pull request
+        if: ${{ steps.parameters.outputs.isHotfix == false }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
+        run: |
+          version=${{ env.RELEASE_VERSION }}
+          gh pr create -B ${{ env.MAIN_BRANCH }} -H release/$version --title "Release $version" --body "" --draft --label "release"
+
+      - name: Create Hotfix pull request
+        if: ${{ steps.parameters.outputs.isHotfix == true }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
+        run: |
+          version=${{ env.RELEASE_VERSION }}
+          gh pr create -B ${{ env.MAIN_BRANCH }} -H hotfix/$version --title "Hotfix $version" --body "" --draft --label "release"
+
