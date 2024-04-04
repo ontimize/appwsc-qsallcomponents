@@ -17,3 +17,4 @@ Resources (CPU, Memory can be customized as needed).
 Also using configmap section in values.yaml it is easy to provide environment values to the pod, adapting deployment.yaml.
 
 If in the configmap.data section a key "environment-profile" exists, its value will be injected as ENVIRONMENT_PROFILE variable. This can be used to differentiate between staging and production environments easily.
+
