@@ -104,7 +104,7 @@ spec:
     spec:
       containers:
         - name: appwsc-qsallcomponent-jee-db
-          image: "ghcr.io/ontimize/appwsc-qsallcomponent-jee-db:{{ .Values.image.version }}"
+          image: "ghcr.io/ontimize/appwsc-qsallcomponents/db:{{ .Values.image.version }}"
 #          readinessProbe:
 #            exec:
 #              #command: [ "psql", "-w", "-U", "external_db_user", "-d", "external_db", "-c", "SELECT 1" ]

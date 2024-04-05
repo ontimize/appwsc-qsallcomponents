@@ -6,6 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
@@ -58,7 +59,7 @@ jobs:
         id: meta-db
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/appwsc-qsallcomponent-jee-db
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/db
           tags: |
             # branch event
             type=ref,event=branch
@@ -75,7 +76,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/appwsc-qsallcomponent-jee-server
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             # branch event
             type=ref,event=branch
