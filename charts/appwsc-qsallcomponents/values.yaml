@@ -6,7 +6,7 @@ image:
   pullPolicy: IfNotPresent
   ## provided as basic setup. replace as needed
   repository: ghcr.io/ontimize/appwsc-qsallcomponents
-  version: 15.x.x
+  version: internal-configure-argocd-deployment
 imagePullSecrets:
   - name: github-ecr-cred
 nameOverride: ""
