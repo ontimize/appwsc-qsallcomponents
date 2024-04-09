@@ -102,6 +102,10 @@ spec:
       labels:
         app.kubernetes.io/name: hsqldb
     spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}      
       containers:
         - name: appwsc-qsallcomponent-jee-db
           image: "ghcr.io/ontimize/appwsc-qsallcomponents/db:{{ .Values.image.version }}"
