@@ -31,7 +31,7 @@ livenessProbe:
   successThreshold: 1
   timeoutSeconds: 1
   ### Optional distinct liveness probe path, if empty the probePath is used
-  probePath: /index.html
+  probePath: /ontimize/health/liveness
 readinessProbe:
   initialDelaySeconds: 70
   failureThreshold: 3
