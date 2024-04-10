@@ -10,6 +10,8 @@ services:
    appwsc-qsallcomponent-jee-server:
       container_name: appwsc-qsallcomponent-jee-boot
       image: appwsc-qsallcomponent-jee-boot
+      environment:
+         JWT_PASSWORD_SECRET: ${JWT_PASSWORD_SECRET}
       ports:
          - "9091:8080"
       depends_on:

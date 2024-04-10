@@ -1,4 +1,7 @@
 ontimize:
+  security:
+    jwt:
+      password: ${JWT_PASSWORD_SECRET}
   dms:
     base-path: file:///usr/local/dms
 server:

@@ -32,8 +32,6 @@ ontimize:
       upper-string: true
       upper-like: true
   security:
-    jwt:
-      password: aaa
     mode: default
     user-information-service:
       user-repository: OCLoginProfilesDao
