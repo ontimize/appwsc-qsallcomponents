@@ -77,17 +77,15 @@ jobs:
       - name: bumping minor version in package.json
         if: ${{ steps.parameters.outputs.isMinor == true }}
         run: |
-          version=$(echo "${{ steps.project.outputs.version }}" | sed 's/-SNAPSHOT//')
-          mvn versions:set -DnewVersion="$version" -DgenerateBackupPoms=false -DprocessAllModules=true
+          mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.0 -DgenerateBackupPoms=false -DprocessAllModules=true
           echo "RELEASE_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
 
       ## HOTFIX
-#      TODO
-#      - name: bumping hotfix version in package.json
-#        if: ${{ steps.parameters.outputs.isHotfix == true }}
-#        run: |
-#          npm version patch --no-git-tag-version
-#          echo "RELEASE_VERSION=$(node -pe "require('./package.json')['version']")" >> $GITHUB_ENV
+      - name: bumping hotfix version in package.json
+        if: ${{ steps.parameters.outputs.isHotfix == true }}
+        run: |
+          mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion} -DgenerateBackupPoms=false -DprocessAllModules=true
+          echo "RELEASE_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
 
       - name: Update Chart values.yml
         run: |

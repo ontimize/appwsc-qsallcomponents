@@ -49,6 +49,8 @@ spec:
             value: {{ (printf "%s" (include "fullname" .)) }}
           - name: HOST
             value: {{ .Values.ingress.host }}
+          - name: JWT_PASSWORD_SECRET
+            value: ld.a,#82xyz
           ports:
           - name: http
             containerPort: {{ .Values.service.internalPort }}
