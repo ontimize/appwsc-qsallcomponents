@@ -2,7 +2,7 @@ name: Deploy Snapshot
 on:
   workflow_dispatch:
   push:
-    branches: [develop, 'internal/configure-argocd-deployment']
+    branches: [develop]
 
 env:
   REGISTRY: ghcr.io
@@ -81,11 +81,6 @@ jobs:
             # branch event
             type=ref,event=branch
             
-      - name: verify
-        run: |
-          echo ${{ github.workspace }}
-          ls -l ${{ github.workspace }}/appwsc-qsallcomponents-jee-boot/target
-
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:

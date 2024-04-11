@@ -71,9 +71,9 @@ ingress:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: cert-manager-letsencrypt-production-route53
-  host: appwsc-qsallcomponents.ontimize.com
+  host: appwsc-qsallcomponents.dev.ontimize.com
   tls:
-    secretName: appwsc-qsallcomponents-tls
+    secretName: dev-appwsc-qsallcomponents-tls
     enabled: true
 
 # Kafka. If used. Will be provided as environment variables to the pods.
