@@ -77,14 +77,14 @@ jobs:
       - name: bumping minor version in package.json
         if: ${{ steps.parameters.outputs.isMinor == true }}
         run: |
-          mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.0 -DgenerateBackupPoms=false -DprocessAllModules=true
+          mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.0 -DgenerateBackupPoms=false -DprocessAllModules=true
           echo "RELEASE_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
 
       ## HOTFIX
       - name: bumping hotfix version in package.json
         if: ${{ steps.parameters.outputs.isHotfix == true }}
         run: |
-          mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion} -DgenerateBackupPoms=false -DprocessAllModules=true
+          mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} -DgenerateBackupPoms=false -DprocessAllModules=true
           echo "RELEASE_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
 
       - name: Update Chart values.yml
