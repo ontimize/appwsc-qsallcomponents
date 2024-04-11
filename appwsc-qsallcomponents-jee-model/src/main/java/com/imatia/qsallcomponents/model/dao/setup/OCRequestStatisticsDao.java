@@ -8,8 +8,5 @@ import com.ontimize.jee.server.services.management.dao.IRequestStatisticsDao;
 //@ConfigurationFile(configurationFile = "base-dao/setup/OCRequestStatisticsDao.xml", configurationFilePlaceholder = "base-dao/placeholders.properties")
 public class OCRequestStatisticsDao extends OntimizeJdbcDaoSupport implements IRequestStatisticsDao {
 
-	public OCRequestStatisticsDao() {
 
-		super();
-	}
 }

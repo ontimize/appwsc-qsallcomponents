@@ -17,8 +17,4 @@ public class MovementTypeDao extends OntimizeJdbcDaoSupport {
 	public static final String	ATTR_DESCRIPTION_ES_ES	= "DESCRIPTION_ES_ES";
 	public static final String	ATTR_DESCRIPTION_GL_ES	= "DESCRIPTION_GL_ES";
 
-	public MovementTypeDao() {
-		super();
-	}
-
 }

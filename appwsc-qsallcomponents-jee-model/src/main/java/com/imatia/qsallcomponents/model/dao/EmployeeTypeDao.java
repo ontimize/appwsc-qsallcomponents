@@ -17,8 +17,4 @@ public class EmployeeTypeDao extends OntimizeJdbcDaoSupport {
 	public static final String	ATTR_EMPLOYEETYPENAME	= "EMPLOYEETYPENAME";
 	public static final String	ATTR_EMPLOYEETYPEDESC	= "EMPLOYEETYPEDESC";
 
-	public EmployeeTypeDao() {
-		super();
-	}
-
 }

@@ -23,9 +23,6 @@ public class CustomerDao extends OntimizeJdbcDaoSupport {
 	public static final String	ATTR_EMAIL			= "EMAIL";
 	public static final String	ATTR_LONGITUDE		= "LONGITUDE";
 	public static final String	ATTR_LATITUDE		= "LATITUDE";
-
-	public CustomerDao() {
-		super();
-	}
+	public static final String ATTR_ID_DMS_DOC = "ID_DMS_DOC";
 
 }

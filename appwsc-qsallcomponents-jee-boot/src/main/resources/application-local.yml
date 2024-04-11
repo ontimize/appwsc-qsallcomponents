@@ -1,0 +1,4 @@
+ontimize:
+  security:
+    jwt:
+      password: ${JWT_PASSWORD_SECRET}

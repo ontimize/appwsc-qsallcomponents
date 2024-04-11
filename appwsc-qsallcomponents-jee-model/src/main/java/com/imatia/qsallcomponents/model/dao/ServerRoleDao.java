@@ -16,8 +16,4 @@ public class ServerRoleDao extends OntimizeJdbcDaoSupport {
 	public static final String ID_SERVER_ROLE_ALL_QUERY = "id_serverRole_all";
 	public static final String ID_SERVER_ROLE_QUERY = "id_serverRole";
 
-	public ServerRoleDao() {
-
-		super();
-	}
 }

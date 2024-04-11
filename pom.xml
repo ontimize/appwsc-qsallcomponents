@@ -1,72 +1,212 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.ontimize.boot</groupId>
-		<artifactId>ontimize-boot-parent</artifactId>
-		<version>3.9.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>com.ontimize.boot</groupId>
+        <artifactId>ontimize-boot-parent</artifactId>
+        <version>3.15.0-SNAPSHOT</version>
+    </parent>
 
-	<groupId>com.imatia</groupId>
-	<artifactId>appwsc-qsallcomponents-jee</artifactId>
-	<version>2.2.0</version>
-	<packaging>pom</packaging>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>11</java.version>
-		<hsqldatabase.path>src/main/db</hsqldatabase.path>
-		<database.url>jdbc:hsqldb:hsql://localhost:9013/templateDB</database.url>
-		<hsqldb.version>2.3.4</hsqldb.version>
-		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
-		<javax.mail.version>1.5.0</javax.mail.version>
-		<poi.poi.version>4.1.0</poi.poi.version>
-       		<poi.poi-ooxml.version>4.1.0</poi.poi-ooxml.version>
-        	<poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
-        	<poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
-        	<poi.dom4j.version>1.6.1</poi.dom4j.version>
-	</properties>
+    <groupId>com.imatia</groupId>
+    <artifactId>appwsc-qsallcomponents-jee</artifactId>
+    <version>2.3.0</version>
+    <packaging>pom</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <hsqldatabase.path>src/main/db</hsqldatabase.path>
+        <database.url>jdbc:hsqldb:hsql://localhost:9013/templateDB</database.url>
+        <hsqldb.version>2.3.4</hsqldb.version>
+        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+        <javax.mail.version>1.5.0</javax.mail.version>
+        <itextpdf.version>7.2.3</itextpdf.version>
+        <poi.poi.version>4.1.0</poi.poi.version>
+        <poi.poi-ooxml.version>4.1.0</poi.poi-ooxml.version>
+        <poi.poi-ooxml-schemas.version>4.1.0</poi.poi-ooxml-schemas.version>
+        <poi.ooxml-schemas.version>1.1</poi.ooxml-schemas.version>
+        <poi.dom4j.version>1.6.1</poi.dom4j.version>
+        <pitest.skip>false</pitest.skip>
 
-	<dependencyManagement>
-		<dependencies>
+        <!-- =========================================================== -->
+        <!-- Sonar -->
+        <!-- =========================================================== -->
+        <sonar.organization>ontimize</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/jacoco-report-aggregate/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
-			<dependency>
-				<groupId>com.imatia</groupId>
-				<artifactId>appwsc-qsallcomponents-jee-api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+        <!-- Jacoco -->
+        <jacoco.version>0.8.6</jacoco.version>
+        <surefire.version>3.0.0-M5</surefire.version>
+        <failsafe.version>3.0.0-M5</failsafe.version>
+    </properties>
 
-			<dependency>
-				<groupId>com.imatia</groupId>
-				<artifactId>appwsc-qsallcomponents-jee-openapi</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/coverage-reports/jacoco.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>prepare-agent-integration</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <!-- Sets the name of the property containing the settings for JaCoCo runtime agent. -->
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <!-- Sets the VM argument line used when unit tests are run. -->
+                    <argLine>${surefireArgLine}</argLine>
+                    <!-- Skips unit tests if the value of skip.unit.tests property is true -->
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- Excludes integration tests when unit tests are run. -->
+                    <excludes>
+                        <exclude>**/*IT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>${failsafeArgLine}</argLine>
+                            <skipTests>${skip.integration.tests}</skipTests>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.6.4</version>
+                <configuration>
+                    <targetClasses>
+                        <param>com.imatia.qsallcomponents.model.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.imatia.qsallcomponents.model.*</param>
+                    </targetTests>
+                    <threads>4</threads>
+                    <timeoutFactor>3.0</timeoutFactor>
+                    <timeoutConstant>120000</timeoutConstant>
+                    <outputFormats>
+                        <outputFormat>XML</outputFormat>
+                        <outputFormat>HTML</outputFormat>
+                        <outputFormat>CSV</outputFormat>
+                    </outputFormats>
+                    <exportLineCoverage>true</exportLineCoverage>
+                    <failWhenNoMutations>false</failWhenNoMutations>
+                    <timestampedReports>false</timestampedReports>
+                    <verbose>false</verbose>
+                    <skip>${pitest.skip}</skip>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>0.14</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>pitest</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
 
-			<dependency>
-				<groupId>com.imatia</groupId>
-				<artifactId>appwsc-qsallcomponents-jee-boot</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+            </plugin>
 
-			<dependency>
-				<groupId>com.imatia</groupId>
-				<artifactId>appwsc-qsallcomponents-jee-model</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>com.imatia</groupId>
-				<artifactId>appwsc-qsallcomponents-jee-ws</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+        </plugins>
+    </build>
 
-			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>${hsqldb.version}</version>
-			</dependency>
-			
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>com.imatia</groupId>
+                <artifactId>appwsc-qsallcomponents-jee-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.imatia</groupId>
+                <artifactId>appwsc-qsallcomponents-jee-openapi</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.imatia</groupId>
+                <artifactId>appwsc-qsallcomponents-jee-boot</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.imatia</groupId>
+                <artifactId>appwsc-qsallcomponents-jee-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.imatia</groupId>
+                <artifactId>appwsc-qsallcomponents-jee-ws</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>kernel</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>layout</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
@@ -93,10 +233,10 @@
                 <version>${poi.dom4j.version}</version>
             </dependency>
 
-		</dependencies>
-	</dependencyManagement>
-		
-	<profiles>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
         <profile>
             <id>default</id>
             <activation>
@@ -104,21 +244,24 @@
             </activation>
             <repositories>
                 <repository>
-                    <id>imatia-artifactory</id>
-                    <url>https://artifactory.imatia.com/public-artifactory/libs-release</url>
+                    <id>sonatype-snapshot</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
                     <releases>
                     </releases>
                     <snapshots>
+                        <enabled>true</enabled>
                     </snapshots>
                 </repository>
             </repositories>
         </profile>
     </profiles>
-  <modules>
-    <module>appwsc-qsallcomponents-jee-api</module>
-    <module>appwsc-qsallcomponents-jee-model</module>
-    <module>appwsc-qsallcomponents-jee-openapi</module>
-    <module>appwsc-qsallcomponents-jee-ws</module>
-    <module>appwsc-qsallcomponents-jee-boot</module>
-  </modules>
+
+    <modules>
+        <module>appwsc-qsallcomponents-jee-api</module>
+        <module>appwsc-qsallcomponents-jee-model</module>
+        <module>appwsc-qsallcomponents-jee-openapi</module>
+        <module>appwsc-qsallcomponents-jee-ws</module>
+        <module>appwsc-qsallcomponents-jee-boot</module>
+        <module>jacoco-report-aggregate</module>
+    </modules>
 </project>
