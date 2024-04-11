@@ -115,7 +115,7 @@ jobs:
       - name: Create Release pull request
         if: ${{ steps.parameters.outputs.isHotfix == false }}
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=${{ env.RELEASE_VERSION }}
           gh pr create -B ${{ env.MAIN_BRANCH }} -H release/$version --title "Release $version" --body "" --draft --label "release"
@@ -123,7 +123,7 @@ jobs:
       - name: Create Hotfix pull request
         if: ${{ steps.parameters.outputs.isHotfix == true }}
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=${{ env.RELEASE_VERSION }}
           gh pr create -B ${{ env.MAIN_BRANCH }} -H hotfix/$version --title "Hotfix $version" --body "" --draft --label "release"
