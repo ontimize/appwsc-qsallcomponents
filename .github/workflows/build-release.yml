@@ -81,7 +81,7 @@ jobs:
 
       - name: bumping version in pom.xml
         run: |
-          mvn versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DgenerateBackupPoms=false -DprocessAllModules=true
+          mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DgenerateBackupPoms=false -DprocessAllModules=true
 
       - name: Create sync branch
         run: |
