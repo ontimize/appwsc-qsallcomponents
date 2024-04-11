@@ -50,7 +50,10 @@ spec:
           - name: HOST
             value: {{ .Values.ingress.host }}
           - name: JWT_PASSWORD_SECRET
-            value: ld.a,#82xyz
+            valueFrom:
+              secretKeyRef:
+                name: jwt-password-secret
+                key: password
           ports:
           - name: http
             containerPort: {{ .Values.service.internalPort }}
