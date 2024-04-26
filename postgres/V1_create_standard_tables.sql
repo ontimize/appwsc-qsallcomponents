@@ -5,7 +5,7 @@
  drop table if exists accounttypes;
 
 create table accounttypes (
-	accounttypeid serial not null,
+	accounttypeid serial4 not null,
 	accounttypename varchar(100) not null,
 	constraint sys_pk_10456 primary key (accounttypeid)
 );
@@ -48,7 +48,7 @@ create table branches (
  drop table if exists customertypes;
 
 create table customertypes (
-	customertypeid serial not null,
+	customertypeid serial4 not null,
 	description varchar(255),
 	description_en_us varchar(255),
 	description_es_es varchar(255),
@@ -63,7 +63,7 @@ create table customertypes (
  drop table if exists employeetypes;
 
 create table employeetypes (
-	employeetypeid serial not null,
+	employeetypeid serial4 not null,
 	employeetypename varchar(50) not null,
 	employeetypedesc varchar(10485760),
 	constraint sys_pk_10180 primary key (employeetypeid)
@@ -76,7 +76,7 @@ create table employeetypes (
  drop table if exists movementtypes;
 
 create table movementtypes (
-	movementtypeid serial not null,
+	movementtypeid serial4 not null,
 	description varchar(50),
 	description_en_us varchar(50),
 	description_es_es varchar(50),
@@ -91,7 +91,7 @@ create table movementtypes (
  drop table if exists preferences;
 
 create table preferences (
-	id serial not null,
+	id serial4 not null,
 	name varchar(255),
 	description varchar(255),
 	preferences varchar(5000),
@@ -107,7 +107,7 @@ create table preferences (
  drop table if exists reports;
 
 create table reports (
-	id serial not null,
+	id serial4 not null,
 	"uuid" varchar(255) not null,
 	name varchar(255),
 	description varchar(255),
@@ -125,7 +125,7 @@ create table reports (
  drop table if exists tasks;
 
 create table tasks (
-	id serial not null,
+	id serial4 not null,
 	"uuid" varchar(255) not null,
 	"result" bytea,
 	constraint sys_pk_10484 primary key (id)
@@ -138,7 +138,7 @@ create table tasks (
  drop table if exists tconfigs;
 
 create table tconfigs (
-	id_config serial not null,
+	id_config serial4 not null,
 	user_config varchar(255),
 	type_config varchar(255),
 	components varchar(10485760),
@@ -152,11 +152,11 @@ create table tconfigs (
  drop table if exists tdms_doc;
 
 create table tdms_doc (
-	id_dms_doc serial not null,
+	id_dms_doc serial4 not null,
 	update_date date,
-	update_by_id integer,
+	update_by_id int4,
 	doc_name varchar(255) not null,
-	owner_id integer not null,
+	owner_id int4 not null,
 	doc_description text,
 	doc_keywords varchar(255),
 	constraint tdms_doc_pk primary key (id_dms_doc)
@@ -169,7 +169,7 @@ create table tdms_doc (
  drop table if exists tformprovider;
 
 create table tformprovider (
-	id_formprovider serial not null,
+	id_formprovider serial4 not null,
 	formname varchar(10485760) not null,
 	formxml varchar(10485760) not null,
 	constraint tformprovider_pk primary key (id_formprovider)
@@ -182,7 +182,7 @@ create table tformprovider (
  drop table if exists ti18n;
 
 create table ti18n (
-	id_i18n serial not null,
+	id_i18n serial4 not null,
 	class_name varchar(150),
 	i18n_description varchar(250),
 	constraint sys_pk_10206 primary key (id_i18n)
@@ -195,8 +195,8 @@ create table ti18n (
  drop table if exists ti18n_value;
 
 create table ti18n_value (
-	id_i18n_value serial not null,
-	id_i18n integer not null,
+	id_i18n_value serial4 not null,
+	id_i18n int4 not null,
 	"key" varchar(250),
 	es_es varchar(10485760),
 	en_us varchar(10485760),
@@ -211,12 +211,12 @@ create table ti18n_value (
  drop table if exists trequest_statistics;
 
 create table trequest_statistics (
-	id_request_statistics integer not null,
+	id_request_statistics int4 not null,
 	service_name varchar(255),
 	method_name varchar(50),
 	user_name varchar(50),
 	execution_date date,
-	execution_time integer,
+	execution_time int4,
 	method_params varchar(5000),
 	service_exception varchar(5000),
 	constraint sys_pk_10194 primary key (id_request_statistics)
@@ -229,7 +229,7 @@ create table trequest_statistics (
  drop table if exists trole;
 
 create table trole (
-	id_rolename serial not null,
+	id_rolename serial4 not null,
 	rolename varchar(255),
 	xmlclientpermission varchar(10485760),
 	constraint sys_pk_10096 primary key (id_rolename)
@@ -242,7 +242,7 @@ create table trole (
  drop table if exists tserver_permission;
 
 create table tserver_permission (
-	id_server_permission serial not null,
+	id_server_permission serial4 not null,
 	permission_name varchar(10485760),
 	constraint sys_pk_10108 primary key (id_server_permission)
 );
@@ -254,7 +254,7 @@ create table tserver_permission (
  drop table if exists tsetting;
 
 create table tsetting (
-	id_setting serial not null,
+	id_setting serial4 not null,
 	setting_key varchar(10485760),
 	setting_value varchar(10485760),
 	setting_comment varchar(10485760),
@@ -268,7 +268,7 @@ create table tsetting (
  drop table if exists tshare;
 
 create table tshare (
-	id_share serial not null,
+	id_share serial4 not null,
 	message varchar(10485760),
 	share_type varchar(10485760) not null,
 	content_share varchar(10485760) not null,
@@ -284,8 +284,8 @@ create table tshare (
  drop table if exists tshare_target;
 
 create table tshare_target (
-	id_share_target serial not null,
-	id_share integer not null,
+	id_share_target serial4 not null,
+	id_share int4 not null,
 	user_target varchar(50) not null,
 	constraint sys_pk_10290 primary key (id_share_target)
 );
@@ -316,7 +316,7 @@ create table tuser (
  drop table if exists tuser_preference;
 
 create table tuser_preference (
-	id_user_preference serial not null,
+	id_user_preference serial4 not null,
 	preference_name varchar(150),
 	user_login varchar(150),
 	preference_value varchar(10485760),
@@ -330,7 +330,7 @@ create table tuser_preference (
  drop table if exists accounts;
 
 create table accounts (
-	accountid serial not null,
+	accountid serial4 not null,
 	entityid varchar(50) not null,
 	officeid varchar(50) not null,
 	cdid varchar(50),
@@ -339,7 +339,7 @@ create table accounts (
 	enddate timestamp,
 	interesrate double precision,
 	accounttyp varchar(255),
-	accounttypeid integer,
+	accounttypeid int4,
 	constraint sys_pk_10147 primary key (accountid),
 	constraint fk_account_office foreign key (officeid) references branches(officeid)
 );
@@ -351,8 +351,8 @@ create table accounts (
  drop table if exists customers;
 
 create table customers (
-	customerid serial not null,
-	customertypeid integer,
+	customerid serial4 not null,
+	customertypeid int4,
 	name varchar(255),
 	address varchar(255),
 	comments varchar(10485760),
@@ -367,7 +367,7 @@ create table customers (
 	longitude double precision,
 	latitude double precision,
 	signature bytea,
-	id_dms_doc integer,
+	id_dms_doc int4,
 	country varchar(50),
 	state varchar(50),
 	zipcode varchar(50),
@@ -384,8 +384,8 @@ create table customers (
  drop table if exists employees;
 
 create table employees (
-	employeeid serial not null,
-	employeetypeid integer,
+	employeeid serial4 not null,
+	employeetypeid int4,
 	employeename varchar(255),
 	employeesurname varchar(255),
 	employeeaddress varchar(255),
@@ -410,11 +410,11 @@ create table employees (
  drop table if exists movements;
 
 create table movements (
-	movementid serial not null,
-	accountid integer not null,
+	movementid serial4 not null,
+	accountid int4 not null,
 	date_ timestamp,
 	concept varchar(50),
-	movementtypeid integer,
+	movementtypeid int4,
 	movement double precision,
 	comments varchar(10485760),
 	concept_en_us varchar(50),
@@ -435,12 +435,12 @@ create table movements (
  drop table if exists report_parameters;
 
 create table report_parameters (
-	id serial not null,
+	id serial4 not null,
 	name varchar(255),
 	description varchar(255),
 	nested_type varchar(255),
 	value_class varchar(255),
-	report_id integer,
+	report_id int4,
 	constraint sys_pk_10477 primary key (id),
 	constraint sys_fk_10478 foreign key (report_id) references reports(id)
 );
@@ -452,9 +452,9 @@ create table report_parameters (
  drop table if exists tdms_doc_category;
 
 create table tdms_doc_category (
-	id_dms_doc_category serial not null,
-	id_dms_doc integer not null,
-	id_dms_doc_category_parent integer,
+	id_dms_doc_category serial4 not null,
+	id_dms_doc int4 not null,
+	id_dms_doc_category_parent int4,
 	category_name varchar(255) not null,
 	constraint tdms_doc_category__pk primary key (id_dms_doc_category),
 	constraint tdms_doc_category_tdms_doc_fk foreign key (id_dms_doc) references tdms_doc(id_dms_doc)
@@ -467,11 +467,11 @@ create table tdms_doc_category (
  drop table if exists tdms_doc_file;
 
 create table tdms_doc_file (
-	id_dms_doc_file serial not null,
+	id_dms_doc_file serial4 not null,
 	file_name varchar(255) not null,
-	id_dms_doc integer not null,
+	id_dms_doc int4 not null,
 	file_type varchar(255),
-	id_dms_doc_category integer,
+	id_dms_doc_category int4,
 	constraint tdms_doc_file_pk primary key (id_dms_doc_file),
 	constraint tdms_doc_file_tdms_doc_category_fk foreign key (id_dms_doc_category) references tdms_doc_category(id_dms_doc_category),
 	constraint tdms_doc_file_tdms_doc_fk foreign key (id_dms_doc) references tdms_doc(id_dms_doc)
@@ -484,16 +484,16 @@ create table tdms_doc_file (
  drop table if exists tdms_doc_file_version;
 
 create table tdms_doc_file_version (
-	id_dms_doc_file_version serial not null,
+	id_dms_doc_file_version serial4 not null,
 	file_path varchar(500),
-	version integer not null,
+	version int4 not null,
 	file_description text,
 	is_active character(1) not null,
 	file_added_date timestamp not null,
-	file_added_user_id integer not null,
-	id_dms_doc_file integer not null,
+	file_added_user_id int4 not null,
+	id_dms_doc_file int4 not null,
 	thumbnail bytea,
-	file_size integer,
+	file_size int4,
 	constraint tdms_doc_file_version_pk primary key (id_dms_doc_file_version),
 	constraint tdms_doc_file_version_tdms_doc__file_fk foreign key (id_dms_doc_file) references tdms_doc_file(id_dms_doc_file)
 );
@@ -505,10 +505,10 @@ create table tdms_doc_file_version (
  drop table if exists tdms_doc_property;
 
 create table tdms_doc_property (
-	id_dms_doc_property serial not null,
+	id_dms_doc_property serial4 not null,
 	doc_property_key varchar(255) not null,
 	doc_property_value varchar(255),
-	id_dms_doc integer not null,
+	id_dms_doc int4 not null,
 	constraint tdms_doc_property_pk primary key (id_dms_doc_property),
 	constraint tdms_doc_property_tdms_doc foreign key (id_dms_doc) references tdms_doc(id_dms_doc)
 );
@@ -520,9 +520,9 @@ create table tdms_doc_property (
  drop table if exists tdms_related_doc;
 
 create table tdms_related_doc (
-	id_dms_related_doc serial not null,
-	id_dms_doc_master integer not null,
-	id_dms_doc_child integer not null,
+	id_dms_related_doc serial4 not null,
+	id_dms_doc_master int4 not null,
+	id_dms_doc_child int4 not null,
 	constraint tdms_related_doc_pk primary key (id_dms_related_doc),
 	constraint tdms_related_doc_tdms_doc_child_fk foreign key (id_dms_doc_child) references tdms_doc(id_dms_doc),
 	constraint tdms_related_doc_tdms_doc_master_fk foreign key (id_dms_doc_master) references tdms_doc(id_dms_doc)
@@ -535,9 +535,9 @@ create table tdms_related_doc (
  drop table if exists trole_server_permission;
 
 create table trole_server_permission (
-	id_role_server_permission serial not null,
-	id_rolename integer,
-	id_server_permission integer,
+	id_role_server_permission serial4 not null,
+	id_rolename int4,
+	id_server_permission int4,
 	constraint sys_pk_10112 primary key (id_role_server_permission),
 	constraint fk_trole_server_permission foreign key (id_rolename) references trole(id_rolename),
 	constraint fk_tserver_permission foreign key (id_server_permission) references tserver_permission(id_server_permission)
@@ -550,8 +550,8 @@ create table trole_server_permission (
  drop table if exists tuser_role;
 
 create table tuser_role (
-	id_user_role serial not null,
-	id_rolename integer,
+	id_user_role serial4 not null,
+	id_rolename int4,
 	user_ varchar(50),
 	constraint sys_pk_10100 primary key (id_user_role),
 	constraint fk_trole foreign key (id_rolename) references trole(id_rolename),
@@ -579,9 +579,9 @@ create table webclient_config (
  drop table if exists customeraccounts;
 
 create table customeraccounts (
-	customeraccountid serial not null,
-	customerid integer not null,
-	accountid integer not null,
+	customeraccountid serial4 not null,
+	customerid int4 not null,
+	accountid int4 not null,
 	isowner boolean,
 	constraint sys_pk_10157 primary key (customeraccountid),
 	constraint fk_account foreign key (accountid) references accounts(accountid),
