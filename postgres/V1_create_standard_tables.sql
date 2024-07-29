@@ -91,13 +91,13 @@ create table movementtypes (
  drop table if exists preferences;
 
 create table preferences (
-	id serial4 not null,
-	name varchar(255),
-	description varchar(255),
-	preferences varchar(5000),
-	entity varchar(100),
-	"type" bit,
-	constraint sys_pk_10494 primary key (id)
+	preferenceid serial4 not null,
+	preferencename varchar(255),
+	preferencedescription varchar(255),
+	preferencepreferences varchar(5000),
+	preferenceentity varchar(100),
+	preferencetype smallint,
+	constraint sys_pk_10494 primary key (preferenceid)
 );
 
 -- public.public.reports definition
@@ -107,15 +107,15 @@ create table preferences (
  drop table if exists reports;
 
 create table reports (
-	id serial4 not null,
-	"uuid" varchar(255) not null,
-	name varchar(255),
-	description varchar(255),
-	report_type varchar(255),
-	main_report_filename varchar(255) not null,
-	zip bytea,
-	compiled bytea,
-	constraint sys_pk_10469 primary key (id)
+	reportid serial4 not null,
+	reportuuid varchar(255) not null,
+	reportname varchar(255),
+	reportdescription varchar(255),
+	reporttype varchar(255),
+	reportfilename varchar(255) not null,
+	reportzip bytea,
+	reportcompiled bytea,
+	constraint sys_pk_10469 primary key (reportid)
 );
 
 -- public.public.tasks definition
@@ -125,10 +125,10 @@ create table reports (
  drop table if exists tasks;
 
 create table tasks (
-	id serial4 not null,
-	"uuid" varchar(255) not null,
-	"result" bytea,
-	constraint sys_pk_10484 primary key (id)
+	taskid serial4 not null,
+	taskuuid varchar(255) not null,
+	taskresult bytea,
+	constraint sys_pk_10484 primary key (taskid)
 );
 
 -- public.public.tconfigs definition
@@ -435,14 +435,14 @@ create table movements (
  drop table if exists report_parameters;
 
 create table report_parameters (
-	id serial4 not null,
-	name varchar(255),
-	description varchar(255),
-	nested_type varchar(255),
-	value_class varchar(255),
-	report_id int4,
-	constraint sys_pk_10477 primary key (id),
-	constraint sys_fk_10478 foreign key (report_id) references reports(id)
+	reportparameterid serial4 not null,
+	reportparametername varchar(255),
+	reportparameterdescription varchar(255),
+	reportparameternestedtype varchar(255),
+	reportparametervalueclass varchar(255),
+	reportid int4,
+	constraint sys_pk_10477 primary key (reportparameterid),
+	constraint sys_fk_10478 foreign key (reportid) references reports(reportid)
 );
 
 -- public.public.tdms_doc_category definition
