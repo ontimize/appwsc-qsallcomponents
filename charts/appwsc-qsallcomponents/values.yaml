@@ -27,17 +27,18 @@ probePath: /ontimize/health
 probePort: 8081
 livenessProbe:
   initialDelaySeconds: 100
-  periodSeconds: 15
+  timeoutSeconds: 60
+  periodSeconds: 30
   successThreshold: 1
-  timeoutSeconds: 1
+  failureThreshold: 3
   ### Optional distinct liveness probe path, if empty the probePath is used
   probePath: /ontimize/health/liveness
 readinessProbe:
   initialDelaySeconds: 140
-  failureThreshold: 3
+  timeoutSeconds: 10
   periodSeconds: 15
-  successThreshold: 1
-  timeoutSeconds: 1
+  failureThreshold: 2
+  successThreshold: 5
   ### Optional distinct readiness probe path, if empty the probePath is used
   probePath: /ontimize/health/readiness
 ## Adapt resources if needed
